@@ -3,11 +3,13 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.gms.google.services)
+    //compose nav plugin
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
     namespace = "com.example.iclickipay"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.iclickipay"
