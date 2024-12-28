@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "564209030079",
+    "project_id": "i-click-i-pay",
+    "storage_bucket": "i-click-i-pay.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:564209030079:android:d8a75aef7d1879b196870a",
+        "android_client_info": {
+          "package_name": "com.example.iclickipay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAvibf1LnAvnn6iSW-45vWYBC1_rgdN6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
