@@ -1,18 +1,14 @@
 package com.example.iclickipay.presentation.homepage
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,6 +36,7 @@ fun HomePageScreen(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier.fillMaxSize()
     ) {
         Text(
@@ -54,10 +51,12 @@ fun HomePageScreen(
         // HorizontalPager to display the carousel
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxWidth().padding(16.dp)
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            contentPadding = PaddingValues(20.dp)
+            //index of the page item
         ) { page ->
             // Displaying a Button for each page
-            ButtonCarouselItem(
+            CarouselButton(
                 item = items[page],
                 onClick = {
                     Toast.makeText(context, "Clicked on ${items[page]}", Toast.LENGTH_SHORT).show()
@@ -69,27 +68,8 @@ fun HomePageScreen(
     }
 }
 
-@Composable
-fun ButtonCarouselItem(item: String, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .height(100.dp)
-    ) {
-        Button(
-            onClick = onClick,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Text(text = item)
-        }
-    }
-}
-
 class UserListIndividualParameterProvider : PreviewParameterProvider<String> {
     override val values = sequenceOf(
-        "jim"
+        "Jim"
     )
 }
