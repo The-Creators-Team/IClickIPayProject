@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.gms.google.services)
+    //compose nav plugin
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
