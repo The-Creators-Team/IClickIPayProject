@@ -27,11 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.iclickipay.R
 
 @Composable
-fun PetListScreen(dogs: List<Dog>, ) {
+fun PetListScreen(
+    dogs: List<Dog>,
+    navigateToNewPet: () -> Unit
+) {
 
     Column {
         Card(
@@ -71,6 +73,7 @@ fun PetListScreen(dogs: List<Dog>, ) {
         Button(
             onClick = {
                 //navController.navigate(BabySitterScreen.FilterScreen.route)
+                navigateToNewPet()
             }
         ) {
             Text(text = "Next")
@@ -107,11 +110,11 @@ fun DogCard(dog: Dog) {
                 modifier = Modifier.weight(1f)
             )
             // Edit Icon
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { }) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Dog")
             }
             // Delete Icon
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { }) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Dog")
             }
         }
@@ -131,9 +134,9 @@ enum class Sex {
 
 data class Dog(
     val name: String,
-    var race:String,
+    var race: String,
     var sex: Sex,
-    var age:Int,
+    var age: Int,
     var size: Size,
     val imageResId: Int // Drawable resource ID for the image
 )

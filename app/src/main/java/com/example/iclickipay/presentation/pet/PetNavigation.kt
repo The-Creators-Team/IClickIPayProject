@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.iclickipay.LoginScreenRoute
 import com.example.iclickipay.R
 import kotlinx.serialization.Serializable
 
@@ -15,14 +14,21 @@ fun PetNavigation() {
         navController = petNavController,
         startDestination = PetListRoute
     ) {
-        composable<LoginScreenRoute> {
-            PetListScreen(dogs)
+        composable<PetListRoute> {
+            PetListScreen(dogs,
+                navigateToNewPet = { petNavController.navigate(NewPetRoute) })
+        }
+        composable<NewPetRoute> {
+            NewPetScreen()
         }
     }
 }
 
 @Serializable
 object PetListRoute
+
+@Serializable
+object NewPetRoute
 
 val dogs = listOf<Dog>(
     Dog("Chris", "Labrador",Sex.FEMALE,3, Size.MEDIUM, R.drawable.ic_gear),
