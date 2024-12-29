@@ -2,9 +2,12 @@ package com.example.iclickipay.presentation.babysitter
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,20 +17,25 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -38,6 +46,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,6 +61,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -85,6 +95,13 @@ fun BabySitterNavigation() {
         composable(route = BabySitterScreen.SearchScreen.route) {
             SearchScreen(navController = navController)
         }
+        composable(route = BabySitterScreen.MapScreen.route) {
+            MapScreen(navController = navController)
+        }
+        composable(route = BabySitterScreen.OrderScreen.route) {
+            OrderScreen(navController = navController, babysitters[0], children[0])
+        }
+
         composable(route = "home_page") {
             HomePageScreen(
                 user = "User", // Replace with actual user data or parameter
@@ -146,7 +163,7 @@ fun BabySitterMainScreen(navController: NavController) {
                 navController.navigate("home_page")
             }
         ) {
-            Text(text = "Back to Home")
+            Text(text = "Back to All Apps")
         }
     }
 }
@@ -223,7 +240,7 @@ fun YourChildDetailsScreen(navController: NavController) {
                 navController.navigate("home_page")
             }
         ) {
-            Text(text = "Back to Home")
+            Text(text = "Back to All Apps")
         }
     }
 }
@@ -459,8 +476,12 @@ val babysitters = listOf<Babysitter>(
     Babysitter("Nina", "Corona",R.drawable.cam_placeholder,3.0,500,15 )
 
 )
+
 @Composable
-fun SearchScreen(navController: NavController){
+fun SearchScreen(navController: NavController) {
+    var showPopup by remember { mutableStateOf(false) }
+    var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
+
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Image
         Image(
@@ -480,23 +501,40 @@ fun SearchScreen(navController: NavController){
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Row(modifier = Modifier
-                .clickable {  },
+            // Favorites Row
+            Row(
+                modifier = Modifier
+                    .clickable { },
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorites", tint = Color.White)
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = "Favorites",
+                    tint = Color.White
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Favorites", color = Color.White)
-
             }
-            Row(modifier = Modifier
-                .clickable {  },
+
+            // Orders Row
+            Row(
+                modifier = Modifier
+                    .clickable { showPopup = true },
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.Default.List, contentDescription = "Orders", tint = Color.White)
+                Icon(
+                    imageVector = Icons.Default.AddCircle,
+                    contentDescription = "Orders",
+                    tint = Color.White
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(text = "Orders", color = Color.White)
             }
+        }
+
+        // Show Popup Menu
+        if (showPopup) {
+            OrdersPopupMenu(navController, onDismiss = { showPopup = false })
         }
 
         // Bar with title "Babysitters" and filter icon
@@ -509,30 +547,105 @@ fun SearchScreen(navController: NavController){
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(text = "Babysitters")
-            Icon(modifier = Modifier
-                .clickable {  },
-                imageVector = Icons.Default.Menu, contentDescription = "Filter", tint = MaterialTheme.colorScheme.primary)
+            Icon(
+                modifier = Modifier.clickable { },
+                imageVector = Icons.Default.Menu,
+                contentDescription = "Filter",
+                tint = MaterialTheme.colorScheme.primary
+            )
         }
 
         // Lazy list of babysitters
         LazyColumn(modifier = Modifier.weight(2f)) {
             items(babysitters) { babysitter ->
-                BabysitterCard(babysitter = babysitter)
+                BabysitterCard(
+                    babysitter = babysitter,
+                    onClick = { expandedBabysitter = babysitter }
+                )
             }
         }
     }
 }
 
 @Composable
-fun BabysitterCard(babysitter: Babysitter) {
-// need to add popup menu
+fun OrdersPopupMenu(navController: NavController,onDismiss: () -> Unit) {
+    Popup(
+        alignment = Alignment.Center,
+        onDismissRequest = onDismiss
+    ) {
+        Box(
+            modifier = Modifier
+                .background(Color.White, shape = RoundedCornerShape(8.dp))
+                .padding(16.dp)
+        ) {
+            Column {
+                // Title Row
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "Location",
+                        tint = Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Location",
+                        color = Color.Black,
+                    )
+                }
+
+                // Choose Dates and Number of Children Row
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(text = "Choose Dates", color = Color.Black)
+                    Text(text = "Number of Children", color = Color.Black)
+                }
+
+                // Search Location/Name Row
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search",
+                        tint = Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Search location/name",
+                        color = Color.Black
+                    )
+                }
+                Button(
+                    onClick = {
+                        navController.navigate(BabySitterScreen.MapScreen.route)
+                    },
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(16.dp)
+                ) {
+                    Text(text = "Search")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BabysitterCard(babysitter: Babysitter, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-
+            .clickable { onClick() }
     ) {
-        Column{
+        Column {
             // Babysitter Image
             Image(
                 painter = painterResource(id = babysitter.imageResId),
@@ -583,5 +696,251 @@ fun BabysitterCard(babysitter: Babysitter) {
         }
     }
 }
+
+@Composable
+fun MapScreen(navController: NavController) {
+    var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
+
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Background Image
+        Image(
+            painter = painterResource(id = R.drawable.map_temp), // Replace with your drawable resource
+            contentDescription = "Background Image",
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        // Search Bar
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            OutlinedTextField(
+                value = "",
+                onValueChange = { /* Handle search query */ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White, shape = RoundedCornerShape(8.dp)),
+                placeholder = { Text("Search Babysitters...") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon"
+                    )
+                }
+            )
+
+            Spacer(modifier = Modifier.weight(1f)) // Spacer to push the LazyRow to the bottom
+
+            // Babysitter Cards LazyRow
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                contentPadding = PaddingValues(horizontal = 8.dp)
+            ) {
+                items(babysitters) { babysitter ->
+                    BabysitterCard(
+                        babysitter = babysitter,
+                        onClick = { expandedBabysitter = babysitter }
+                    )
+                }
+            }
+        }
+
+        // Expanded Babysitter Details
+        expandedBabysitter?.let { babysitter ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .clickable { expandedBabysitter = null }, // Dismiss when clicking outside
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp) // Half-screen height
+                        .padding(16.dp),
+                    shape = RoundedCornerShape(16.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        // Babysitter Details
+                        Column {
+                            Image(
+                                painter = painterResource(id = babysitter.imageResId),
+                                contentDescription = "Babysitter Image",
+                                modifier = Modifier
+                                    .size(50.dp) // Set the size for the circular image
+                                    .clip(CircleShape) // Clip the image into a circle
+                                    .border(1.dp, Color.Gray, CircleShape), // Optional border around the circle
+                                contentScale = ContentScale.Crop // Crop the image to fill the circle
+                            )
+                            Text(text = babysitter.name)
+                            Text(text = "Location: ${babysitter.location}")
+                            Text(text = "Rating: ${babysitter.rating}")
+                            Text(text = "Distance: ${babysitter.distance} meters")
+                            Text(text = "Cost per hour: $${babysitter.costPerHour}")
+                        }
+
+                        // Take Appointment Button
+                        Button(
+                            onClick = { navController.navigate(BabySitterScreen.OrderScreen.route)},
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "Take Appointment")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun OrderScreen(navController: NavController, babysitter: Babysitter, child: Child) {
+    Column(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        // Upper Section with Theme Background Color
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(16.dp)
+        ) {
+            // Title
+            Text(
+                text = "Order Details",
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+
+            // Babysitter and Child Row
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                // Babysitter Profile
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = babysitter.imageResId),
+                        contentDescription = "Babysitter Image",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, Color.White, CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    Text(text = "Babysitter", color = Color.White)
+                    Text(text = babysitter.name, color = Color.White)
+                }
+
+                // Child Profile
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = child.imageResId),
+                        contentDescription = "Child Image",
+                        modifier = Modifier
+                            .size(70.dp)
+                            .clip(CircleShape)
+                            .border(1.dp, Color.White, CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                    Text(text = "Child", color = Color.White)
+                    Text(text = child.name, color = Color.White)
+                }
+            }
+
+            // Date and Location
+            Text(
+                text = "Date",
+                color = Color.White,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.LocationOn,
+                    contentDescription = "Location Icon",
+                    tint = Color.White
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = babysitter.location,
+                    color = Color.White
+                )
+            }
+        }
+
+        // Lower Section
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            // Babysitter Cost Row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Babysitter")
+                Text(text = "$${babysitter.costPerHour}/hr")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Subtotal
+            Text(text = "Subtotal")
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Delivery Fees
+            Text(text = "Delivery Fees")
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Divider
+            Divider(color = Color.Gray, thickness = 1.dp)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Total Amount
+            Text(
+                text = "Total Amount",
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Place Order Button
+            Button(
+                onClick = { /* Handle Place Order */ },
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
+                Text(text = "Place Order")
+            }
+        }
+    }
+}
+
+
 
 

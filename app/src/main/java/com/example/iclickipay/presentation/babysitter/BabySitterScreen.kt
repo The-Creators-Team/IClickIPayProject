@@ -7,6 +7,8 @@ sealed class BabySitterScreen(val route: String) {
     object ChildListScreen : BabySitterScreen("child_list_screen")
     object FilterScreen : BabySitterScreen("filter_screen")
     object SearchScreen : BabySitterScreen("search_screen")
+    object MapScreen : BabySitterScreen("map_screen")
+    object OrderScreen: BabySitterScreen("order_screen")
 
     fun withArgs(vararg args: String ): String{
         return buildString {
