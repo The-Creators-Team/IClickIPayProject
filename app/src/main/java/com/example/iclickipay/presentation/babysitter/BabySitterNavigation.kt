@@ -20,14 +20,24 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -55,7 +66,6 @@ fun BabySitterNavigation() {
         navController = navController,
         startDestination = BabySitterScreen.BabySitterMainScreen.route
     ) {
-
         composable(route = BabySitterScreen.BabySitterMainScreen.route) {
             BabySitterMainScreen(navController = navController)
         }
@@ -68,9 +78,12 @@ fun BabySitterNavigation() {
         composable(route = BabySitterScreen.ChildListScreen.route) {
             ChildListScreen(navController = navController, children)
         }
-//        composable() {
-//            FilterScreen(navController = navController)
-//        }
+        composable(route = BabySitterScreen.FilterScreen.route) {
+            FilterScreen(navController = navController)
+        }
+        composable(route = BabySitterScreen.SearchScreen.route) {
+            SearchScreen(navController = navController)
+        }
     }
 }
 
@@ -94,7 +107,7 @@ fun BabySitterMainScreen(navController: NavController) {
 
         // Title
         Text(
-            text = "title",
+            text = "Babysitter",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 8.dp),
             color = MaterialTheme.colorScheme.primary,
@@ -103,7 +116,7 @@ fun BabySitterMainScreen(navController: NavController) {
 
         // Description
         Text(
-            text = "description",
+            text = "Welcome to babysitty an app to schedule a babysitter for your little one. Write reviews and filter through are list of babysitters to find the perfect match for your child and date ",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 24.dp),
             textAlign = TextAlign.Center
@@ -277,7 +290,9 @@ fun ChildListScreen(navController: NavController, children: List<Child>, ) {
                 )
             }
         }
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f)) {
             items(children) { child ->
                 ChildCard(child = child)
             }
@@ -285,7 +300,10 @@ fun ChildListScreen(navController: NavController, children: List<Child>, ) {
         Button(
             onClick = {
                 navController.navigate(BabySitterScreen.FilterScreen.route)
-            }
+            },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp)
         ) {
             Text(text = "Next")
         }
@@ -331,3 +349,213 @@ fun ChildCard(child: Child) {
         }
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun FilterScreen(navController: NavController){
+    var selectedOption by remember { mutableStateOf("Recommend") }
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier.padding(40.dp)) {
+        // Title
+        Text(text = "Filter Options")
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Dropdown menu
+        Text("Sort By")
+
+        // ExposedDropdownMenuBox is used for the dropdown
+        ExposedDropdownMenuBox(
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            // TextField to show the selected option and the dropdown menu
+            TextField(
+                value = selectedOption,
+                onValueChange = { },
+                readOnly = true,
+                label = { Text("Select Sorting Option") },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            // The dropdown itself
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+
+            }
+        }
+        ParcelSlider("Price/Hour")
+        Button(
+            onClick = {
+                navController.navigate(BabySitterScreen.SearchScreen.route)
+            },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp)
+        ) {
+            Text(text = "Apply")
+        }
+    }
+}
+
+@Composable
+fun ParcelSlider(title: String) {
+    var sliderValue by remember { mutableStateOf(0f) }
+    Column {
+        Slider(
+            value = sliderValue,
+            onValueChange = { sliderValue = it },
+            valueRange = 0f..60f,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Text(text = "Value: ${sliderValue.toInt()}")
+    }
+}
+
+data class Babysitter(
+    val name: String,
+    val location: String,
+    val imageResId: Int,
+    val rating: Double,
+    val distance: Int,
+    val costPerHour:Int
+)
+
+val babysitters = listOf<Babysitter>(
+    Babysitter("Lee", "Corona",R.drawable.cam_placeholder,3.0,500,15 ),
+    Babysitter("Alice", "Corona",R.drawable.cam_placeholder,3.0,500,15 ),
+    Babysitter("Nina", "Corona",R.drawable.cam_placeholder,3.0,500,15 )
+
+)
+@Composable
+fun SearchScreen(navController: NavController){
+    Column(modifier = Modifier.fillMaxSize()) {
+        // Top Image
+        Image(
+            painter = painterResource(id = R.drawable.cam_placeholder),
+            contentDescription = "Top Image",
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        )
+
+        // Bar with two options: Favorites and Orders
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Row(modifier = Modifier
+                .clickable {  },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Default.Favorite, contentDescription = "Favorites", tint = Color.White)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Favorites", color = Color.White)
+
+            }
+            Row(modifier = Modifier
+                .clickable {  },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Default.List, contentDescription = "Orders", tint = Color.White)
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(text = "Orders", color = Color.White)
+            }
+        }
+
+        // Bar with title "Babysitters" and filter icon
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface)
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = "Babysitters")
+            Icon(modifier = Modifier
+                .clickable {  },
+                imageVector = Icons.Default.Menu, contentDescription = "Filter", tint = MaterialTheme.colorScheme.primary)
+        }
+
+        // Lazy list of babysitters
+        LazyColumn(modifier = Modifier.weight(2f)) {
+            items(babysitters) { babysitter ->
+                BabysitterCard(babysitter = babysitter)
+            }
+        }
+    }
+}
+
+@Composable
+fun BabysitterCard(babysitter: Babysitter) {
+// need to add popup menu
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+
+    ) {
+        Column{
+            // Babysitter Image
+            Image(
+                painter = painterResource(id = babysitter.imageResId),
+                contentDescription = "Babysitter Image",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Name and Location
+            Text(
+                text = babysitter.name,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+            Text(
+                text = babysitter.location,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            )
+
+            // Rating, Distance, and Cost Per Hour
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Rating
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Rating", tint = Color.Yellow)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "${babysitter.rating}")
+                }
+
+                // Distance
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Distance", tint = Color.Gray)
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "${babysitter.distance} m")
+                }
+                // Cost Per Hour
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "$${babysitter.costPerHour}/hr")
+                }
+            }
+        }
+    }
+}
+
+
