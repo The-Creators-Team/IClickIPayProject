@@ -10,8 +10,10 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
+import com.example.iclickipay.presentation.register.RegisterScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.serialization.Serializable
@@ -34,9 +36,19 @@ class MainActivity : ComponentActivity() {
                     // and by using the 'navController.navigate' method and giving a route as
                     //an argument, its possible to move in between screens
                     composable<LoginScreenRoute> {
-                        //LoginScreen(loginAuth)
-                        LoginScreen(loginAuth)
+                        LoginScreen(loginAuth,
+                            navigateToRegister = { navController.navigate(RegisterScreenRoute) },
+                            navigateToHomeScreen = { navController.navigate(HomeScreenRoute) }
+                        )
                     }
+                    composable<RegisterScreenRoute>{
+                        RegisterScreen(loginAuth,
+                            navigateToLogin = { navController.navigate(LoginScreenRoute) })
+                    }
+                    composable<HomeScreenRoute> {
+                        HomePageScreen("jim")
+                    }
+
                 }
             }
         }
@@ -50,3 +62,9 @@ class MainActivity : ComponentActivity() {
 //API call)
 @Serializable
 object LoginScreenRoute
+
+@Serializable
+object RegisterScreenRoute
+
+@Serializable
+object HomeScreenRoute
