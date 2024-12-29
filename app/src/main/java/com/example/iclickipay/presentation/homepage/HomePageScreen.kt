@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,15 +25,11 @@ import androidx.compose.ui.unit.sp
 @Preview(showBackground = true)
 @Composable
 fun HomePageScreen(
-    @PreviewParameter(UserListIndividualParameterProvider::class) user: String
+    @PreviewParameter(UserListIndividualParameterProvider::class) user: String,
+    navigateToBabySitter: () -> Unit
 ) {
     val context = LocalContext.current
-    // Sample data for button texts
     val items = List(10) { "Button ${it + 1}" }
-
-
-
-
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -44,18 +41,16 @@ fun HomePageScreen(
             modifier = Modifier.padding(20.dp),
             style = TextStyle(fontSize = 40.sp)
         )
-        // Remember the state of the pager
         val pagerState = rememberPagerState(initialPage = 0) {
             items.size
         }
-        // HorizontalPager to display the carousel
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             contentPadding = PaddingValues(20.dp)
-            //index of the page item
         ) { page ->
-            // Displaying a Button for each page
             CarouselButton(
                 item = items[page],
                 onClick = {
@@ -63,8 +58,12 @@ fun HomePageScreen(
                 }
             )
         }
-
-
+        Button(
+            onClick = navigateToBabySitter,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(text = "Go to Babysitter Section")
+        }
     }
 }
 

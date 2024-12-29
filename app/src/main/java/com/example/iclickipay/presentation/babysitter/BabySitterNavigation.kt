@@ -57,6 +57,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.iclickipay.R
+import com.example.iclickipay.presentation.homepage.HomePageScreen
 
 
 @Composable
@@ -83,6 +84,14 @@ fun BabySitterNavigation() {
         }
         composable(route = BabySitterScreen.SearchScreen.route) {
             SearchScreen(navController = navController)
+        }
+        composable(route = "home_page") {
+            HomePageScreen(
+                user = "User", // Replace with actual user data or parameter
+                navigateToBabySitter = {
+                    navController.navigate(BabySitterScreen.BabySitterMainScreen.route)
+                }
+            )
         }
     }
 }
@@ -128,6 +137,16 @@ fun BabySitterMainScreen(navController: NavController) {
             }
         ) {
             Text(text = "Lets Go")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Back to Home Button
+        Button(
+            onClick = {
+                navController.navigate("home_page")
+            }
+        ) {
+            Text(text = "Back to Home")
         }
     }
 }
@@ -198,6 +217,13 @@ fun YourChildDetailsScreen(navController: NavController) {
             }
         ) {
             Text(text = "Next")
+        }
+        Button(
+            onClick = {
+                navController.navigate("home_page")
+            }
+        ) {
+            Text(text = "Back to Home")
         }
     }
 }

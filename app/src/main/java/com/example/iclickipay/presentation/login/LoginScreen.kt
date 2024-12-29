@@ -118,13 +118,15 @@ fun LoginScreen(
                 }
                 Button(
                     onClick = {
-                        verifyFirebaseUser(
+     /*                   verifyFirebaseUser(
                             emailText,
                             passwordText,
                             auth,
-                            context
-                            //navigateToHomeScreen
-                        )
+                            context,
+                            navigateToHomeScreen
+                        )*/
+
+                        navigateToHomeScreen()
                     },
                     enabled = enabledState,
                     modifier = Modifier
@@ -159,14 +161,14 @@ private fun verifyFirebaseUser(
     password: String,
     auth: FirebaseAuth,
     context: Context,
-    //navigateToHomeScreen: () -> Unit
+    navigateToHomeScreen: () -> Unit
 ) {
     auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
         if (task.isSuccessful) {
             val user = auth.currentUser
             Toast.makeText(context, "Good Login by ${user?.email}", Toast.LENGTH_LONG).show()
             //navigate to home screen
-            //navigateToHomeScreen()
+            navigateToHomeScreen()
 
         } else {
             Toast.makeText(context, "Bad Login: ${task.exception?.message}", Toast.LENGTH_LONG)
