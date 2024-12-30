@@ -1,9 +1,7 @@
 package com.example.feature_housecleaning.housecleaning
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,29 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,13 +33,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.iclickipay.R
-import com.example.feature_babysitter.babysitter.BabySitterScreen
-import com.example.feature_babysitter.babysitter.Babysitter
-import com.example.feature_babysitter.babysitter.BabysitterCard
-import com.example.feature_babysitter.babysitter.Child
-import com.example.feature_babysitter.babysitter.ParcelSlider
-import com.example.feature_babysitter.babysitter.babysitters
+import com.example.feature_housecleaning.R
 
 
 @Composable
@@ -317,9 +287,9 @@ data class Cleaner(
 )
 
 val Cleaners = listOf<Cleaner>(
-    Cleaner("Lee", "Corona",R.drawable.cam_placeholder,3.0,500,15 ),
-    Cleaner("Alice", "Corona",R.drawable.cam_placeholder,3.0,500,15 ),
-    Cleaner("Nina", "Corona",R.drawable.cam_placeholder,3.0,500,15 )
+    Cleaner("Lee", "Corona", R.drawable.cam_placeholder,3.0,500,15 ),
+    Cleaner("Alice", "Corona", R.drawable.cam_placeholder,3.0,500,15 ),
+    Cleaner("Nina", "Corona", R.drawable.cam_placeholder,3.0,500,15 )
 
 )
 
