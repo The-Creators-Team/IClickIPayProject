@@ -11,6 +11,24 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/feature_babysitter" />
+            <option value="$PROJECT_DIR$/feature_bank" />
+            <option value="$PROJECT_DIR$/feature_chat" />
+            <option value="$PROJECT_DIR$/feature_delivery" />
+            <option value="$PROJECT_DIR$/feature_eat" />
+            <option value="$PROJECT_DIR$/feature_handyman" />
+            <option value="$PROJECT_DIR$/feature_hotel" />
+            <option value="$PROJECT_DIR$/feature_housecleaning" />
+            <option value="$PROJECT_DIR$/feature_laundry" />
+            <option value="$PROJECT_DIR$/feature_learn" />
+            <option value="$PROJECT_DIR$/feature_mechanic" />
+            <option value="$PROJECT_DIR$/feature_mover" />
+            <option value="$PROJECT_DIR$/feature_pcrepair" />
+            <option value="$PROJECT_DIR$/feature_pet" />
+            <option value="$PROJECT_DIR$/navigation" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
