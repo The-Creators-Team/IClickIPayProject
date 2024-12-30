@@ -7,4 +7,9 @@
     <string name="chat_title">Chat</string>
     <string name="register_email_text_field">new email</string>
     <string name="register_password_text_field">new password</string>
+<<<<<<< HEAD
+=======
+    <string name="new_dog_text_field">Name of dog</string>
+    <string name="new_dog_age_field">Age of dog</string>
+>>>>>>> c0ce2d9df269af8366cb833c52de331ec13b5642
 </resources>

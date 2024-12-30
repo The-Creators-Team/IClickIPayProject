@@ -1,24 +1,30 @@
 package com.example.iclickipay
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.iclickipay.presentation.babysitter.BabySitterNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
+import com.example.iclickipay.presentation.housecleaning.HouseCleaningNavigation
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
+import com.example.iclickipay.presentation.pet.PetNavigation
 import com.example.iclickipay.presentation.register.RegisterScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.serialization.Serializable
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -29,26 +35,36 @@ class MainActivity : ComponentActivity() {
                 NavHost(
                     navController = navController,
                     startDestination = LoginScreenRoute
-                    //modifier = Modifier.background(MaterialTheme.colorScheme.primary)
                 ) {
-                    //these K classes can be seen as routes and with the composable
-                    //the applications will start at the one given as the start destination above,
-                    // and by using the 'navController.navigate' method and giving a route as
-                    //an argument, its possible to move in between screens
                     composable<LoginScreenRoute> {
-                        LoginScreen(loginAuth,
+                        LoginScreen(
+                            loginAuth,
                             navigateToRegister = { navController.navigate(RegisterScreenRoute) },
                             navigateToHomeScreen = { navController.navigate(HomeScreenRoute) }
                         )
                     }
-                    composable<RegisterScreenRoute>{
-                        RegisterScreen(loginAuth,
-                            navigateToLogin = { navController.navigate(LoginScreenRoute) })
+                    composable<RegisterScreenRoute> {
+                        RegisterScreen(
+                            loginAuth,
+                            navigateToLogin = { navController.navigate(LoginScreenRoute) }
+                        )
                     }
                     composable<HomeScreenRoute> {
-                        HomePageScreen("jim")
+                        HomePageScreen(
+                            user = "jim",
+                            navigateToBabySitter = { navController.navigate(BabySitterScreenRoute) },
+                            navigateToHouseCleaning = {navController.navigate(HouseCleaningScreenRoute)}
+                        )
                     }
-
+                    composable<BabySitterScreenRoute> {
+                        BabySitterNavigation()
+                    }
+                    composable<HouseCleaningScreenRoute>{
+                        HouseCleaningNavigation()
+                    }
+                    composable<PetNavigationRoute> {
+                        PetNavigation()
+                    }
                 }
             }
         }
@@ -68,3 +84,12 @@ object RegisterScreenRoute
 
 @Serializable
 object HomeScreenRoute
+
+@Serializable
+object BabySitterScreenRoute
+
+@Serializable
+object HouseCleaningScreenRoute
+
+@Serializable
+object PetNavigationRoute
