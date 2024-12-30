@@ -117,12 +117,14 @@ fun LoginScreen(
                 }
                 Button(
                     onClick = {
-                        verifyFirebaseUser(
+                            verifyFirebaseUser(
                             emailText,
                             passwordText,
                             auth,
                             context,
                             navigateToHomeScreen
+
+                        navigateToHomeScreen()
                         )
                     },
                     shape = MaterialTheme.shapes.medium,
@@ -167,7 +169,6 @@ private fun verifyFirebaseUser(
             Toast.makeText(context, "Good Login by ${user?.email}", Toast.LENGTH_LONG).show()
             //navigate to home screen
             navigateToHomeScreen()
-            println("SUCCESSFUL LOGIN")
 
         } else {
             Toast.makeText(context, "Bad Login: ${task.exception?.message}", Toast.LENGTH_LONG)
