@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.iclickipay.data.chatList
-import com.example.iclickipay.domain.ChatListDataObject
+import com.example.iclickipay.presentation.chat.data.chatList
+import com.example.iclickipay.presentation.chat.domain.ChatListDataObject
 import com.example.iclickipay.presentation.chat.components.UserDetails
 import com.example.iclickipay.presentation.chat.components.UserImage
 
@@ -33,7 +33,7 @@ fun ChatsScreen(){
 //            Spacer(modifier = Modifier.height(10.dp))
 //        }
 
-        items(chatList){chatData ->
+        items(chatList){ chatData ->
             ChatListItem(chatData)
         }
     }

@@ -1,4 +1,4 @@
-package com.example.iclickipay.domain
+package com.example.iclickipay.presentation.chat.domain
 
 data class ChatListDataObject(
     val chatId: Int,

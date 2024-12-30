@@ -1,10 +1,10 @@
-package com.example.iclickipay.data
+package com.example.iclickipay.presentation.chat.data
 
 import com.example.iclickipay.R
-import com.example.iclickipay.domain.ChatListDataObject
-import com.example.iclickipay.domain.Message
-import com.example.iclickipay.domain.MessageDeliveryStatus
-import com.example.iclickipay.domain.MessageType
+import com.example.iclickipay.presentation.chat.domain.ChatListDataObject
+import com.example.iclickipay.presentation.chat.domain.Message
+import com.example.iclickipay.presentation.chat.domain.MessageDeliveryStatus
+import com.example.iclickipay.presentation.chat.domain.MessageType
 
 val chatList = listOf<ChatListDataObject>(
     ChatListDataObject(

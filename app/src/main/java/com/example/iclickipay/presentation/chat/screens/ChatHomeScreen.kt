@@ -10,8 +10,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.iclickipay.data.INITIAL_SCREEN_INDEX
-import com.example.iclickipay.data.tabs
+import com.example.iclickipay.presentation.chat.data.INITIAL_SCREEN_INDEX
+import com.example.iclickipay.presentation.chat.data.tabs
 import com.example.iclickipay.presentation.chat.components.AppBarComponent
 import com.example.iclickipay.presentation.chat.components.TabBarComponent
 import kotlinx.coroutines.launch
@@ -23,7 +23,7 @@ fun HomeScreen(){
 
     Column {
         AppBarComponent()
-        TabBarComponent(pagerState = pagerState, initialIndex = INITIAL_SCREEN_INDEX,onTabSelected = {selectedPage ->
+        TabBarComponent(pagerState = pagerState, initialIndex = INITIAL_SCREEN_INDEX,onTabSelected = { selectedPage ->
             scope.launch {pagerState.animateScrollToPage(selectedPage)}
             })
 

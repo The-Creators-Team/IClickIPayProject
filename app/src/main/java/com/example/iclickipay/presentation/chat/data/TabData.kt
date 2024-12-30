@@ -1,4 +1,4 @@
-package com.example.iclickipay.data
+package com.example.iclickipay.presentation.chat.data
 
 data class TabData(val title: String)
 
