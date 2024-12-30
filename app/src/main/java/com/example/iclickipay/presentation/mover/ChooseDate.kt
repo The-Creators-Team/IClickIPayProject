@@ -67,6 +67,11 @@ fun ChooseDate(navController: NavController) {
 
                 )
         },
+        bottomBar = {
+            CustomButton(
+                text = "Next",
+                onClick = { navController.navigate("MoverListScreen") })
+        },
         content = {
             Column(
                 modifier = Modifier
@@ -187,10 +192,6 @@ fun ChooseDate(navController: NavController) {
                 }
 
                 Spacer(modifier = Modifier.weight(1f))
-
-                CustomButton(
-                    text = "Next",
-                    onClick = { navController.navigate("MoverListScreen") })
 
 
             }

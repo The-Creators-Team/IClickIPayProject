@@ -1,11 +1,15 @@
 package com.example.iclickipay.presentation.mover
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
@@ -17,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -24,148 +29,164 @@ import androidx.navigation.compose.rememberNavController
 import com.example.iclickipay.R
 import com.example.iclickipay.presentation.reuseable.CustomButton
 import com.example.iclickipay.ui.theme.btnClr
+import java.time.format.DateTimeFormatter
+import java.time.temporal.WeekFields
+import java.util.Locale
 
+
+@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MoverProfileScreen(navController: NavController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        // Map Section with Back Button
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .background(btnClr)
-        ) {
-            // Map would be implemented here using Google Maps Compose
-            IconButton(
-                onClick = { /* Handle navigation */ },
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(
-                    Icons.Default.ArrowBack,
-                    contentDescription = "Back",
-                    tint = Color.Black
-                )
-            }
-        }
+    Scaffold(
 
-        // Business Logo and Details
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            // Circular Logo
-            Box(
+        bottomBar = {
+            // Take Appointment Button
+            CustomButton("Take Appointment",  onClick = { navController.navigate("ChooseDateTime") })
+        },
+        content = {
+            Column(
                 modifier = Modifier
-                    .size(200.dp)
-                    .clip(CircleShape)
-                    .align(Alignment.CenterHorizontally)
-                    .offset(y = (-50).dp),
+                    .fillMaxSize()
+                    .background(Color.White)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.moverlogo),
-                    contentDescription = "Business Logo",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-            }
+                // Map Section with Back Button
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .background(btnClr)
+                ) {
 
-            Spacer(modifier = Modifier.height(16.dp))
+                    IconButton(
+                        onClick = { /* Handle navigation */ },
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.Black
+                        )
+                    }
+                }
 
-            // Business Name
-            Text(
-                text = "Box Entreprise",
-                style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
+                // Business Logo and Details
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    // Circular Logo
+                    Box(
+                        modifier = Modifier
+                            .size(200.dp)
+                            .clip(CircleShape)
+                            .align(Alignment.CenterHorizontally)
+                            .offset(y = (-50).dp),
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.moverlogo),
+                            contentDescription = "Business Logo",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
 
-            // Rating
-            Row(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    Icons.Default.Star,
-                    contentDescription = "Rating",
-                    tint = Color(0xFFFFA000),
-                    modifier = Modifier.size(20.dp)
-                )
-                Text(
-                    text = "4.8",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(horizontal = 4.dp)
-                )
-                Text(
-                    text = "$ 15/m³",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 16.dp)
-                )
-            }
+                    Spacer(modifier = Modifier.height(16.dp))
 
-            // Description
-            Text(
-                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lobortis sit amet odio in egestas. Pellen tesque ultricies justo.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray,
-                modifier = Modifier.padding(vertical = 8.dp)
-            )
-
-            // Address
-            Row(
-                modifier = Modifier.padding(vertical = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    Icons.Default.LocationOn,
-                    contentDescription = "Location",
-                    tint = Color(0xFF00C853),
-                    modifier = Modifier.size(24.dp)
-                )
-                Column(modifier = Modifier.padding(start = 8.dp)) {
+                    // Business Name
                     Text(
-                        text = "28 Broad Street",
-                        style = MaterialTheme.typography.bodyLarge
+                        text = "Box Entreprise",
+                        style = MaterialTheme.typography.titleLarge,
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
+
+                    // Rating
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.Star,
+                            contentDescription = "Rating",
+                            tint = Color(0xFFFFA000),
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Text(
+                            text = "4.8",
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(horizontal = 4.dp)
+                        )
+                        Text(
+                            text = "$ 15/m³",
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(start = 16.dp)
+                        )
+                    }
+
+                    // Description
                     Text(
-                        text = "Johannesburg",
-                        style = MaterialTheme.typography.bodyMedium
+                        text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis lobortis sit amet odio in egestas. Pellen tesque ultricies justo.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(vertical = 8.dp)
                     )
+
+                    // Address
+                    Row(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            Icons.Default.LocationOn,
+                            contentDescription = "Location",
+                            tint = Color(0xFF00C853),
+                            modifier = Modifier.size(24.dp)
+                        )
+                        Column(modifier = Modifier.padding(start = 8.dp)) {
+                            Text(
+                                text = "28 Broad Street",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                            Text(
+                                text = "Johannesburg",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // Quote Section
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "Quote",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Text(
+                            text = "$ 15",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Quote Section
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Quote",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = "$ 15",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Take Appointment Button
-           CustomButton("Take Appointment",  onClick = { navController.navigate("ChooseDateTime") })
         }
-    }
+    )
+
 }
 
 @Preview

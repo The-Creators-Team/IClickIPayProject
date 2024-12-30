@@ -22,7 +22,7 @@ fun CustomButton(text: String,onClick: () -> Unit){
         onClick = { onClick() },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(35.dp)
             .size(257.dp, 56.dp), // Width 257dp, Height 56dp
 
         shape = RoundedCornerShape(6.dp),
