@@ -15,6 +15,7 @@ import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.presentation.housecleaning.HouseCleaningNavigation
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
+import com.example.iclickipay.presentation.pet.PetNavigation
 import com.example.iclickipay.presentation.register.RegisterScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -58,6 +59,9 @@ class MainActivity : ComponentActivity() {
                     composable<HouseCleaningScreenRoute>{
                         HouseCleaningNavigation()
                     }
+                    composable<PetNavigationRoute> {
+                        PetNavigation()
+                    }
                 }
             }
         }
@@ -83,3 +87,6 @@ object BabySitterScreenRoute
 
 @Serializable
 object HouseCleaningScreenRoute
+
+@Serializable
+object PetNavigationRoute
