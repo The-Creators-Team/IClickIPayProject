@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.iclickipay.presentation.eat.EatActivity
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
 import com.google.firebase.auth.ktx.auth
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
                     //an argument, its possible to move in between screens
                     composable<LoginScreenRoute> {
                         //LoginScreen(loginAuth)
-                        LoginScreen(loginAuth)
+                        EatActivity()
                     }
                 }
             }
