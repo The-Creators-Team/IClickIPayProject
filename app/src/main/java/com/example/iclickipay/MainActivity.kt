@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.iclickipay.presentation.chat.screens.HomeScreen //
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
@@ -24,32 +25,33 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             IClickIPayTheme {
-                val navController = rememberNavController()
-                val loginAuth by remember { mutableStateOf(Firebase.auth) }
-                NavHost(
-                    navController = navController,
-                    startDestination = LoginScreenRoute
-                    //modifier = Modifier.background(MaterialTheme.colorScheme.primary)
-                ) {
-                    //these K classes can be seen as routes and with the composable
-                    //the applications will start at the one given as the start destination above,
-                    // and by using the 'navController.navigate' method and giving a route as
-                    //an argument, its possible to move in between screens
-                    composable<LoginScreenRoute> {
-                        LoginScreen(loginAuth,
-                            navigateToRegister = { navController.navigate(RegisterScreenRoute) },
-                            navigateToHomeScreen = { navController.navigate(HomeScreenRoute) }
-                        )
-                    }
-                    composable<RegisterScreenRoute>{
-                        RegisterScreen(loginAuth,
-                            navigateToLogin = { navController.navigate(LoginScreenRoute) })
-                    }
-                    composable<HomeScreenRoute> {
-                        HomePageScreen("jim")
-                    }
-
-                }
+                HomeScreen()
+//                val navController = rememberNavController()
+//                val loginAuth by remember { mutableStateOf(Firebase.auth) }
+//                NavHost(
+//                    navController = navController,
+//                    startDestination = LoginScreenRoute
+//                    //modifier = Modifier.background(MaterialTheme.colorScheme.primary)
+//                ) {
+//                    //these K classes can be seen as routes and with the composable
+//                    //the applications will start at the one given as the start destination above,
+//                    // and by using the 'navController.navigate' method and giving a route as
+//                    //an argument, its possible to move in between screens
+//                    composable<LoginScreenRoute> {
+//                        LoginScreen(loginAuth,
+//                            navigateToRegister = { navController.navigate(RegisterScreenRoute) },
+//                            navigateToHomeScreen = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<RegisterScreenRoute>{
+//                        RegisterScreen(loginAuth,
+//                            navigateToLogin = { navController.navigate(LoginScreenRoute) })
+//                    }
+//                    composable<HomeScreenRoute> {
+//                        HomePageScreen("jim")
+//                    }
+//
+//                }
             }
         }
     }
