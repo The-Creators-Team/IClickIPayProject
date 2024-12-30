@@ -1,6 +1,7 @@
 package com.example.iclickipay.presentation.chat.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -13,7 +14,7 @@ import com.example.iclickipay.R
 @Composable
 fun UserImage(userImage: Int) {
     Image(
-        modifier = Modifier.size(60.dp),
+        modifier = Modifier.size(60.dp).padding(start = 8.dp),
         painter = painterResource(id = userImage),
         contentDescription = "")
 }

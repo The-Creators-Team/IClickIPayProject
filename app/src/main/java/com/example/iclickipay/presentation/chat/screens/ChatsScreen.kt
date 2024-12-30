@@ -1,5 +1,6 @@
 package com.example.iclickipay.presentation.chat.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,16 +15,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.iclickipay.data.chatList
 import com.example.iclickipay.domain.ChatListDataObject
+import com.example.iclickipay.presentation.chat.components.UserDetails
 import com.example.iclickipay.presentation.chat.components.UserImage
 
 @Composable
 fun ChatsScreen(){
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(16.dp)
+        modifier = Modifier.fillMaxSize().padding(16.dp).background(Color.LightGray)
     ){
 
 //        item {
@@ -39,9 +42,10 @@ fun ChatsScreen(){
 @Composable
 fun ChatListItem(chatData: ChatListDataObject){
     Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp).background(Color.White)
     ){
         UserImage(chatData.userImage)
+        UserDetails(chatData)
     }
 }
 

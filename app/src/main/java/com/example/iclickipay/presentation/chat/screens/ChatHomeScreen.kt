@@ -1,5 +1,6 @@
 package com.example.iclickipay.presentation.chat.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
@@ -7,6 +8,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.iclickipay.data.INITIAL_SCREEN_INDEX
 import com.example.iclickipay.data.tabs
@@ -26,7 +28,7 @@ fun HomeScreen(){
             })
 
         HorizontalPager(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().background(Color.LightGray),
             state = pagerState
         ) { page ->
             when(page){
