@@ -26,7 +26,8 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun HomePageScreen(
     @PreviewParameter(UserListIndividualParameterProvider::class) user: String,
-    navigateToBabySitter: () -> Unit
+    navigateToBabySitter: () -> Unit,
+    navigateToHouseCleaning: () -> Unit
 ) {
     val context = LocalContext.current
     val items = List(10) { "Button ${it + 1}" }
@@ -64,6 +65,13 @@ fun HomePageScreen(
         ) {
             Text(text = "Go to Babysitter Section")
         }
+        Button(
+            onClick = navigateToHouseCleaning,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(text = "Go to Housecleaing Section")
+        }
+
     }
 }
 

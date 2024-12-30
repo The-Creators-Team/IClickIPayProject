@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.iclickipay.presentation.babysitter.BabySitterNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
+import com.example.iclickipay.presentation.housecleaning.HouseCleaningNavigation
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
 import com.example.iclickipay.presentation.register.RegisterScreen
@@ -47,11 +48,15 @@ class MainActivity : ComponentActivity() {
                     composable<HomeScreenRoute> {
                         HomePageScreen(
                             user = "jim",
-                            navigateToBabySitter = { navController.navigate(BabySitterScreenRoute) }
+                            navigateToBabySitter = { navController.navigate(BabySitterScreenRoute) },
+                            navigateToHouseCleaning = {navController.navigate(HouseCleaningScreenRoute)}
                         )
                     }
                     composable<BabySitterScreenRoute> {
                         BabySitterNavigation()
+                    }
+                    composable<HouseCleaningScreenRoute>{
+                        HouseCleaningNavigation()
                     }
                 }
             }
@@ -75,3 +80,6 @@ object HomeScreenRoute
 
 @Serializable
 object BabySitterScreenRoute
+
+@Serializable
+object HouseCleaningScreenRoute
