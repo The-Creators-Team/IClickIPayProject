@@ -23,7 +23,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.iclickipay.R
-import com.example.iclickipay.ui.theme.btnColor
 
 
 @Preview
@@ -79,7 +78,6 @@ fun EatActivity() {
                         .size(width = 280.dp,height = 60.dp)
                         .align(Alignment.CenterHorizontally),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(btnColor.value),
                         contentColor = Color.White
                     ),
                     shape = RoundedCornerShape(20),) {

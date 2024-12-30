@@ -16,7 +16,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.iclickipay.R
 import com.example.iclickipay.presentation.reuseable.CustomButton
-import com.example.iclickipay.ui.theme.divider
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -126,8 +125,7 @@ fun YourArrivalScreen(navController: NavController) {
                         Divider(
                             modifier = Modifier
                                 .weight(1f)
-                                .height(1.dp),
-                            color = Color(divider.value)
+                                .height(1.dp)
                         )
                     }
                     Row(

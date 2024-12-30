@@ -27,7 +27,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.iclickipay.R
 import com.example.iclickipay.presentation.reuseable.CustomButton
-import com.example.iclickipay.ui.theme.divider
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter

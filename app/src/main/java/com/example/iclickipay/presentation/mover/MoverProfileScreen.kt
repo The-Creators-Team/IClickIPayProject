@@ -23,7 +23,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.iclickipay.R
 import com.example.iclickipay.presentation.reuseable.CustomButton
-import com.example.iclickipay.ui.theme.btnClr
 
 @Composable
 fun MoverProfileScreen(navController: NavController) {
@@ -37,7 +36,6 @@ fun MoverProfileScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .background(btnClr)
         ) {
             // Map would be implemented here using Google Maps Compose
             IconButton(
