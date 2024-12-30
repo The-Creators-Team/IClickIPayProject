@@ -66,4 +66,12 @@ dependencies {
     //navigation with compose - Jonathan
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+    //Map Dependencies
+
+    implementation (libs.play.services.maps)
+    implementation (libs.maps.compose)
+    implementation (libs.places)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
 }
