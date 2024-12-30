@@ -34,9 +34,9 @@ class MainActivity : ComponentActivity() {
                 val loginAuth by remember { mutableStateOf(Firebase.auth) }
                 NavHost(
                     navController = navController,
-                    startDestination = LoginScreenRoute
+                    startDestination = "login"
                 ) {
-                    composable<LoginScreenRoute> {
+                    composable("login") {
                         LoginScreen(
                             loginAuth,
                             navigateToRegister = { navController.navigate(RegisterScreenRoute) },
@@ -53,7 +53,8 @@ class MainActivity : ComponentActivity() {
                         HomePageScreen(
                             user = "jim",
                             navigateToBabySitter = { navController.navigate(BabySitterScreenRoute) },
-                            navigateToHouseCleaning = {navController.navigate(HouseCleaningScreenRoute)}
+                            navigateToHouseCleaning = {navController.navigate(HouseCleaningScreenRoute)},
+                            navigateToPet = {navController.navigate(PetNavigationRoute)}
                         )
                     }
                     composable<BabySitterScreenRoute> {

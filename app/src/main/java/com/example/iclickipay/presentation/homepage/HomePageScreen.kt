@@ -26,10 +26,18 @@ import androidx.compose.ui.unit.sp
 fun HomePageScreen(
     @PreviewParameter(UserListIndividualParameterProvider::class) user: String,
     navigateToBabySitter: () -> Unit,
-    navigateToHouseCleaning: () -> Unit
+    navigateToHouseCleaning: () -> Unit,
+    navigateToPet: () -> Unit
 ) {
     val context = LocalContext.current
-    val items = List(10) { "Button ${it + 1}" }
+    //val items = List(10) { "Button ${it + 1}" }
+
+    val listOfSubApps = listOf(
+
+        subApp("Baby Sitter", navigateToBabySitter),
+        subApp("House Cleaning", navigateToHouseCleaning),
+        subApp("Pet Care", navigateToPet)
+    )
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -42,7 +50,7 @@ fun HomePageScreen(
             style = TextStyle(fontSize = 40.sp)
         )
         val pagerState = rememberPagerState(initialPage = 0) {
-            items.size
+            listOfSubApps.size
         }
         HorizontalPager(
             state = pagerState,
@@ -52,23 +60,9 @@ fun HomePageScreen(
             contentPadding = PaddingValues(20.dp)
         ) { page ->
             CarouselButton(
-                item = items[page],
-                onClick = {
-                    Toast.makeText(context, "Clicked on ${items[page]}", Toast.LENGTH_SHORT).show()
-                }
+                item = listOfSubApps[page].buttonText,
+                onClick = listOfSubApps[page].navFunction
             )
-        }
-        Button(
-            onClick = navigateToBabySitter,
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(text = "Go to Babysitter Section")
-        }
-        Button(
-            onClick = navigateToHouseCleaning,
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(text = "Go to Housecleaing Section")
         }
 
     }
@@ -79,3 +73,7 @@ class UserListIndividualParameterProvider : PreviewParameterProvider<String> {
         "Jim"
     )
 }
+
+data class subApp(val buttonText: String, val navFunction: () -> Unit)
+
+
