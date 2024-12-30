@@ -9,14 +9,14 @@ import kotlinx.serialization.Serializable
 
 @Composable
 fun PetNavigation() {
-    val petNavController = rememberNavController()
+    val navController = rememberNavController()
     NavHost(
-        navController = petNavController,
+        navController = navController,
         startDestination = PetListRoute
     ) {
         composable<PetListRoute> {
             PetListScreen(dogs,
-                navigateToNewPet = { petNavController.navigate(NewPetRoute) })
+                navigateToNewPet = { navController.navigate(NewPetRoute) })
         }
         composable<NewPetRoute> {
             NewPetScreen()

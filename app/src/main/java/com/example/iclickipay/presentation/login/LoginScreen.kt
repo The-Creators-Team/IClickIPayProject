@@ -58,7 +58,6 @@ fun LoginScreen(
         )*/
         Surface(
             shape = MaterialTheme.shapes.medium,
-            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.border(
                 5.dp,
                 MaterialTheme.colorScheme.secondary,
@@ -122,10 +121,11 @@ fun LoginScreen(
                             emailText,
                             passwordText,
                             auth,
-                            context
-                            //navigateToHomeScreen
+                            context,
+                            navigateToHomeScreen
                         )
                     },
+                    shape = MaterialTheme.shapes.medium,
                     enabled = enabledState,
                     modifier = Modifier
                         .padding(20.dp)
@@ -159,14 +159,15 @@ private fun verifyFirebaseUser(
     password: String,
     auth: FirebaseAuth,
     context: Context,
-    //navigateToHomeScreen: () -> Unit
+    navigateToHomeScreen: () -> Unit
 ) {
     auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
         if (task.isSuccessful) {
             val user = auth.currentUser
             Toast.makeText(context, "Good Login by ${user?.email}", Toast.LENGTH_LONG).show()
             //navigate to home screen
-            //navigateToHomeScreen()
+            navigateToHomeScreen()
+            println("SUCCESSFUL LOGIN")
 
         } else {
             Toast.makeText(context, "Bad Login: ${task.exception?.message}", Toast.LENGTH_LONG)
