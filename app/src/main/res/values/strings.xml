@@ -4,4 +4,5 @@
     <string name="password_text_field">password</string>
     <string name="login_button">login</string>
     <string name="register_button">register</string>
+    <string name="chat_title">Chat</string>
 </resources>
