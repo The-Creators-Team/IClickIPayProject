@@ -53,6 +53,9 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,4 +69,13 @@ dependencies {
     //navigation with compose - Jonathan
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+
+
+    //Map Dependencies - Sebastian
+
+    implementation (libs.play.services.maps)
+    implementation (libs.maps.compose)
+    implementation (libs.places)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
 }
