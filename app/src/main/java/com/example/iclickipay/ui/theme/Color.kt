@@ -14,4 +14,3 @@ val AppOrange = Color(0xFFF4761D)
 val AppBlue = Color(0xFF143FC1)
 val AppGreen = Color(0xFF1DC16E)
 val AppOrangeLight = Color(0xFFFFE6D7)
-

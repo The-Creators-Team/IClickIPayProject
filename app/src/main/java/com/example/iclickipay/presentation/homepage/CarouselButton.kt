@@ -24,18 +24,31 @@ import com.example.iclickipay.R
 @Composable
 fun CarouselButton (item: String, onClick: () -> Unit) {
     Card(
-    modifier = Modifier
-        .padding(8.dp)
-        .fillMaxWidth()
-        .height(100.dp)
-    ) {
-        Button(
-            onClick = onClick,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
-        ) {
-            Text(text = item)
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxWidth()
+            .height(400.dp)
+    )
+    {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier.fillMaxSize()
+        )
+        {
+            Image(
+                painter = painterResource(id = R.drawable.ic_gear),
+                contentDescription = null,
+                modifier = Modifier.size(200.dp)
+            )
+            Button(
+                onClick = onClick,
+                modifier = Modifier
+                    .wrapContentSize()
+                    .padding(16.dp)
+            ) {
+                Text(text = item)
+            }
         }
     }
 }
@@ -64,7 +77,6 @@ fun CarouselButtonPreview () {
             Button(
                 onClick = { },
                 modifier = Modifier
-                    /*  .fillMaxSize()*/
                     .wrapContentSize()
                     .padding(16.dp)
             ) {
