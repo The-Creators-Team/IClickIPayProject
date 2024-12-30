@@ -1,5 +1,7 @@
 package com.example.iclickipay.presentation.mover
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.navigation.NavController
 
@@ -22,7 +24,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.iclickipay.R
 
 
@@ -107,5 +111,13 @@ fun MoverHomeScreen(navController: NavController){
     }
 }
 
+
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview
+@Composable
+fun MoverHomeScreenPreview() {
+    val navController = rememberNavController() // Use rememberNavController() for previews
+    MoverHomeScreen(navController = navController)
+}
 
 
