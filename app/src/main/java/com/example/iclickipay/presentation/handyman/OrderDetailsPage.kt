@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.iclickipay.R
 
@@ -193,4 +194,10 @@ fun SummaryRow(label: String, amount: String, isTotal: Boolean = false) {
         Text(text = label, style = if (isTotal) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyLarge)
         Text(text = amount, style = if (isTotal) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyLarge)
     }
+}
+
+@Preview
+@Composable
+fun OrderDetailsPagePreview() {
+    OrderDetailsPage()
 }
