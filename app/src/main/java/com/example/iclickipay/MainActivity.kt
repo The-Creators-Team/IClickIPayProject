@@ -12,17 +12,13 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.iclickipay.presentation.babysitter.BabySitterNavigation
+import com.example.iclickipay.presentation.homepage.HomePageScreen
+import com.example.iclickipay.presentation.housecleaning.HouseCleaningNavigation
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
-import com.example.iclickipay.presentation.mover.ChooseDate
-import com.example.iclickipay.presentation.mover.ChooseDateTime
-import com.example.iclickipay.presentation.mover.MoverHomeScreen
-import com.example.iclickipay.presentation.mover.MoverProfileScreen
-import com.example.iclickipay.presentation.mover.MoverScreen
-import com.example.iclickipay.presentation.mover.MoversListScreen
-import com.example.iclickipay.presentation.mover.PlaceOrderScreen
-import com.example.iclickipay.presentation.mover.YourArrivalScreen
-import com.example.iclickipay.presentation.mover.YourStartScreen
+import com.example.iclickipay.presentation.pet.PetNavigation
+import com.example.iclickipay.presentation.register.RegisterScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.serialization.Serializable
@@ -38,45 +34,36 @@ class MainActivity : ComponentActivity() {
                 val loginAuth by remember { mutableStateOf(Firebase.auth) }
                 NavHost(
                     navController = navController,
-                    //startDestination = LoginScreenRoute
-                    startDestination = "MovieScreen"
-                    //modifier = Modifier.background(MaterialTheme.colorScheme.primary)
+                    startDestination = LoginScreenRoute
                 ) {
-                    //these K classes can be seen as routes and with the composable
-                    //the applications will start at the one given as the start destination above,
-                    // and by using the 'navController.navigate' method and giving a route as
-                    //an argument, its possible to move in between screens
                     composable<LoginScreenRoute> {
-                        //LoginScreen(loginAuth)
-                        LoginScreen(loginAuth)
-
+                        LoginScreen(
+                            loginAuth,
+                            navigateToRegister = { navController.navigate(RegisterScreenRoute) },
+                            navigateToHomeScreen = { navController.navigate(HomeScreenRoute) }
+                        )
                     }
-                    composable("MovieScreen") {
-                        MoverScreen(navController = navController) // Mover screen composable
+                    composable<RegisterScreenRoute> {
+                        RegisterScreen(
+                            loginAuth,
+                            navigateToLogin = { navController.navigate(LoginScreenRoute) }
+                        )
                     }
-                    composable("YourStart") {
-                        YourStartScreen(navController = navController) // YourStart screen composable
+                    composable<HomeScreenRoute> {
+                        HomePageScreen(
+                            user = "jim",
+                            navigateToBabySitter = { navController.navigate(BabySitterScreenRoute) },
+                            navigateToHouseCleaning = {navController.navigate(HouseCleaningScreenRoute)}
+                        )
                     }
-                    composable("YourArrival") {
-                        YourArrivalScreen(navController = navController)
+                    composable<BabySitterScreenRoute> {
+                        BabySitterNavigation()
                     }
-                    composable("ChooseDate") {
-                        ChooseDate(navController = navController)
+                    composable<HouseCleaningScreenRoute>{
+                        HouseCleaningNavigation()
                     }
-                    composable("ChooseDateTime") {
-                        ChooseDateTime(navController = navController)
-                    }
-                    composable("MoverHomeScreen") {
-                        MoverHomeScreen(navController = navController)
-                    }
-                    composable("MoverListScreen") {
-                    MoversListScreen(navController = navController)
-                    }
-                    composable("MoverProfileScreen") {
-                        MoverProfileScreen(navController = navController)
-                    }
-                    composable("PlaceOrderScreen") {
-                        PlaceOrderScreen( navController = navController)
+                    composable<PetNavigationRoute> {
+                        PetNavigation()
                     }
                 }
             }
@@ -91,3 +78,18 @@ class MainActivity : ComponentActivity() {
 //API call)
 @Serializable
 object LoginScreenRoute
+
+@Serializable
+object RegisterScreenRoute
+
+@Serializable
+object HomeScreenRoute
+
+@Serializable
+object BabySitterScreenRoute
+
+@Serializable
+object HouseCleaningScreenRoute
+
+@Serializable
+object PetNavigationRoute
