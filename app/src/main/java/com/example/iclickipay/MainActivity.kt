@@ -12,12 +12,9 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.iclickipay.presentation.babysitter.BabySitterNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
-import com.example.iclickipay.presentation.housecleaning.HouseCleaningNavigation
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
-import com.example.iclickipay.presentation.pet.PetNavigation
 import com.example.iclickipay.presentation.register.RegisterScreen
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -58,13 +55,10 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable<BabySitterScreenRoute> {
-                        BabySitterNavigation()
                     }
                     composable<HouseCleaningScreenRoute>{
-                        HouseCleaningNavigation()
                     }
                     composable<PetNavigationRoute> {
-                        PetNavigation()
                     }
                 }
             }
