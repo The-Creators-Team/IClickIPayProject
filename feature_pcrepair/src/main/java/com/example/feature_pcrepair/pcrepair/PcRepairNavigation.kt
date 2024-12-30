@@ -1,10 +1,12 @@
-package com.example.iclickipay.presentation.pcrepair
+package com.example.feature_pcrepair.pcrepair
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
 import androidx.navigation.compose.rememberNavController
+import com.example.feature_pcrepair.pcrepair.PcRepairScreens
+//import com.example.iclickipay.presentation.pcrepair.PcRepairScreens
 
 @Composable
 fun PcRepairNavigation(){

@@ -1,8 +1,7 @@
-package com.example.iclickipay.presentation.pcrepair
+package com.example.feature_pcrepair.pcrepair
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -35,8 +33,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.iclickipay.R
-import com.example.iclickipay.presentation.reuseable.CustomButton
+import com.example.iclickipay.R.*
+
 import com.example.iclickipay.ui.theme.AppOrange
 
 
@@ -90,7 +88,7 @@ fun PcRepairHomeScreen(){
             ) {
                 // Image Section
                 Image(
-                    painter = painterResource(id = R.drawable.pcrepairlogo), // Replace with your image resource
+                    painter = painterResource(id = drawable.pcrepairlogo), // Replace with your image resource
                     contentDescription = "Mover Illustration",
                     modifier = Modifier
                         .size(300.dp)
@@ -131,7 +129,7 @@ fun PcRepairHomeScreen(){
 
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PcRepairHomeScreenPreview(){
     PcRepairHomeScreen()

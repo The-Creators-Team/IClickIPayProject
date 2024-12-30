@@ -1,4 +1,4 @@
-package com.example.iclickipay.presentation.pcrepair
+package com.example.feature_pcrepair.pcrepair
 
 sealed class PcRepairScreens(val route: String){
     object PcRepairHomeScreen: PcRepairScreens("pc_repair_home_screen")
