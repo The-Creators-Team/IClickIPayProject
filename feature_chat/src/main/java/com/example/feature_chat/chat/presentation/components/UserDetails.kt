@@ -1,4 +1,4 @@
-package com.example.iclickipay.presentation.chat.components
+package com.example.feature_chat.chat.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,11 +12,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.iclickipay.R
-import com.example.iclickipay.presentation.chat.domain.ChatListDataObject
-import com.example.iclickipay.presentation.chat.domain.Message
-import com.example.iclickipay.presentation.chat.domain.MessageDeliveryStatus
-import com.example.iclickipay.presentation.chat.domain.MessageType
+import com.example.feature_chat.R
+import com.example.feature_chat.chat.domain.ChatListDataObject
+import com.example.feature_chat.chat.domain.Message
+import com.example.feature_chat.chat.domain.MessageDeliveryStatus
+import com.example.feature_chat.chat.domain.MessageType
 
 @Composable
 fun UserDetails(chatData: ChatListDataObject){
@@ -33,21 +33,36 @@ fun UserDetails(chatData: ChatListDataObject){
 
 @Composable
 fun MessageHeader(chatData: ChatListDataObject) {
-    Row{
-        TextComponent(value = chatData.userName,
+    Row (
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        TextComponent(
+            modifier = Modifier.weight(1f),
+            value = chatData.userName,
             fontSize = 18.sp,
             color = Color.Black
         )
-        TextComponent(value = chatData.message.timeStamp,
+        TextComponent(
+            value = chatData.message.timeStamp,
             fontSize = 16.sp,
-            color = Color.Gray
+            color = Color.Gray,
+            modifier = null
         )
     }
 }
 
 @Composable
 fun MessageSubSection(chatData: ChatListDataObject) {
-
+    Row (
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        TextComponent(
+            modifier = Modifier.weight(1f),
+            value = chatData.message.content,
+            fontSize = 18.sp,
+            color = Color.Black
+        )
+    }
 }
 
 @Preview(showBackground = true)

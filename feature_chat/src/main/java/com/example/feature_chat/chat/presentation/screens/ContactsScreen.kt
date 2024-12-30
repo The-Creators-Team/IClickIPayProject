@@ -1,4 +1,4 @@
-package com.example.feature_chat.chat.screens
+package com.example.feature_chat.chat.presentation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,18 +10,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun CallsScreen(){
+fun ContactsScreen(){
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(text = "Calls Screen")
+        Text(text = "Contacts Screen")
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun CallsScreenPreview(){
-    CallsScreen()
+fun ContactsScreenPreview(){
+    ContactsScreen()
 }

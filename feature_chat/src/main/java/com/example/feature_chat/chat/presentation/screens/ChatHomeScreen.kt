@@ -1,4 +1,4 @@
-package com.example.feature_chat.chat.screens
+package com.example.feature_chat.chat.presentation.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -10,17 +10,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-<<<<<<< HEAD:app/src/main/java/com/example/iclickipay/presentation/chat/screens/ChatHomeScreen.kt
-import com.example.iclickipay.presentation.chat.data.INITIAL_SCREEN_INDEX
-import com.example.iclickipay.presentation.chat.data.tabs
-import com.example.iclickipay.presentation.chat.components.AppBarComponent
-import com.example.iclickipay.presentation.chat.components.TabBarComponent
-=======
-import com.example.iclickipay.data.INITIAL_SCREEN_INDEX
-import com.example.iclickipay.data.tabs
-import com.example.feature_chat.chat.components.AppBarComponent
-import com.example.feature_chat.chat.components.TabBarComponent
->>>>>>> 5c7be8ee9ddd97b7b48ced80eba26b1c8ea04c14:feature_chat/src/main/java/com/example/feature_chat/chat/screens/ChatHomeScreen.kt
+import com.example.feature_chat.chat.data.INITIAL_SCREEN_INDEX
+import com.example.feature_chat.chat.data.tabs
+import com.example.feature_chat.chat.presentation.components.AppBarComponent
+import com.example.feature_chat.chat.presentation.components.TabBarComponent
 import kotlinx.coroutines.launch
 
 @Composable
