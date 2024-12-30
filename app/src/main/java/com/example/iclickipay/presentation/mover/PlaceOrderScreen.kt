@@ -23,7 +23,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.iclickipay.R
 import com.example.iclickipay.presentation.reuseable.CustomButton
-import com.example.iclickipay.ui.theme.btnClr
 
 @Composable
 fun PlaceOrderScreen(navController: NavController) {
@@ -38,7 +37,6 @@ fun PlaceOrderScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(btnClr)
                 .padding(16.dp)
         ) {
             // Top Bar
@@ -151,7 +149,6 @@ fun PlaceOrderScreen(navController: NavController) {
                     )
                     Text(
                         text = "Remove",
-                        color = btnClr,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -176,7 +173,6 @@ fun PlaceOrderScreen(navController: NavController) {
                 Text("Subtotal")
                 Text(
                     text = "$ 15.00",
-                    color = btnClr
                 )
             }
 
@@ -211,7 +207,6 @@ fun PlaceOrderScreen(navController: NavController) {
                 Text(
                     text = "$ 15.00",
                     style = MaterialTheme.typography.titleLarge,
-                    color = btnClr
                 )
             }
 

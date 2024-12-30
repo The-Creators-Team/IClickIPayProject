@@ -23,7 +23,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.iclickipay.ui.theme.btnClr
 
 @Composable
 fun MoverCard(babysitter: Babysitter,navController: NavController) {
@@ -67,7 +66,7 @@ fun MoverCard(babysitter: Babysitter,navController: NavController) {
             ) {
                 // Rating
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(imageVector = Icons.Default.Star, contentDescription = "Rating", tint = btnClr)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Rating")
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(text = "${babysitter.rating}")
                 }
