@@ -58,7 +58,6 @@ fun LoginScreen(
         )*/
         Surface(
             shape = MaterialTheme.shapes.medium,
-            color = MaterialTheme.colorScheme.surfaceVariant,
             modifier = Modifier.border(
                 5.dp,
                 MaterialTheme.colorScheme.secondary,
@@ -118,16 +117,17 @@ fun LoginScreen(
                 }
                 Button(
                     onClick = {
-     /*                   verifyFirebaseUser(
+                            verifyFirebaseUser(
                             emailText,
                             passwordText,
                             auth,
                             context,
                             navigateToHomeScreen
-                        )*/
 
                         navigateToHomeScreen()
+                        )
                     },
+                    shape = MaterialTheme.shapes.medium,
                     enabled = enabledState,
                     modifier = Modifier
                         .padding(20.dp)
