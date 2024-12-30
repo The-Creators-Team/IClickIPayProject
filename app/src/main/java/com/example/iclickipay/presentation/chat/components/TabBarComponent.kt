@@ -15,11 +15,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.iclickipay.data.tabs
-import com.example.iclickipay.ui.theme.Orange
 
 @Composable
 fun TabBarComponent(initialIndex: Int = 0,
@@ -36,7 +34,6 @@ fun TabBarComponent(initialIndex: Int = 0,
         indicator = {tabPosition ->
             TabRowDefaults.Indicator(
                 modifier = Modifier.tabIndicatorOffset(tabPosition[selectedIndex]),
-                color = Color(Orange.value),
                 height = 4.dp)}){
         tabs.forEachIndexed {index,tabData ->
             Tab(selected = index == selectedIndex,
