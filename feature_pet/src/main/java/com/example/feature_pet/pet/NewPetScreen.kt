@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -29,11 +30,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.iclickipay.R
+import com.example.feature_pet.R
 
 @Composable
-@Preview(showBackground = true)
-fun NewPetScreen() {
+fun NewPetScreen(
+    navigateToPetList: ()-> Unit
+) {
     Column(
 
         verticalArrangement = Arrangement.Top,
@@ -65,11 +67,11 @@ fun NewPetScreen() {
         )
         DividerWithText("Breed")
         val breeds = listOf(
-            "Option 1",
-            "Option 2",
-            "Option 3",
-            "Option 4",
-            "Option 5"
+            "Mix",
+            "Chihuahua",
+            "Bulldog",
+            "German Shepard",
+            "Pug"
         )
 
         // Track the selected radio button
@@ -86,7 +88,6 @@ fun NewPetScreen() {
                     Text(option)
                 }
             }
-            Text("Selected: ${selectedBreed.value}")
 
             DividerWithText("Sex")
 
@@ -131,6 +132,37 @@ fun NewPetScreen() {
         )
 
         DividerWithText("Size")
+
+        val selectedSize = remember { mutableStateOf("Small") }
+        Row(verticalAlignment =Alignment.CenterVertically
+        ){
+            RadioButton(
+                selected = selectedSize.value=="Small",
+                onClick = { selectedSize.value = "Small" }
+            )
+            Text("Small")
+            RadioButton(
+                selected = selectedSize.value=="Medium",
+                onClick = { selectedSize.value = "Medium" }
+            )
+            Text("Medium")
+            RadioButton(
+                selected = selectedSize.value=="Large",
+                onClick = { selectedSize.value = "Large" }
+            )
+            Text("Large")
+        }
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+        )
+        Button(
+            onClick = {
+                navigateToPetList()
+            }
+        ) {
+            Text(text = "Back to Pet List")
+        }
 
 
     }
