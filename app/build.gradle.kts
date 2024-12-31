@@ -74,4 +74,27 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(project(":feature_mover"))
 
+
+
+    //Map Dependencies - Sebastian
+
+    implementation (libs.play.services.maps)
+    implementation (libs.maps.compose)
+    implementation (libs.places)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation(project(":feature_babysitter"))
+//    implementation(project(":feature_bank"))
+//    implementation(project(":feature_chat"))
+//    implementation(project(":feature_delivery"))
+//    implementation(project(":feature_eat"))
+//    implementation(project(":feature_handyman"))
+//    implementation(project(":feature_hotel"))
+    implementation(project(":feature_housecleaning"))
+//    implementation(project(":feature_laundry"))
+//    implementation(project(":feature_learn"))
+//    implementation(project(":feature_mechanic"))
+//    implementation(project(":feature_mover"))
+//    implementation(project(":feature_pcrepair"))
+//    implementation(project(":feature_pet"))
 }
