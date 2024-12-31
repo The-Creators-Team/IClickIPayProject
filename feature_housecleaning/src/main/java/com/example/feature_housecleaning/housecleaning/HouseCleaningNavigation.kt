@@ -38,6 +38,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.feature_babysitter.babysitter.BabySitterScreen
+import com.example.feature_babysitter.babysitter.Babysitter
+import com.example.feature_babysitter.babysitter.BabysitterCard
+import com.example.feature_babysitter.babysitter.Child
+import com.example.feature_babysitter.babysitter.ParcelSlider
+import com.example.feature_babysitter.babysitter.babysitters
 import com.example.feature_housecleaning.R
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -58,8 +64,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-
-
 
 
 @Composable

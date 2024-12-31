@@ -9,4 +9,5 @@
     <string name="register_password_text_field">new password</string>
     <string name="new_dog_text_field">Name of dog</string>
     <string name="new_dog_age_field">Age of dog</string>
+    <string name="edit_location">Edit location</string>
 </resources>

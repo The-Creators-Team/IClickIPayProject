@@ -123,6 +123,8 @@ fun LoginScreen(
                             auth,
                             context,
                             navigateToHomeScreen
+
+                        //navigateToHomeScreen()
                         )
                     },
                     shape = MaterialTheme.shapes.medium,
