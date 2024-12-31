@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    //compose nav plugin
     alias(libs.plugins.kotlin.compose)
 }
 
@@ -47,6 +48,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.firebase.auth)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.appcompat)
@@ -59,6 +61,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Please separate any added dependencies with a blank line and a comment
+    //with your name describing what the import is needed for
+    //navigation with compose - Jonathan
+    implementation(libs.navigation.compose)
+    implementation(libs.kotlinx.serialization.json)
     implementation (libs.play.services.maps)
     implementation (libs.maps.compose)
     implementation (libs.places)

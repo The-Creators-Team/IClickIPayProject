@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.iclickipay.R
 
 
@@ -28,6 +29,7 @@ fun HomePageScreen(
     @PreviewParameter(UserListIndividualParameterProvider::class) user: String,
     navigateToBabySitter: () -> Unit,
     navigateToHouseCleaning: () -> Unit,
+    navController: NavController
     navigateToPet: () -> Unit,
     navigateToLearn: () -> Unit
 ) {
@@ -77,6 +79,27 @@ fun HomePageScreen(
                 onClick = listOfSubApps[page].navFunction,
                 imageId = listOfSubApps[page].imageId
             )
+        }
+        Button(
+            onClick = navigateToBabySitter,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(text = "Go to Babysitter Section")
+        }
+
+        //mover
+        Button(
+            onClick = {navController.navigate("MoverScreen")},
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(text = "Go to Mover Section")
+        }
+
+        Button(
+            onClick = navigateToHouseCleaning,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(text = "Go to Housecleaing Section")
         }
 
     }
