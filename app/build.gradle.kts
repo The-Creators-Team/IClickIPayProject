@@ -57,6 +57,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(project(":feature_chat"))
+    implementation(project(":feature_pet"))
+    implementation(project(":feature_learn"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

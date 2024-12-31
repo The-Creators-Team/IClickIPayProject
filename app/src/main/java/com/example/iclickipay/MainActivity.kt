@@ -12,6 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.feature_learn.LearnNavigation
+import com.example.feature_pet.pet.PetNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
@@ -31,9 +33,9 @@ class MainActivity : ComponentActivity() {
                 val loginAuth by remember { mutableStateOf(Firebase.auth) }
                 NavHost(
                     navController = navController,
-                    startDestination = LoginScreenRoute
+                    startDestination = "login"
                 ) {
-                    composable<LoginScreenRoute> {
+                    composable("login") {
                         LoginScreen(
                             loginAuth,
                             navigateToRegister = { navController.navigate(RegisterScreenRoute) },
@@ -50,7 +52,10 @@ class MainActivity : ComponentActivity() {
                         HomePageScreen(
                             user = "jim",
                             navigateToBabySitter = { navController.navigate(BabySitterScreenRoute) },
-                            navigateToHouseCleaning = {navController.navigate(HouseCleaningScreenRoute)}
+                            navigateToHouseCleaning = {navController.navigate(HouseCleaningScreenRoute)},
+                            navigateToPet = {navController.navigate(PetNavigationRoute)},
+                            navigateToLearn = {navController.navigate(LearnNavigationRoute)}
+
                         )
                     }
                     composable<BabySitterScreenRoute> {
@@ -58,6 +63,14 @@ class MainActivity : ComponentActivity() {
                     composable<HouseCleaningScreenRoute>{
                     }
                     composable<PetNavigationRoute> {
+                        PetNavigation(
+                            onNavigateBack={navController.navigate(HomeScreenRoute)}
+                        )
+                    }
+                    composable<LearnNavigationRoute> {
+                        LearnNavigation(
+                            onNavigateBack={navController.navigate(HomeScreenRoute)}
+                        )
                     }
                 }
             }
@@ -87,3 +100,6 @@ object HouseCleaningScreenRoute
 
 @Serializable
 object PetNavigationRoute
+
+@Serializable
+object LearnNavigationRoute
