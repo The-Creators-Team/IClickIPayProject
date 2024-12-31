@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.iclickipay.R
+import com.example.feature_mover.R
 import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

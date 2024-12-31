@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.iclickipay.ui.theme.AppOrange
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +30,7 @@ fun PcRepairOrderScreen() {
                     }
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = Color(0xFFFFA726)
+                    containerColor = AppOrange
                 ),
                 navigationIcon = {
                     IconButton(onClick = { /* do something */ }) {
@@ -55,7 +56,7 @@ fun PcRepairOrderScreen() {
             Column {
                 Column(
                     modifier = Modifier
-                        .background(Color(0xFFFFA726))
+                        .background(AppOrange)
                         .padding(horizontal = 12.dp)
                 ) {
                     // Handyman Information
@@ -84,7 +85,7 @@ fun PcRepairOrderScreen() {
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color(0xFFFFA726))
+                            .background(AppOrange)
                     ) {
                         Column {
                             // Date and Address
@@ -195,7 +196,7 @@ fun PcRepairOrderScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(75.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFFA726)),
+                    colors = ButtonDefaults.buttonColors(containerColor = AppOrange),
                     shape = RoundedCornerShape(8.dp),
                 ) {
                     Text("Place order", color = Color.White, fontSize = 16.sp)

@@ -105,6 +105,16 @@ fun BabySitterNavigation(
         composable(route = BabySitterScreen.OrderScreen.route) {
             OrderScreen(navController = navController, babysitters[0], children[0])
         }
+
+
+       /* composable(route = "home_page") {
+            HomePageScreen(
+                user = "User", // Replace with actual user data or parameter
+                navigateToBabySitter = { navController.navigate(BabySitterScreen.BabySitterMainScreen.route) },
+                navigateToHouseCleaning = { navController.navigate(HouseCleaningScreen.HouseCleaningMainScreen.route)},
+                navigateToPet = { navController.navigate(PetNavigationRoute)}
+            )
+        }*/
     }
 }
 

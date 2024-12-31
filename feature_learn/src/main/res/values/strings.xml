@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="new_dog_text_field">Dog Name</string>
+    <string name="new_dog_age_field">Dog age</string>
+</resources>
