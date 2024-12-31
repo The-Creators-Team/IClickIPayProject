@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_babysitter.babysitter.BabySitterNavigation
+import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
@@ -51,11 +52,17 @@ class MainActivity : ComponentActivity() {
                         HomePageScreen(
                             user = "jim",
                             navigateToBabySitter = { navController.navigate(BabySitterNavigationRoute) },
-                            navigateToHouseCleaning = { navController.navigate(HouseCleaningScreenRoute) }
+                            navigateToHouseCleaning = { navController.navigate(HouseCleaningNavigationRoute) }
                         )
                     }
                     composable<BabySitterNavigationRoute> {
                         BabySitterNavigation(
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+                        )
+                    }
+                    //Nav Step 2 add navigation to ur module
+                    composable<HouseCleaningNavigationRoute> {
+                        HouseCleaningNavigation(
                             onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
@@ -80,13 +87,8 @@ object RegisterScreenRoute
 object HomeScreenRoute
 
 @Serializable
-object BabySitterScreenRoute
-
-@Serializable
-object HouseCleaningScreenRoute
-
-@Serializable
-object PetNavigationRoute
-
-@Serializable
 object BabySitterNavigationRoute
+
+//Nav Step 1 just name app+NavigationRoute
+@Serializable
+object HouseCleaningNavigationRoute
