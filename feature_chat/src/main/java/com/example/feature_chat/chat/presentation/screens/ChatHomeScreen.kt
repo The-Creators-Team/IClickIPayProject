@@ -1,5 +1,6 @@
-package com.example.feature_chat.chat.screens
+package com.example.feature_chat.chat.presentation.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
@@ -7,11 +8,12 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.iclickipay.data.INITIAL_SCREEN_INDEX
-import com.example.iclickipay.data.tabs
-import com.example.feature_chat.chat.components.AppBarComponent
-import com.example.feature_chat.chat.components.TabBarComponent
+import com.example.feature_chat.chat.data.INITIAL_SCREEN_INDEX
+import com.example.feature_chat.chat.data.tabs
+import com.example.feature_chat.chat.presentation.components.AppBarComponent
+import com.example.feature_chat.chat.presentation.components.TabBarComponent
 import kotlinx.coroutines.launch
 
 @Composable
@@ -21,12 +23,12 @@ fun HomeScreen(){
 
     Column {
         AppBarComponent()
-        TabBarComponent(pagerState = pagerState, initialIndex = INITIAL_SCREEN_INDEX,onTabSelected = {selectedPage ->
+        TabBarComponent(pagerState = pagerState, initialIndex = INITIAL_SCREEN_INDEX,onTabSelected = { selectedPage ->
             scope.launch {pagerState.animateScrollToPage(selectedPage)}
             })
 
         HorizontalPager(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().background(Color.LightGray),
             state = pagerState
         ) { page ->
             when(page){
