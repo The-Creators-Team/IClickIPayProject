@@ -161,7 +161,7 @@ fun MoverProfileScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Take Appointment Button
-           CustomButton("Take Appointment",  onClick = { navController.navigate("ChooseDateTime") })
+           CustomButton("Take Appointment",  onClick = { navController.navigate(MoverScreenRoutes.ChooseDateTimeScreen.route) })
         }
     }
 }

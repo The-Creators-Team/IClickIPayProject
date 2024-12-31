@@ -148,7 +148,7 @@ fun ChooseDateTime(navController: NavController) {
                             selectedTime = time
                             //onTimeSelected(time)
 
-                            navController.navigate("PlaceOrderScreen")
+                            navController.navigate(MoverScreenRoutes.OrderScreen.route)
 
                         }
                         .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -166,7 +166,9 @@ fun ChooseDateTime(navController: NavController) {
                         Text(
                             text = time,
                             style = MaterialTheme.typography.bodyLarge,
-                            color = if (selectedTime == time) Color(0xFF3B414B) else Color(0xFF707275)
+                            color = if (selectedTime == time) Color(0xFF3B414B) else Color(
+                                0xFF707275
+                            )
                         )
                     }
                     Divider(color = Color.LightGray)
@@ -175,10 +177,6 @@ fun ChooseDateTime(navController: NavController) {
         }
     }
 }
-
-
-
-
 
 
 @RequiresApi(Build.VERSION_CODES.O)

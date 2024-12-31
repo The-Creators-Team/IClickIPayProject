@@ -31,7 +31,7 @@ fun HomePageScreen(
     //Nav Step 3 add fun to you module from activity
     navigateToHouseCleaning: () -> Unit,
     navigateToPet: () -> Unit,
-    navigateToLearn: () -> Unit
+    navigateToLearn: () -> Unit,
 //    ,navigateToBank: () -> Unit,
 //    navigateToChat: () -> Unit,
 //    navigateToDelivery: () -> Unit,
@@ -41,7 +41,7 @@ fun HomePageScreen(
 //    navigateToLaundry: () -> Unit,
 //    navigateToLearn: () -> Unit,
 //    navigateToMechanic: () -> Unit,
-//    navigateToMover: () -> Unit,
+    navigateToMover: () -> Unit,
 //    navigateToPcRepair: () -> Unit,
 //    navigateToPet: () -> Unit
 ) {
@@ -62,8 +62,8 @@ fun HomePageScreen(
         subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
         subApp("Laundry", navigateToLaundry, R.drawable.laundry),
         subApp("PC Repair", navigateToPCRepair, R.drawable.pcrepair),
-        subApp("Mechanic", navigateToMechanic, R.drawable.mechanic),
-        subApp("Hire Movers", navigateToMover, R.drawable.mover),*/
+        subApp("Mechanic", navigateToMechanic, R.drawable.mechanic), */
+        subApp("Hire Movers", navigateToMover, R.drawable.mover)
 
     )
 

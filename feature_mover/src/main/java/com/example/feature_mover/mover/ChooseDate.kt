@@ -193,7 +193,7 @@ fun ChooseDate(navController: NavController) {
 
                 CustomButton(
                     text = "Next",
-                    onClick = { navController.navigate("MoverListScreen") })
+                    onClick = { navController.navigate(MoverScreenRoutes.MoverHomeScreen.route) })
 
 
             }

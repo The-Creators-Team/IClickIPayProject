@@ -53,7 +53,7 @@ fun YourArrivalScreen(navController: NavController) {
                 )
         },
         bottomBar = {
-            CustomButton(text = "Let’s go", onClick = { navController.navigate("ChooseDate") })
+            CustomButton(text = "Let’s go", onClick = { navController.navigate(MoverScreenRoutes.ChooseDateScreen.route) })
         },
         content = {
             Column(

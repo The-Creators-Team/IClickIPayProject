@@ -31,7 +31,7 @@ fun MoverCard(babysitter: Babysitter, navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        onClick = { navController.navigate("MoverProfileScreen") },
+        onClick = { navController.navigate(MoverScreenRoutes.MoverProfileScreen.route) },
 
 
     ) {

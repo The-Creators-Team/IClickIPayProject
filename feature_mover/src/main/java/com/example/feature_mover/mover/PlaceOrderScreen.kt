@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_mover.R
+import com.example.feature_mover.ui.theme.btnClr
 import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @Composable
@@ -37,6 +38,7 @@ fun PlaceOrderScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(btnClr)
                 .padding(16.dp)
         ) {
             // Top Bar

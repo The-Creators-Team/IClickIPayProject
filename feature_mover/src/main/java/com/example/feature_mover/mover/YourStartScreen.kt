@@ -45,7 +45,7 @@ fun YourStartScreen(navController: NavController) {
             )
         },
         bottomBar = {
-            CustomButton(text = "Let’s go", onClick = { navController.navigate("YourArrival") })
+            CustomButton(text = "Let’s go", onClick = { navController.navigate(MoverScreenRoutes.YourArrivalScreen.route) })
         },
         content = {
             Column(

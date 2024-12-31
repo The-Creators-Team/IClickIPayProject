@@ -14,8 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_babysitter.babysitter.BabySitterNavigation
 import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
-import com.example.feature_mover.mover.registerMoverRoutes
 import com.example.feature_learn.LearnNavigation
+import com.example.feature_mover.mover.MoverNavigation
 import com.example.feature_pet.pet.PetNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
 //                            navigateToLaundry = { navController.navigate(LaundryNavigationRoute) },
                             navigateToLearn = { navController.navigate(LearnNavigationRoute) },
 //                            navigateToMechanic = { navController.navigate(MechanicNavigationRoute) },
-//                            navigateToMover = { navController.navigate(MoverNavigationRoute) },
+                            navigateToMover = { navController.navigate(MoverNavigationRoute) },
 //                            navigateToPcRepair = { navController.navigate(PcRepairNavigationRoute) },
                          navigateToPet = { navController.navigate(PetNavigationRoute) }
                         )
@@ -138,11 +138,11 @@ class MainActivity : ComponentActivity() {
 //                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
 //                        )
 //                    }
-//                    composable<MoverNavigationRoute> {
-//                        MoverNavigation(
-//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
-//                        )
-//                    }
+                    composable<MoverNavigationRoute> {
+                        MoverNavigation(
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+                        )
+                    }
 //                    composable<PcRepairNavigationRoute> {
 //                        PcRepairNavigation(
 //                            onNavigateBack = { navController.navigate(HomeScreenRoute) }

@@ -43,7 +43,7 @@ fun MoverScreen(navController: NavController) {
             )
         },
         bottomBar = {
-            CustomButton(text = "Let’s go", onClick = { navController.navigate("YourStart") })
+            CustomButton(text = "Let’s go", onClick = { navController.navigate(MoverScreenRoutes.YourStartScreen.route) })
         },
         content = {
             Column(
