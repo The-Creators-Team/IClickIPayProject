@@ -20,13 +20,16 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 
 @Composable
 fun HomePageScreen(
     @PreviewParameter(UserListIndividualParameterProvider::class) user: String,
     navigateToBabySitter: () -> Unit,
-    navigateToHouseCleaning: () -> Unit
+    navigateToHouseCleaning: () -> Unit,
+    navController: NavController
+
 ) {
     val context = LocalContext.current
     val items = List(10) { "Button ${it + 1}" }
@@ -64,6 +67,15 @@ fun HomePageScreen(
         ) {
             Text(text = "Go to Babysitter Section")
         }
+
+        //mover
+        Button(
+            onClick = {navController.navigate("MoverScreen")},
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(text = "Go to Mover Section")
+        }
+
         Button(
             onClick = navigateToHouseCleaning,
             modifier = Modifier.padding(top = 16.dp)

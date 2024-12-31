@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.feature_mover.mover.registerMoverRoutes
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
@@ -40,6 +41,8 @@ class MainActivity : ComponentActivity() {
                             navigateToHomeScreen = { navController.navigate(HomeScreenRoute) }
                         )
                     }
+
+
                     composable<RegisterScreenRoute> {
                         RegisterScreen(
                             loginAuth,
@@ -50,9 +53,16 @@ class MainActivity : ComponentActivity() {
                         HomePageScreen(
                             user = "jim",
                             navigateToBabySitter = { navController.navigate(BabySitterScreenRoute) },
-                            navigateToHouseCleaning = {navController.navigate(HouseCleaningScreenRoute)}
+                            navigateToHouseCleaning = {
+                                navController.navigate(
+                                    HouseCleaningScreenRoute
+                                )
+                            },
+                            navController,
                         )
                     }
+                    registerMoverRoutes(navController)
+
                     composable<BabySitterScreenRoute> {
                     }
                     composable<HouseCleaningScreenRoute>{
