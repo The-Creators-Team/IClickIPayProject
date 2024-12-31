@@ -27,7 +27,8 @@ fun HomePageScreen(
     @PreviewParameter(UserListIndividualParameterProvider::class) user: String,
     navigateToBabySitter: () -> Unit,
     navigateToHouseCleaning: () -> Unit,
-    navigateToPet: () -> Unit
+    navigateToPet: () -> Unit,
+    navigateToLearn: () -> Unit
 ) {
     val context = LocalContext.current
     //val items = List(10) { "Button ${it + 1}" }
@@ -36,7 +37,8 @@ fun HomePageScreen(
 
         subApp("Baby Sitter", navigateToBabySitter),
         subApp("House Cleaning", navigateToHouseCleaning),
-        subApp("Pet Care", navigateToPet)
+        subApp("Pet Care", navigateToPet),
+        subApp("Tutors", navigateToLearn)
     )
 
     Column(

@@ -1,4 +1,4 @@
-package com.example.iclickipay.presentation.pet
+package com.example.feature_learn
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -16,11 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.feature_pet.R
 
 @Composable
-fun PetIntroScreen(
-    navigateToPetList: () -> Unit,
+fun LearnIntroScreen(
+    navigateToTeacherMap: () -> Unit,
     navigateBackToHomeScreen: () -> Unit
 ) {
     Column(
@@ -41,7 +40,7 @@ fun PetIntroScreen(
 
         // Title
         Text(
-            text = "Pet",
+            text = "Learn",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 8.dp),
             color = MaterialTheme.colorScheme.primary,
@@ -50,7 +49,7 @@ fun PetIntroScreen(
 
         // Description
         Text(
-            text = "In the Pets app, you can create a profile for your pet and then look for dog care options in the area",
+            text = "In the Learn app, you can look for tutors in your area for all levels of education and all kinds of subjects",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 24.dp),
             textAlign = TextAlign.Center
@@ -58,7 +57,7 @@ fun PetIntroScreen(
         //Button
         Button(
             onClick = {
-                navigateToPetList()
+                navigateToTeacherMap()
             }
         ) {
             Text(text = "Let's Go")
