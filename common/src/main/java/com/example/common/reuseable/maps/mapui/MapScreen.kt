@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.example.common.R
@@ -36,6 +37,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 
+@Preview
 @Composable
 fun MapScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -44,7 +46,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
     val suggestions = remember { mutableStateOf<List<Pair<String, LatLng>>>(emptyList()) }
     val selectedPosition = remember { mutableStateOf(LatLng(33.7772544, -84.5545472)) }
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(selectedPosition.value, 15f)
+        position = CameraPosition.fromLatLngZoom(selectedPosition.value, 17f)
     }
 
     val route = remember { mutableStateOf<List<LatLng>>(emptyList()) }
@@ -104,6 +106,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                                         15f
                                     )
                                 }
+
                         )
                     }
                 }
@@ -178,8 +181,8 @@ private fun getMarkerSuggestions(query: String): List<Pair<String, LatLng>> {
 private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
     val vectorDrawable = ContextCompat.getDrawable(context, vectorResId) ?: return null
 
-    val width = 80
-    val height = 80
+    val width = 140
+    val height = 140
 
     vectorDrawable.setBounds(0, 0, width, height)
     val bitmap = Bitmap.createBitmap(
