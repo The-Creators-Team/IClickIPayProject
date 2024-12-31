@@ -46,7 +46,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -66,23 +65,27 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.iclickipay.R
-import com.example.iclickipay.presentation.homepage.HomePageScreen
-import com.example.iclickipay.presentation.housecleaning.HouseCleaningScreen
+import com.example.feature_babysitter.R
 
 
 @Composable
-fun BabySitterNavigation() {
+fun BabySitterNavigation(
+    onNavigateBack: () -> Unit
+) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
         startDestination = BabySitterScreen.BabySitterMainScreen.route
     ) {
         composable(route = BabySitterScreen.BabySitterMainScreen.route) {
-            BabySitterMainScreen(navController = navController)
+            BabySitterMainScreen(
+                navController = navController,
+                onNavigateBack = onNavigateBack
+            )
         }
         composable(route = BabySitterScreen.YourChildDetails.route) {
-            YourChildDetailsScreen(navController = navController)
+            YourChildDetailsScreen(navController = navController,
+                onNavigateBack = onNavigateBack)
         }
         composable(route = BabySitterScreen.TakeAPhotoScreen.route) {
             TakeAPhotoScreen(navController = navController)
@@ -103,18 +106,23 @@ fun BabySitterNavigation() {
             OrderScreen(navController = navController, babysitters[0], children[0])
         }
 
-        composable(route = "home_page") {
+
+       /* composable(route = "home_page") {
             HomePageScreen(
                 user = "User", // Replace with actual user data or parameter
                 navigateToBabySitter = { navController.navigate(BabySitterScreen.BabySitterMainScreen.route) },
-                navigateToHouseCleaning = { navController.navigate(HouseCleaningScreen.HouseCleaningMainScreen.route)}
+                navigateToHouseCleaning = { navController.navigate(HouseCleaningScreen.HouseCleaningMainScreen.route)},
+                navigateToPet = { navController.navigate(PetNavigationRoute)}
             )
-        }
+        }*/
     }
 }
 
 @Composable
-fun BabySitterMainScreen(navController: NavController) {
+fun BabySitterMainScreen(
+    navController: NavController,
+    onNavigateBack: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -159,9 +167,8 @@ fun BabySitterMainScreen(navController: NavController) {
 
         // Back to Home Button
         Button(
-            onClick = {
-                navController.navigate("home_page")
-            }
+            onClick = onNavigateBack
+
         ) {
             Text(text = "Back to All Apps")
         }
@@ -169,7 +176,10 @@ fun BabySitterMainScreen(navController: NavController) {
 }
 
 @Composable
-fun YourChildDetailsScreen(navController: NavController) {
+fun YourChildDetailsScreen(
+    navController: NavController,
+    onNavigateBack: () -> Unit
+) {
     var name by remember { mutableStateOf("") }
     var isMale by remember { mutableStateOf(true) }
     var age by remember { mutableStateOf("") }
@@ -236,9 +246,8 @@ fun YourChildDetailsScreen(navController: NavController) {
             Text(text = "Next")
         }
         Button(
-            onClick = {
-                navController.navigate("home_page")
-            }
+            onClick = onNavigateBack
+
         ) {
             Text(text = "Back to All Apps")
         }
@@ -288,7 +297,7 @@ fun TakeAPhotoScreen(navController: NavController) {
 
 data class Child(
     val name: String,
-    var age:Int,
+    var age: Int,
     val imageResId: Int // Drawable resource ID for the image
 )
 
@@ -300,7 +309,7 @@ val children = listOf<Child>(
 )
 
 @Composable
-fun ChildListScreen(navController: NavController, children: List<Child>, ) {
+fun ChildListScreen(navController: NavController, children: List<Child>) {
 
     Column {
         Card(
@@ -333,9 +342,11 @@ fun ChildListScreen(navController: NavController, children: List<Child>, ) {
                 )
             }
         }
-        LazyColumn(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
             items(children) { child ->
                 ChildCard(child = child)
             }
@@ -382,11 +393,11 @@ fun ChildCard(child: Child) {
                 modifier = Modifier.weight(1f)
             )
             // Edit Icon
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { }) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Child")
             }
             // Delete Icon
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { }) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Child")
             }
         }
@@ -395,7 +406,7 @@ fun ChildCard(child: Child) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterScreen(navController: NavController){
+fun FilterScreen(navController: NavController) {
     var selectedOption by remember { mutableStateOf("Recommend") }
     var expanded by remember { mutableStateOf(false) }
 
@@ -467,13 +478,13 @@ data class Babysitter(
     val imageResId: Int,
     val rating: Double,
     val distance: Int,
-    val costPerHour:Int
+    val costPerHour: Int
 )
 
 val babysitters = listOf<Babysitter>(
-    Babysitter("Lee", "Corona",R.drawable.cam_placeholder,3.0,500,15 ),
-    Babysitter("Alice", "Corona",R.drawable.cam_placeholder,3.0,500,15 ),
-    Babysitter("Nina", "Corona",R.drawable.cam_placeholder,3.0,500,15 )
+    Babysitter("Lee", "Corona", R.drawable.cam_placeholder, 3.0, 500, 15),
+    Babysitter("Alice", "Corona", R.drawable.cam_placeholder, 3.0, 500, 15),
+    Babysitter("Nina", "Corona", R.drawable.cam_placeholder, 3.0, 500, 15)
 
 )
 
@@ -568,7 +579,7 @@ fun SearchScreen(navController: NavController) {
 }
 
 @Composable
-fun OrdersPopupMenu(navController: NavController,onDismiss: () -> Unit) {
+fun OrdersPopupMenu(navController: NavController, onDismiss: () -> Unit) {
     Popup(
         alignment = Alignment.Center,
         onDismissRequest = onDismiss
@@ -676,14 +687,22 @@ fun BabysitterCard(babysitter: Babysitter, onClick: () -> Unit) {
             ) {
                 // Rating
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(imageVector = Icons.Default.Star, contentDescription = "Rating", tint = Color.Yellow)
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Rating",
+                        tint = Color.Yellow
+                    )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(text = "${babysitter.rating}")
                 }
 
                 // Distance
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Distance", tint = Color.Gray)
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "Distance",
+                        tint = Color.Gray
+                    )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(text = "${babysitter.distance} m")
                 }
@@ -779,7 +798,11 @@ fun MapScreen(navController: NavController) {
                                 modifier = Modifier
                                     .size(50.dp) // Set the size for the circular image
                                     .clip(CircleShape) // Clip the image into a circle
-                                    .border(1.dp, Color.Gray, CircleShape), // Optional border around the circle
+                                    .border(
+                                        1.dp,
+                                        Color.Gray,
+                                        CircleShape
+                                    ), // Optional border around the circle
                                 contentScale = ContentScale.Crop // Crop the image to fill the circle
                             )
                             Text(text = babysitter.name)
@@ -791,7 +814,7 @@ fun MapScreen(navController: NavController) {
 
                         // Take Appointment Button
                         Button(
-                            onClick = { navController.navigate(BabySitterScreen.OrderScreen.route)},
+                            onClick = { navController.navigate(BabySitterScreen.OrderScreen.route) },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(text = "Take Appointment")

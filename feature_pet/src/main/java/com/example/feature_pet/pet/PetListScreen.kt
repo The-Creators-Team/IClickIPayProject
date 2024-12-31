@@ -17,20 +17,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import com.example.iclickipay.R
+import com.example.feature_pet.R
 
 @Composable
+
 fun PetListScreen(
-    dogs: List<Dog>,
+    @PreviewParameter(SampleDogProvider::class) dogs: List<Dog>,
     navigateToNewPet: () -> Unit
 ) {
 
@@ -40,7 +46,9 @@ fun PetListScreen(
                 .fillMaxWidth()
                 .padding(8.dp)
                 .clickable {
-                }
+                    navigateToNewPet()
+                },
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
             Row(
                 modifier = Modifier
@@ -130,6 +138,18 @@ data class Dog(
     var sex: Sex,
     var age: Int,
     var size: Size,
-    val imageResId: Int // Drawable resource ID for the image
+    val imageResId: Int
 )
+
+class SampleDogProvider : PreviewParameterProvider<List<Dog>> {
+    override val values: Sequence<List<Dog>> = sequenceOf(
+        listOf(
+        Dog("Chris", "Labrador", Sex.FEMALE, 3, Size.MEDIUM, R.drawable.ic_gear),
+        Dog("Rebecca", "Chihuahua", Sex.FEMALE, 4, Size.SMALL, R.drawable.ic_gear),
+        Dog("Jill", "Bulldog", Sex.MALE, 2, Size.SMALL, R.drawable.ic_gear),
+        Dog("Leon", "Pug", Sex.MALE, 1, Size.SMALL, R.drawable.ic_gear),
+    )
+
+    )
+}
 

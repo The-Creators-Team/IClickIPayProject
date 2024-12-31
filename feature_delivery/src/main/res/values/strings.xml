@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">IClickIPay</string>
+    <string name="email_text_field">email</string>
+    <string name="password_text_field">password</string>
+    <string name="login_button">login</string>
+    <string name="register_button">register</string>
+    <string name="chat_title">Chat</string>
+    <string name="register_email_text_field">new email</string>
+    <string name="register_password_text_field">new password</string>
+    <string name="new_dog_text_field">Name of dog</string>
+    <string name="new_dog_age_field">Age of dog</string>
+</resources>

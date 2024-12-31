@@ -3,6 +3,7 @@
 package com.example.feature_handyman.handyman
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,185 +13,230 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.iclickipay.R
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.feature_handyman.R
+import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @Composable
-fun OrderDetailsPage() {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = "Filters") },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.White
-                ),
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Filled.Home,
-                            contentDescription = "Home"
-                        )
-                    }
+fun PlaceOrderScreen(navController: NavController) {
+
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+    ) {
+        // Orange Header Section
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            // Top Bar
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { /* Handle back navigation */ }) {
+                    Icon(
+                        Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.White
+                    )
                 }
+                Text(
+                    text = "Order",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color.White
+                )
+                TextButton(onClick = { /* Handle cancel */ }) {
+                    Text(
+                        text = "Cancel",
+                        color = Color.White
+                    )
+                }
+            }
+
+            // Mover Info
+            Row(
+                modifier = Modifier.padding(top = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.moverlogo),
+                    contentDescription = "Mover Image",
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+                Column(
+                    modifier = Modifier.padding(start = 12.dp)
+                ) {
+                    Text(
+                        text = "Mover",
+                        color = Color.White.copy(alpha = 0.8f),
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                    Text(
+                        text = "Box Entreprise",
+                        color = Color.White,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+            }
+
+            // Date and Location
+            Column(
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Text(
+                    text = "Date",
+                    color = Color.White.copy(alpha = 0.8f),
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "20 March, Thu - 10h",
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        Icons.Default.LocationOn,
+                        contentDescription = "Location",
+                        tint = Color.White,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Text(
+                        text = "28 Broad Street\nJohannesburg",
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                }
+            }
+        }
+
+        // Order Details
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            // Mover Quote
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "Mover quote",
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Text(
+                        text = "Remove",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+                Text(
+                    text = "$ 15",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+
+            Divider(
+                modifier = Modifier.padding(vertical = 16.dp),
+                color = Color.LightGray
             )
-        },
-        bottomBar = {
-            Button(
-                onClick = { /*TODO*/ },
+
+            // Subtotal
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = "Apply")
+                Text("Subtotal")
+                Text(
+                    text = "$ 15.00",
+                )
             }
-        },
-        content = { padding ->
-            Column(
+
+            // Delivery Fees
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Delivery-man Section
-                DeliveryManSection()
-                HorizontalDivider(
-                    modifier = Modifier.padding(vertical = 8.dp),
+                Text("Delivery fees")
+                Text(
+                    text = "$ 0.00",
                     color = Color.Gray
                 )
-                // Date Section
-                DateSection()
-                HorizontalDivider(
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    color = Color.Gray
-                )
-                // Delivery Details Section
-                DeliveryDetailsSection()
-                HorizontalDivider(
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    color = Color.Gray
-                )
-                // Order Summary Section
-                OrderSummarySection()
             }
+
+            Divider(
+                modifier = Modifier.padding(vertical = 16.dp),
+                color = Color.LightGray
+            )
+
+            // Total Amount
+            Column(
+                modifier = Modifier.size(317.dp, 51.dp),
+            ) {
+                Text(
+                    text = "Total amount",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
+                )
+                Text(
+                    text = "$ 15.00",
+                    style = MaterialTheme.typography.titleLarge,
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            // Place Order Button
+            CustomButton("Place Order", onClick = {})
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun OrderScreenPreview() {
+    val navController = rememberNavController()
+    PlaceOrderScreen(
+        navController
     )
-}
-
-@Composable
-fun DeliveryManSection() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-        ,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Image(
-            painter = painterResource(id = R.drawable.sukuna_jjk), // Replace with your drawable resource
-            contentDescription = "Handy Man",
-            modifier = Modifier
-                .size(60.dp)
-                .padding(end = 16.dp)
-        )
-        Column {
-            Text(text = "John Jones", style = MaterialTheme.typography.titleMedium)
-            Text(text = "Handy Man", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
-        }
-    }
-}
-
-@Composable
-fun DateSection() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)
-    ) {
-        Text(text = "20 March, Thu - 14h", style = MaterialTheme.typography.bodyLarge)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Row(modifier = Modifier
-            .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Icon(imageVector = Icons.Filled.LocationOn, contentDescription = "Pickup", tint = Color.Gray)
-            Text("28 Broad Street\n" + "Johannesburg")
-        }
-    }
-}
-
-@Composable
-fun DeliveryDetailsSection() {
-    Column(modifier = Modifier.fillMaxWidth()) {
-        DeliveryItemRow(label = "Plumber", details = "$15/h", onRemove = { /* Handle Remove Weight */ })
-    }
-}
-
-@Composable
-fun DeliveryItemRow(label: String, details: String, onRemove: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(text = "$label: $details", style = MaterialTheme.typography.bodyLarge)
-        TextButton(onClick = onRemove) {
-            Text(text = "Remove", color = Color.Red)
-        }
-
-    }
-}
-
-@Composable
-fun OrderSummarySection() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp)
-    ) {
-        Text(text = "Order Summary", style = MaterialTheme.typography.titleMedium)
-        Spacer(modifier = Modifier.height(8.dp))
-
-        SummaryRow(label = "Subtotal", amount = "$75")
-        SummaryRow(label = "Delivery fees", amount = "$10")
-        HorizontalDivider(
-            modifier = Modifier.padding(vertical = 8.dp),
-            color = Color.Gray
-        )
-        SummaryRow(label = "Total", amount = "$85", isTotal = true)
-    }
-}
-
-@Composable
-fun SummaryRow(label: String, amount: String, isTotal: Boolean = false) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Text(text = label, style = if (isTotal) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyLarge)
-        Text(text = amount, style = if (isTotal) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyLarge)
-    }
 }

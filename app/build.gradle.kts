@@ -57,6 +57,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.foundation.layout.android)
+    implementation(project(":feature_chat"))
+    implementation(project(":feature_pet"))
+    implementation(project(":feature_learn"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -70,6 +73,8 @@ dependencies {
     //navigation with compose - Jonathan
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
+    implementation(project(":feature_mover"))
+
 
 
     //Map Dependencies - Sebastian
@@ -79,4 +84,18 @@ dependencies {
     implementation (libs.places)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
+    implementation(project(":feature_babysitter"))
+//    implementation(project(":feature_bank"))
+//    implementation(project(":feature_chat"))
+//    implementation(project(":feature_delivery"))
+//    implementation(project(":feature_eat"))
+//    implementation(project(":feature_handyman"))
+//    implementation(project(":feature_hotel"))
+    implementation(project(":feature_housecleaning"))
+//    implementation(project(":feature_laundry"))
+//    implementation(project(":feature_learn"))
+//    implementation(project(":feature_mechanic"))
+//    implementation(project(":feature_mover"))
+//    implementation(project(":feature_pcrepair"))
+//    implementation(project(":feature_pet"))
 }
