@@ -33,13 +33,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.iclickipay.R.*
+import com.example.feature_pcrepair.R
+
 
 import com.example.iclickipay.ui.theme.AppOrange
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
 @Composable
 fun PcRepairHomeScreen(){
 
@@ -88,7 +90,7 @@ fun PcRepairHomeScreen(){
             ) {
                 // Image Section
                 Image(
-                    painter = painterResource(id = drawable.pcrepairlogo), // Replace with your image resource
+                    painter = painterResource(id = R.drawable.pcrepairlogo), // Replace with your image resource
                     contentDescription = "Mover Illustration",
                     modifier = Modifier
                         .size(300.dp)
@@ -129,8 +131,8 @@ fun PcRepairHomeScreen(){
 
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PcRepairHomeScreenPreview(){
-    PcRepairHomeScreen()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PcRepairHomeScreenPreview(){
+//    PcRepairHomeScreen()
+//}
