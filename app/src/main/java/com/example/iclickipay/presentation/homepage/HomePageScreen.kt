@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.iclickipay.R
 
 
 @Composable
@@ -31,14 +32,24 @@ fun HomePageScreen(
     navigateToLearn: () -> Unit
 ) {
     val context = LocalContext.current
-    //val items = List(10) { "Button ${it + 1}" }
 
     val listOfSubApps = listOf(
 
-        subApp("Baby Sitter", navigateToBabySitter),
-        subApp("House Cleaning", navigateToHouseCleaning),
-        subApp("Pet Care", navigateToPet),
-        subApp("Tutors", navigateToLearn)
+        subApp("Baby Sitter", navigateToBabySitter, R.drawable.babysitter),
+        subApp("House Cleaning", navigateToHouseCleaning, R.drawable.housecleaning),
+        subApp("Pet Care", navigateToPet, R.drawable.pet),
+        subApp("Tutors", navigateToLearn, R.drawable.learn),
+    /*    subApp("Bank", navigateToBank, R.drawable.bank),
+        subApp("Chat", navigateToChat, R.drawable.chat),
+        subApp("Delivery", navigateToDelivery, R.drawable.delivery),
+        subApp("Order Food", navigateToEat, R.drawable.eat),
+        subApp("Handyman", navigateToHandyman, R.drawable.handyman),
+        subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
+        subApp("Laundry", navigateToLaundry, R.drawable.laundry),
+        subApp("PC Repair", navigateToPCRepair, R.drawable.pcrepair),
+        subApp("Mechanic", navigateToMechanic, R.drawable.mechanic),
+        subApp("Hire Movers", navigateToMover, R.drawable.mover),*/
+
     )
 
     Column(
@@ -63,7 +74,8 @@ fun HomePageScreen(
         ) { page ->
             CarouselButton(
                 item = listOfSubApps[page].buttonText,
-                onClick = listOfSubApps[page].navFunction
+                onClick = listOfSubApps[page].navFunction,
+                imageId = listOfSubApps[page].imageId
             )
         }
 
@@ -76,6 +88,6 @@ class UserListIndividualParameterProvider : PreviewParameterProvider<String> {
     )
 }
 
-data class subApp(val buttonText: String, val navFunction: () -> Unit)
+data class subApp(val buttonText: String, val navFunction: () -> Unit, val imageId: Int)
 
 
