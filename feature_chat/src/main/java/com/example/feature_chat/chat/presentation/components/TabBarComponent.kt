@@ -1,4 +1,4 @@
-package com.example.feature_chat.chat.components
+package com.example.feature_chat.chat.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.PagerState
@@ -18,7 +18,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.iclickipay.data.tabs
+import com.example.feature_chat.chat.data.tabs
+
 
 @Composable
 fun TabBarComponent(initialIndex: Int = 0,
@@ -36,7 +37,7 @@ fun TabBarComponent(initialIndex: Int = 0,
             TabRowDefaults.Indicator(
                 modifier = Modifier.tabIndicatorOffset(tabPosition[selectedIndex]),
                 height = 4.dp)}){
-        tabs.forEachIndexed {index,tabData ->
+        tabs.forEachIndexed { index, tabData ->
             Tab(selected = index == selectedIndex,
                 onClick = {
                     selectedIndex = index

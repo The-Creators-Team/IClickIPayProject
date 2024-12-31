@@ -1,4 +1,4 @@
-package com.example.feature_teach
+package com.example.feature_learn
 
 import org.junit.Test
 
