@@ -66,9 +66,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.iclickipay.PetNavigationRoute
 import com.example.iclickipay.R
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.presentation.housecleaning.HouseCleaningScreen
+import com.example.iclickipay.presentation.pet.PetNavigation
 
 
 @Composable
@@ -107,7 +109,8 @@ fun BabySitterNavigation() {
             HomePageScreen(
                 user = "User", // Replace with actual user data or parameter
                 navigateToBabySitter = { navController.navigate(BabySitterScreen.BabySitterMainScreen.route) },
-                navigateToHouseCleaning = { navController.navigate(HouseCleaningScreen.HouseCleaningMainScreen.route)}
+                navigateToHouseCleaning = { navController.navigate(HouseCleaningScreen.HouseCleaningMainScreen.route)},
+                navigateToPet = { navController.navigate(PetNavigationRoute)}
             )
         }
     }

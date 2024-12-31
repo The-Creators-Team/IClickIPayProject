@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.iclickipay.R
 
 @Composable
-fun CarouselButton (item: String, onClick: () -> Unit) {
+fun CarouselButton (item: String, onClick: () -> Unit, imageId: Int) {
     Card(
         modifier = Modifier
             .padding(8.dp)
