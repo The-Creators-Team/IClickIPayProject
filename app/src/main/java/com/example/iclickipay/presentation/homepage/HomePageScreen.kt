@@ -26,11 +26,12 @@ import com.example.iclickipay.R
 
 @Composable
 fun HomePageScreen(
-    @PreviewParameter(UserListIndividualParameterProvider::class) user: String,
+    user: String,
     navigateToBabySitter: () -> Unit,
-
     //Nav Step 3 add fun to you module from activity
-    navigateToHouseCleaning: () -> Unit
+    navigateToHouseCleaning: () -> Unit,
+    navigateToPet: () -> Unit,
+    navigateToLearn: () -> Unit
 //    ,navigateToBank: () -> Unit,
 //    navigateToChat: () -> Unit,
 //    navigateToDelivery: () -> Unit,
@@ -44,12 +45,7 @@ fun HomePageScreen(
 //    navigateToPcRepair: () -> Unit,
 //    navigateToPet: () -> Unit
 ) {
-    val context = LocalContext.current
-    navigateToHouseCleaning: () -> Unit,
-    navController: NavController
-    navigateToPet: () -> Unit,
-    navigateToLearn: () -> Unit
-) {
+
     val context = LocalContext.current
 
     val listOfSubApps = listOf(
@@ -104,13 +100,8 @@ fun HomePageScreen(
             Text(text = "Go to Babysitter Section")
         }
 
-        //mover
-        Button(
-            onClick = {navController.navigate("MoverScreen")},
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(text = "Go to Mover Section")
-        }
+
+
 
         Button(
             //Nav step 4 add nav call to button click also don't forgot to import module in app.gradle file step 5
