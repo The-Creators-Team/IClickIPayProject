@@ -26,10 +26,23 @@ import androidx.compose.ui.unit.sp
 fun HomePageScreen(
     @PreviewParameter(UserListIndividualParameterProvider::class) user: String,
     navigateToBabySitter: () -> Unit,
+    //Nav Step 3 add fun to you module from activity
     navigateToHouseCleaning: () -> Unit
+//    ,navigateToBank: () -> Unit,
+//    navigateToChat: () -> Unit,
+//    navigateToDelivery: () -> Unit,
+//    navigateToEat: () -> Unit,
+//    navigateToHandyMan: () -> Unit,
+//    navigateToHotel: () -> Unit,
+//    navigateToLaundry: () -> Unit,
+//    navigateToLearn: () -> Unit,
+//    navigateToMechanic: () -> Unit,
+//    navigateToMover: () -> Unit,
+//    navigateToPcRepair: () -> Unit,
+//    navigateToPet: () -> Unit
 ) {
     val context = LocalContext.current
-    val items = List(10) { "Button ${it + 1}" }
+    val items = List(14) { "Button ${it + 1}" }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -65,12 +78,12 @@ fun HomePageScreen(
             Text(text = "Go to Babysitter Section")
         }
         Button(
+            //Nav step 4 add nav call to button click also don't forgot to import module in app.gradle file step 5
             onClick = navigateToHouseCleaning,
             modifier = Modifier.padding(top = 16.dp)
         ) {
-            Text(text = "Go to Housecleaing Section")
+            Text(text = "Go to Housecleaning Section")
         }
-
     }
 }
 

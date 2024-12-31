@@ -13,6 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_babysitter.babysitter.BabySitterNavigation
+import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
 import com.example.iclickipay.presentation.login.LoginScreen
@@ -51,7 +52,19 @@ class MainActivity : ComponentActivity() {
                         HomePageScreen(
                             user = "jim",
                             navigateToBabySitter = { navController.navigate(BabySitterNavigationRoute) },
-                            navigateToHouseCleaning = { navController.navigate(HouseCleaningScreenRoute) }
+                            navigateToHouseCleaning = { navController.navigate(HouseCleaningNavigationRoute) }
+//                            ,navigateToBank = { navController.navigate(BankNavigationRoute) },
+//                            navigateToChat = { navController.navigate(ChatNavigationRoute) },
+//                            navigateToDelivery = { navController.navigate(DeliveryNavigationRoute) },
+//                            navigateToEat = { navController.navigate(EatNavigationRoute) },
+//                            navigateToHandyMan = { navController.navigate(HandymanNavigationRoute) },
+//                            navigateToHotel = { navController.navigate(HotelNavigationRoute) },
+//                            navigateToLaundry = { navController.navigate(LaundryNavigationRoute) },
+//                            navigateToLearn = { navController.navigate(LearnNavigationRoute) },
+//                            navigateToMechanic = { navController.navigate(MechanicNavigationRoute) },
+//                            navigateToMover = { navController.navigate(MoverNavigationRoute) },
+//                            navigateToPcRepair = { navController.navigate(PcRepairNavigationRoute) },
+//                            navigateToPet = { navController.navigate(PetNavigationRoute) }
                         )
                     }
                     composable<BabySitterNavigationRoute> {
@@ -59,6 +72,73 @@ class MainActivity : ComponentActivity() {
                             onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
+                    //Nav Step 2 add navigation to ur module
+//                    composable<BankNavigationRoute> {
+//                        BankNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<ChatNavigationRoute> {
+//                        ChatNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<DeliveryNavigationRoute> {
+//                        DeliveryNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<EatNavigationRoute> {
+//                        EatNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<HandymanNavigationRoute> {
+//                        HandymanNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<HotelNavigationRoute> {
+//                        HotelNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+                    composable<HouseCleaningNavigationRoute> {
+                        HouseCleaningNavigation(
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+                        )
+                    }
+//                    composable<LaundryNavigationRoute> {
+//                        LaundryNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<LearnNavigationRoute> {
+//                        LearnNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<MechanicNavigationRoute> {
+//                        MechanicNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<MoverNavigationRoute> {
+//                        MoverNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<PcRepairNavigationRoute> {
+//                        PcRepairNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+//                    composable<PetNavigationRoute> {
+//                        PetNavigation(
+//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+//                        )
+//                    }
+
                 }
             }
         }
@@ -80,13 +160,44 @@ object RegisterScreenRoute
 object HomeScreenRoute
 
 @Serializable
-object BabySitterScreenRoute
+object BabySitterNavigationRoute
+
+//Nav Step 1 just name app+NavigationRoute
+@Serializable
+object BankNavigationRoute
 
 @Serializable
-object HouseCleaningScreenRoute
+object ChatNavigationRoute
+
+@Serializable
+object DeliveryNavigationRoute
+
+@Serializable
+object EatNavigationRoute
+
+@Serializable
+object HandymanNavigationRoute
+
+@Serializable
+object HotelNavigationRoute
+
+@Serializable
+object HouseCleaningNavigationRoute
+
+@Serializable
+object LaundryNavigationRoute
+
+@Serializable
+object LearnNavigationRoute
+
+@Serializable
+object MechanicNavigationRoute
+
+@Serializable
+object MoverNavigationRoute
+
+@Serializable
+object PcRepairNavigationRoute
 
 @Serializable
 object PetNavigationRoute
-
-@Serializable
-object BabySitterNavigationRoute
