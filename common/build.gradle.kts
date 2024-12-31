@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.common"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -32,7 +32,8 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures{
+
+    buildFeatures {
         compose = true
     }
 }
@@ -48,6 +49,11 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.firebase.auth)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.firebase.auth)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,6 +67,9 @@ dependencies {
     //navigation with compose - Jonathan
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
-
-
+    implementation (libs.play.services.maps)
+    implementation (libs.maps.compose)
+    implementation (libs.places)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
 }

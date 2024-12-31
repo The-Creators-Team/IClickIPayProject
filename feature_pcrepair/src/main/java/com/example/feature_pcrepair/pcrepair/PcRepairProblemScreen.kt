@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.iclickipay.ui.theme.AppOrange
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -85,7 +86,7 @@ fun PcRepairProblemScreen() {
                     .height(75.dp),
                 shape = RoundedCornerShape(8.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFF9800) // Orange color
+                    containerColor = AppOrange // Orange color
                 )
             ) {
                 Text(text = "Next", color = Color.White, fontSize = 16.sp)
