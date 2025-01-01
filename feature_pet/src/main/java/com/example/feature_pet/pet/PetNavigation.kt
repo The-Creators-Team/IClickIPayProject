@@ -1,10 +1,13 @@
 package com.example.feature_pet.pet
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.feature_pet.R
+import androidx.navigation.toRoute
+import com.example.common.reuseable.maps.maputil.Route
+import com.example.feature_pet.viewmodel.DogViewModel
 import com.example.iclickipay.presentation.pet.PetIntroScreen
 import kotlinx.serialization.Serializable
 
@@ -13,6 +16,8 @@ fun PetNavigation(
     onNavigateBack: () -> Unit
 ) {
     val petNavController = rememberNavController()
+    val petViewModel = remember { DogViewModel() }
+
 
     NavHost(
         navController = petNavController,
@@ -20,13 +25,17 @@ fun PetNavigation(
     ) {
         composable<PetListRoute> {
             PetListScreen(
-                dogs,
-                navigateToNewPet = { petNavController.navigate(NewPetRoute) }
+                navigateToNewPet = { petNavController.navigate(NewPetRoute) },
+                navigateBack = { petNavController.popBackStack() },
+                navigateToPetMap = { petNavController.navigate(PetMapRoute) },
+                dogViewModel = petViewModel
             )
         }
         composable<NewPetRoute> {
             NewPetScreen(
-                navigateToPetList = { petNavController.navigate(PetListRoute) }
+                navigateToPetList = { petNavController.navigate(PetListRoute) },
+                navigateBack = { petNavController.popBackStack() },
+                dogViewModel = petViewModel
             )
         }
         composable<PetIntroRoute> {
@@ -35,8 +44,17 @@ fun PetNavigation(
                 navigateBackToHomeScreen = onNavigateBack
             )
         }
+        composable<PetFilterRoute> {
+            PetFilterScreen(
+                navigateToPetMap = { petNavController.navigate(PetFilterRoute) }
+            )
+        }
+        composable<PetMapRoute> {
+            PetMapScreen()
+        }
     }
 }
+
 
 @Serializable
 object PetListRoute
@@ -47,9 +65,8 @@ object NewPetRoute
 @Serializable
 object PetIntroRoute
 
-val dogs = listOf<Dog>(
-    Dog("Goldie", "Labrador", Sex.FEMALE, 3, Size.MEDIUM, R.drawable.labrador),
-    Dog("Jose", "Chihuahua", Sex.FEMALE, 4, Size.SMALL, R.drawable.chihuahua),
-    Dog("Dumptruck", "Bulldog", Sex.MALE, 2, Size.SMALL, R.drawable.bulldog),
-    Dog("Muffin", "Pug", Sex.MALE, 1, Size.SMALL, R.drawable.pug)
-)
+@Serializable
+object PetFilterRoute
+
+@Serializable
+object PetMapRoute
