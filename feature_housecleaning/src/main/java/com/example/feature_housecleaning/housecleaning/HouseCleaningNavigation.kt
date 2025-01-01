@@ -59,6 +59,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import com.example.common.reuseable.maps.mapui.MapScreen
 import com.example.feature_babysitter.babysitter.BabySitterViewModel
 
 
@@ -542,13 +543,14 @@ fun HouseMapScreen(navController: NavController, viewModel: HouseCleaningViewMod
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Background Image
-        Image(
-            painter = painterResource(id = R.drawable.map_temp), // Replace with your drawable resource
-            contentDescription = "Background Image",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        // Background Map
+        MapScreen(modifier = Modifier.fillMaxSize())
+//        Image(
+//            painter = painterResource(id = R.drawable.map_temp), // Replace with your drawable resource
+//            contentDescription = "Background Image",
+//            modifier = Modifier.fillMaxSize(),
+//            contentScale = ContentScale.Crop
+//        )
 
         // Search Bar
         Column(
