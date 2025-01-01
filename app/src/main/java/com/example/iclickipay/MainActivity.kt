@@ -14,7 +14,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_babysitter.babysitter.BabySitterNavigation
 import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
-import com.example.feature_mover.mover.registerMoverRoutes
 import com.example.feature_learn.LearnNavigation
 import com.example.feature_pet.pet.PetNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
@@ -201,7 +200,6 @@ object HouseCleaningNavigationRoute
 
 @Serializable
 object LaundryNavigationRoute
-
 
 @Serializable
 object MechanicNavigationRoute

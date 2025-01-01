@@ -66,12 +66,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_babysitter.R
-
+import kotlinx.coroutines.NonCancellable.children
 
 @Composable
 fun BabySitterNavigation(
     onNavigateBack: () -> Unit
 ) {
+    val viewModel = remember { BabySitterViewModel() }
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -91,30 +92,21 @@ fun BabySitterNavigation(
             TakeAPhotoScreen(navController = navController)
         }
         composable(route = BabySitterScreen.ChildListScreen.route) {
-            ChildListScreen(navController = navController, children)
+            ChildListScreen(navController = navController, viewModel = viewModel)
         }
         composable(route = BabySitterScreen.FilterScreen.route) {
             FilterScreen(navController = navController)
         }
         composable(route = BabySitterScreen.SearchScreen.route) {
-            SearchScreen(navController = navController)
+            SearchScreen(navController = navController, viewModel = viewModel)
         }
         composable(route = BabySitterScreen.MapScreen.route) {
-            MapScreen(navController = navController)
+            MapScreen(navController = navController, viewModel = viewModel)
         }
         composable(route = BabySitterScreen.OrderScreen.route) {
-            OrderScreen(navController = navController, babysitters[0], children[0])
+            OrderScreen(navController = navController, viewModel.babysitters[0], viewModel.children[0])
         }
 
-
-       /* composable(route = "home_page") {
-            HomePageScreen(
-                user = "User", // Replace with actual user data or parameter
-                navigateToBabySitter = { navController.navigate(BabySitterScreen.BabySitterMainScreen.route) },
-                navigateToHouseCleaning = { navController.navigate(HouseCleaningScreen.HouseCleaningMainScreen.route)},
-                navigateToPet = { navController.navigate(PetNavigationRoute)}
-            )
-        }*/
     }
 }
 
@@ -295,21 +287,9 @@ fun TakeAPhotoScreen(navController: NavController) {
     }
 }
 
-data class Child(
-    val name: String,
-    var age: Int,
-    val imageResId: Int // Drawable resource ID for the image
-)
-
-val children = listOf<Child>(
-    Child("Chris", 22, R.drawable.cam_placeholder),
-    Child("Rebecca", 22, R.drawable.cam_placeholder),
-    Child("Jill", 22, R.drawable.cam_placeholder),
-    Child("Leon", 22, R.drawable.cam_placeholder),
-)
-
 @Composable
-fun ChildListScreen(navController: NavController, children: List<Child>) {
+fun ChildListScreen(navController: NavController, viewModel: BabySitterViewModel) {
+    val children = viewModel.children // Access children from ViewModel
 
     Column {
         Card(
@@ -472,26 +452,11 @@ fun ParcelSlider(title: String) {
     }
 }
 
-data class Babysitter(
-    val name: String,
-    val location: String,
-    val imageResId: Int,
-    val rating: Double,
-    val distance: Int,
-    val costPerHour: Int
-)
-
-val babysitters = listOf<Babysitter>(
-    Babysitter("Lee", "Corona", R.drawable.cam_placeholder, 3.0, 500, 15),
-    Babysitter("Alice", "Corona", R.drawable.cam_placeholder, 3.0, 500, 15),
-    Babysitter("Nina", "Corona", R.drawable.cam_placeholder, 3.0, 500, 15)
-
-)
-
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel) {
     var showPopup by remember { mutableStateOf(false) }
     var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
+    val babysitters = viewModel.babysitters
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Image
@@ -502,8 +467,6 @@ fun SearchScreen(navController: NavController) {
                 .fillMaxWidth()
                 .weight(1f)
         )
-
-        // Bar with two options: Favorites and Orders
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -717,8 +680,9 @@ fun BabysitterCard(babysitter: Babysitter, onClick: () -> Unit) {
 }
 
 @Composable
-fun MapScreen(navController: NavController) {
+fun MapScreen(navController: NavController, viewModel: BabySitterViewModel) {
     var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
+    val babysitters = viewModel.babysitters
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -939,21 +903,14 @@ fun OrderScreen(navController: NavController, babysitter: Babysitter, child: Chi
             Text(text = "Delivery Fees")
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Divider
             Divider(color = Color.Gray, thickness = 1.dp)
-
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Total Amount
             Text(
                 text = "Total Amount",
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
-
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Place Order Button
             Button(
                 onClick = { /* Handle Place Order */ },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
