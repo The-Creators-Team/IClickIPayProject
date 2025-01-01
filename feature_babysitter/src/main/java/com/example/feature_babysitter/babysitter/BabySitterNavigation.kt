@@ -1,5 +1,6 @@
 package com.example.feature_babysitter.babysitter
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -56,15 +57,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.feature_babysitter.R
 import kotlinx.coroutines.NonCancellable.children
 
@@ -79,20 +83,40 @@ fun BabySitterNavigation(
         startDestination = BabySitterScreen.BabySitterMainScreen.route
     ) {
         composable(route = BabySitterScreen.BabySitterMainScreen.route) {
-            BabySitterMainScreen(
+            BabySitterMainScreen(navController = navController, onNavigateBack = onNavigateBack)
+        }
+        composable(route = BabySitterScreen.YourChildDetails.route) {
+            YourChildDetailsScreen(
                 navController = navController,
+                viewModel = viewModel,
                 onNavigateBack = onNavigateBack
             )
         }
-        composable(route = BabySitterScreen.YourChildDetails.route) {
-            YourChildDetailsScreen(navController = navController,
-                onNavigateBack = onNavigateBack)
+        composable(
+            route = BabySitterScreen.EditChildDetails.route + "/{index}",
+            arguments = listOf(
+                navArgument("index") {
+                    type = NavType.StringType
+                    nullable = false
+                }
+            )
+        ) { entry ->
+            EditChildDetailsScreen(
+                navController = navController,
+                viewModel = viewModel,
+                onNavigateBack = onNavigateBack,
+                index = entry.arguments?.getString("index")
+            )
         }
         composable(route = BabySitterScreen.TakeAPhotoScreen.route) {
             TakeAPhotoScreen(navController = navController)
         }
         composable(route = BabySitterScreen.ChildListScreen.route) {
-            ChildListScreen(navController = navController, viewModel = viewModel)
+            ChildListScreen(
+                navController = navController,
+                viewModel = viewModel,
+                onNavigateBack = onNavigateBack
+            )
         }
         composable(route = BabySitterScreen.FilterScreen.route) {
             FilterScreen(navController = navController)
@@ -104,7 +128,11 @@ fun BabySitterNavigation(
             MapScreen(navController = navController, viewModel = viewModel)
         }
         composable(route = BabySitterScreen.OrderScreen.route) {
-            OrderScreen(navController = navController, viewModel.babysitters[0], viewModel.children[0])
+            OrderScreen(
+                navController = navController,
+                viewModel.babysitters[0],
+                viewModel.children[0]
+            )
         }
 
     }
@@ -142,7 +170,7 @@ fun BabySitterMainScreen(
 
         // Description
         Text(
-            text = "Welcome to babysitty an app to schedule a babysitter for your little one. Write reviews and filter through are list of babysitters to find the perfect match for your child and date ",
+            text = "Babysits makes it easy for parents and babysitters to find one another. With our intuitive platform, you can effortlessly search, connect, and plan babysitting appointments. We help parents - by creating the best search experience. With tons of search options, it is easy to find the perfect babysitter for your family.",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.padding(bottom = 24.dp),
             textAlign = TextAlign.Center
@@ -150,17 +178,15 @@ fun BabySitterMainScreen(
         //Button
         Button(
             onClick = {
-                navController.navigate(BabySitterScreen.YourChildDetails.route)
+                navController.navigate(BabySitterScreen.ChildListScreen.route)
             }
         ) {
             Text(text = "Lets Go")
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Back to Home Button
         Button(
             onClick = onNavigateBack
-
         ) {
             Text(text = "Back to All Apps")
         }
@@ -170,11 +196,13 @@ fun BabySitterMainScreen(
 @Composable
 fun YourChildDetailsScreen(
     navController: NavController,
+    viewModel: BabySitterViewModel,
     onNavigateBack: () -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var isMale by remember { mutableStateOf(true) }
     var age by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -184,22 +212,24 @@ fun YourChildDetailsScreen(
     ) {
         // Title
         Text(
-            text = "Your child",
+            text = "New Child Info",
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(top = 35.dp)
         )
 
-        // Name Entry
         OutlinedTextField(
             value = name,
-            onValueChange = { name = it },
+            onValueChange = { input ->
+                if (input.all { it.isLetter() || it.isWhitespace() }) {
+                    name = input
+                }
+            },
             label = { Text("Name") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp)
         )
 
-        // Gender Checkbox
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -229,14 +259,142 @@ fun YourChildDetailsScreen(
                 .padding(bottom = 16.dp)
         )
 
-        // Submit Button (Optional)
         Button(
             onClick = {
-                navController.navigate(BabySitterScreen.TakeAPhotoScreen.route)
+                if (name.isNullOrBlank() || age.isNullOrBlank()) {
+                    Toast.makeText(context, "Name or Age cannot be empty", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    val child = Child(
+                        name = name,
+                        gender = if (isMale) "Male" else "Female",
+                        age = age.toIntOrNull() ?: 0, // Convert age to Int safely
+                        imageResId = R.drawable.cam_placeholder // Use appropriate placeholder
+                    )
+                    viewModel.addChild(child) // Add child to ViewModel
+
+                    navController.navigate(BabySitterScreen.TakeAPhotoScreen.route)
+                }
             }
         ) {
             Text(text = "Next")
         }
+        Button(
+            onClick = {
+                navController.navigate(BabySitterScreen.ChildListScreen.route)
+            }
+        ) {
+            Text(text = "Back")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Back to Home Button
+        Button(
+            onClick = onNavigateBack
+
+        ) {
+            Text(text = "Back to All Apps")
+        }
+    }
+}
+
+@Composable
+fun EditChildDetailsScreen(
+    navController: NavController,
+    viewModel: BabySitterViewModel,
+    onNavigateBack: () -> Unit,
+    index: String?
+) {
+    var name by remember { mutableStateOf("") }
+    var isMale by remember { mutableStateOf(true) }
+    var age by remember { mutableStateOf("") }
+    val context = LocalContext.current
+
+    var child = viewModel.children[index?.toInt()!!]
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Title
+        Text(
+            text = "Edit Child Info $index",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(top = 35.dp)
+        )
+
+        OutlinedTextField(
+            value = name,
+            onValueChange = { input ->
+                if (input.all { it.isLetter() || it.isWhitespace() }) {
+                    name = input
+                }
+            },
+            label = { Text(child.name) },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 16.dp)
+        ) {
+            Text(text = "Gender:", modifier = Modifier.padding(end = 8.dp))
+            Checkbox(
+                checked = isMale,
+                onCheckedChange = { isMale = it },
+                modifier = Modifier.padding(end = 8.dp)
+            )
+            Text(text = if (isMale) "Male" else "Female")
+        }
+
+        // Age Entry
+        OutlinedTextField(
+            value = age,
+            onValueChange = {
+                if (it.all { char -> char.isDigit() }) {
+                    val inputAge = it.toIntOrNull() ?: 0
+                    if (inputAge in 0..17) age = it
+                }
+            },
+            label = { Text(child.age.toString()) },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+
+        Button(
+            onClick = {
+                if (name.isNullOrBlank() || age.isNullOrBlank()) {
+                    Toast.makeText(context, "Name or Age cannot be empty", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    child = Child(
+                        name = name,
+                        gender = if (isMale) "Male" else "Female",
+                        age = age.toIntOrNull() ?: 0,
+                        imageResId = child.imageResId
+                    )
+                    viewModel.updateChild(index.toInt(), child) // Add child to ViewModel
+
+                    navController.navigate(BabySitterScreen.TakeAPhotoScreen.route)
+                }
+            }
+        ) {
+            Text(text = "Update")
+        }
+        Button(
+            onClick = {
+                navController.navigate(BabySitterScreen.ChildListScreen.route)
+            }
+        ) {
+            Text(text = "Back")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Back to Home Button
         Button(
             onClick = onNavigateBack
 
@@ -288,10 +446,14 @@ fun TakeAPhotoScreen(navController: NavController) {
 }
 
 @Composable
-fun ChildListScreen(navController: NavController, viewModel: BabySitterViewModel) {
-    val children = viewModel.children // Access children from ViewModel
+fun ChildListScreen(
+    navController: NavController,
+    viewModel: BabySitterViewModel,
+    onNavigateBack: () -> Unit
+) {
+    val children = viewModel.children
 
-    Column {
+    Column(modifier = Modifier.padding(top = 40.dp)) {
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -328,7 +490,7 @@ fun ChildListScreen(navController: NavController, viewModel: BabySitterViewModel
                 .weight(1f)
         ) {
             items(children) { child ->
-                ChildCard(child = child)
+                ChildCard(child = child, navController, children.indexOf(child))
             }
         }
         Button(
@@ -341,11 +503,19 @@ fun ChildListScreen(navController: NavController, viewModel: BabySitterViewModel
         ) {
             Text(text = "Next")
         }
+        Button(
+            onClick = onNavigateBack,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(10.dp)
+        ) {
+            Text(text = "Back to All Apps")
+        }
     }
 }
 
 @Composable
-fun ChildCard(child: Child) {
+fun ChildCard(child: Child, navController: NavController, index: Int) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -363,17 +533,26 @@ fun ChildCard(child: Child) {
                 contentDescription = "Child Image",
                 modifier = Modifier
                     .size(50.dp)
-                    .clip(CircleShape)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop // Ensures the image fills and crops to the circle
             )
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Child Name
-            Text(
-                text = child.name,
-                modifier = Modifier.weight(1f)
-            )
+            Column (modifier = Modifier.weight(1f)){
+                Text(
+                    text = "${child.name}, Age ${child.age}",
+                )
+                Text(
+                    text = child.gender,
+
+                )
+            }
+
+
             // Edit Icon
-            IconButton(onClick = { }) {
+            IconButton(onClick = {
+                navController.navigate(BabySitterScreen.EditChildDetails.withArgs(index.toString()))
+            }) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Child")
             }
             // Delete Icon
