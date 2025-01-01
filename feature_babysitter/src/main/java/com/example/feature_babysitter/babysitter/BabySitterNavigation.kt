@@ -71,6 +71,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.common.reuseable.maps.mapui.MapScreen
 import com.example.feature_babysitter.R
 
 @Composable
@@ -137,8 +138,8 @@ fun BabySitterNavigation(
                 min = entry.arguments?.getString("min")
             )
         }
-        composable(route = BabySitterScreen.MapScreen.route) {
-            MapScreen(navController = navController, viewModel = viewModel)
+        composable(route = BabySitterScreen.BabyMapScreen.route) {
+            BabyMapScreen(navController = navController, viewModel = viewModel)
         }
         composable(route = BabySitterScreen.OrderScreen.route + "/{indexBabySitter}/{indexChild}",
                 arguments = listOf(
@@ -888,7 +889,7 @@ fun OrdersPopupMenu(navController: NavController, onDismiss: () -> Unit) {
                 }
                 Button(
                     onClick = {
-                        navController.navigate(BabySitterScreen.MapScreen.route)
+                        navController.navigate(BabySitterScreen.BabyMapScreen.route)
                     },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
@@ -987,7 +988,7 @@ fun BabysitterCard(babysitter: Babysitter, onClick: () -> Unit) {
 }
 
 @Composable
-fun MapScreen(navController: NavController, viewModel: BabySitterViewModel) {
+fun BabyMapScreen(navController: NavController, viewModel: BabySitterViewModel) {
     var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
     val babysitters = viewModel.babysitters
 
@@ -995,12 +996,14 @@ fun MapScreen(navController: NavController, viewModel: BabySitterViewModel) {
         modifier = Modifier.fillMaxSize()
     ) {
         // Background Image
-        Image(
-            painter = painterResource(id = R.drawable.map_temp), // Replace with your drawable resource
-            contentDescription = "Background Image",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+//        Image(
+//            painter = painterResource(id = R.drawable.map_temp), // Replace with your drawable resource
+//            contentDescription = "Background Image",
+//            modifier = Modifier.fillMaxSize(),
+//            contentScale = ContentScale.Crop
+//        )
+
+        MapScreen(modifier = Modifier.fillMaxSize())
 
         // Search Bar
         Column(

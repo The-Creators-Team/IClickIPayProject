@@ -89,8 +89,8 @@ fun HouseCleaningNavigation(
         composable(route = HouseCleaningScreen.SearchScreen.route) {
             SearchScreen(navController = navController,viewModel = viewModel)
         }
-        composable(route = HouseCleaningScreen.MapScreen.route) {
-            MapScreen(navController = navController, viewModel = viewModel)
+        composable(route = HouseCleaningScreen.HouseMapScreen.route) {
+            HouseMapScreen(navController = navController, viewModel = viewModel)
         }
         composable(route = HouseCleaningScreen.OrderScreen.route) {
             OrderScreen(navController = navController,viewModel.cleaners[0], viewModel.houses[0])
@@ -462,7 +462,7 @@ fun OrdersPopupMenu(navController: NavController,onDismiss: () -> Unit) {
                 }
                 Button(
                     onClick = {
-                        navController.navigate(HouseCleaningScreen.MapScreen.route)
+                        navController.navigate(HouseCleaningScreen.HouseMapScreen.route)
                     },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
@@ -535,7 +535,7 @@ fun CleanerCard(cleaner: Cleaner, onClick: () -> Unit) {
 }
 
 @Composable
-fun MapScreen(navController: NavController, viewModel: HouseCleaningViewModel){
+fun HouseMapScreen(navController: NavController, viewModel: HouseCleaningViewModel){
     var expandedCleaner by remember { mutableStateOf<Cleaner?>(null) }
     val cleaners = viewModel.cleaners
 
