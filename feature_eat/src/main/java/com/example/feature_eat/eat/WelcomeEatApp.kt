@@ -25,7 +25,7 @@ import com.example.iclickipay.R.*
 
 
 @Composable
-fun EatActivity() {
+fun WelcomeEatApp() {
     Box(
         Modifier
             .fillMaxSize()
@@ -91,5 +91,5 @@ fun EatActivity() {
 @Preview
 @Composable
 fun EatActivityPreview() {
-    EatActivity()
+    WelcomeEatApp()
 }

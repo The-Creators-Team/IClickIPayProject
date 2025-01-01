@@ -46,7 +46,7 @@ import kotlin.math.absoluteValue
 @ExperimentalFoundationApi
 @Preview
 @Composable
-fun EatStep02() {
+fun HomeEatApp() {
 
     Column(
         modifier = Modifier
@@ -276,7 +276,7 @@ fun EatStep02() {
                     ) {
                         Image(
                             modifier = Modifier.size(20.dp),
-                            painter = painterResource(id = R.drawable.tag),
+                            painter = painterResource(id = R.drawable.circle_plus),
                             contentDescription = "Breakfast",
                         )
                         Text(text = "\$\$\$",
