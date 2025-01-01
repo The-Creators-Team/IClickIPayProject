@@ -12,10 +12,35 @@ class BabySitterViewModel : ViewModel() {
     )
 
     private val _babysitters = mutableStateListOf(
-        Babysitter("Steve","Steve Harrington is a fictional character from the Netflix television show Stranger Things, portrayed by Joe Keery. Though initially characterized as a stereotypically unlikeable jock, Steve has progressed throughout the series into a more courageous, thoughtful, and caring character.", "StrangeThings", R.drawable.steve, 1.5, 33.87901699889791, -84.45645900148536,8.0, 15),
-        Babysitter("Mary Poppins","Mary Poppins is described as \"practically perfect in every way\". She's kind and nurturing, but also firm and authoritative. She's sweet and has a big heart, but she's also demanding and doesn't settle.", "Corona", R.drawable.merry_poppins, 5.0, 33.916200120275384, -84.46743627362048,1.0, 40),
-        Babysitter("Mrs.Doubtfire","Mrs.Doubtfire is a 1993 comedy film about an unemployed actor who disguises himself as an elderly British nanny to spend more time with his children", "Corona", R.drawable.doubtfire, 3.0, 33.92095879668887,-84.46697881555114,2.5, 25)
+        Babysitter("Steve","Steve Harrington is a fictional character from the Netflix television show Stranger Things, portrayed by Joe Keery.", "StrangeThings", R.drawable.steve, 1.5, 33.87901699889791, -84.45645900148536,8.0, 15),
+        Babysitter("Mary Poppins","Mary Poppins is described as \"practically perfect in every way\". She's kind and nurturing, but also firm and authoritative.", "Corona", R.drawable.merry_poppins, 5.0, 33.916200120275384, -84.46743627362048,1.0, 40),
+        Babysitter("Mrs.Doubtfire","Mrs.Doubtfire is a 1993 comedy film about an unemployed actor who disguises himself as an elderly British nanny to spend more time with his children", "Riverside", R.drawable.doubtfire, 3.0, 33.92095879668887,-84.46697881555114,2.5, 25),
+        Babysitter("The Nanny","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "New York", R.drawable.doubtfire, 3.0, 33.92095879668887,-84.46697881555114,2.5, 25),
+        Babysitter("Nanny Mcphee","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "New Jersey", R.drawable.the_nanny, 1.0, 33.92095879668887,-84.46697881555114,10.5, 5),
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 4.0, 33.92095879668887,-84.46697881555114,20.0, 25),
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 2.0, 33.92095879668887,-84.46697881555114,15.0, 30),
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 3.0, 33.92095879668887,-84.46697881555114,25.0, 10),
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 4.5, 33.92095879668887,-84.46697881555114,2.0, 11),
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 2.5, 33.92095879668887,-84.46697881555114,3.0, 5),
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 5.0, 33.92095879668887,-84.46697881555114,50.0, 60),
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 2.0, 33.92095879668887,-84.46697881555114,70.0, 60),
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 3.0, 33.92095879668887,-84.46697881555114,2.5, 10)
     )
+
+    private fun sortBabysittersByRating(): List<Babysitter> {
+        return _babysitters.sortedByDescending { it.rating }
+    }
+     val recommendSortBabysitter: List<Babysitter> get() = sortBabysittersByRating()
+
+    private fun sortBabysittersByCostPerHour(): List<Babysitter> {
+        return _babysitters.sortedByDescending { it.costPerHour }
+    }
+    val priceSortBabysitter: List<Babysitter> get() = sortBabysittersByCostPerHour()
+
+    private fun sortBabysittersByDistance(): List<Babysitter> {
+        return _babysitters.sortedByDescending { it.distance }
+    }
+    val distanceSortBabysitter: List<Babysitter> get() = sortBabysittersByDistance()
 
     // Publicly exposed list
     val children: List<Child> get() = _children

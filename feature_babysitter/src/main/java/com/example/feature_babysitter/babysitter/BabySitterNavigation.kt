@@ -28,7 +28,6 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
@@ -37,6 +36,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -70,7 +70,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.feature_babysitter.R
-import kotlinx.coroutines.NonCancellable.children
 
 @Composable
 fun BabySitterNavigation(
@@ -119,10 +118,22 @@ fun BabySitterNavigation(
             )
         }
         composable(route = BabySitterScreen.FilterScreen.route) {
-            FilterScreen(navController = navController)
+            FilterScreen(navController = navController, viewModel)
         }
-        composable(route = BabySitterScreen.SearchScreen.route) {
-            SearchScreen(navController = navController, viewModel = viewModel)
+        composable(route = BabySitterScreen.SearchScreen.route + "/{sort}/{max}/{min}",
+            arguments = listOf(
+                navArgument("sort"){type = NavType.StringType},
+                navArgument("max"){type = NavType.StringType},
+                navArgument("min"){type = NavType.StringType}
+            )
+        ) {entry ->
+            SearchScreen(
+                navController = navController,
+                viewModel = viewModel,
+                sort = entry.arguments?.getString("sort"),
+                max = entry.arguments?.getString("max"),
+                min = entry.arguments?.getString("min")
+            )
         }
         composable(route = BabySitterScreen.MapScreen.route) {
             MapScreen(navController = navController, viewModel = viewModel)
@@ -490,7 +501,7 @@ fun ChildListScreen(
                 .weight(1f)
         ) {
             items(children) { child ->
-                ChildCard(child = child, navController, children.indexOf(child))
+                ChildCard(child = child, navController, children.indexOf(child), viewModel)
             }
         }
         Button(
@@ -515,7 +526,12 @@ fun ChildListScreen(
 }
 
 @Composable
-fun ChildCard(child: Child, navController: NavController, index: Int) {
+fun ChildCard(
+    child: Child,
+    navController: NavController,
+    index: Int,
+    viewModel: BabySitterViewModel
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -548,15 +564,15 @@ fun ChildCard(child: Child, navController: NavController, index: Int) {
                 )
             }
 
-
-            // Edit Icon
             IconButton(onClick = {
                 navController.navigate(BabySitterScreen.EditChildDetails.withArgs(index.toString()))
             }) {
                 Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Child")
             }
             // Delete Icon
-            IconButton(onClick = { }) {
+            IconButton(onClick = {
+                viewModel.removeChild(viewModel.children.get(index))
+            }) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Child")
             }
         }
@@ -565,9 +581,12 @@ fun ChildCard(child: Child, navController: NavController, index: Int) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterScreen(navController: NavController) {
+fun FilterScreen(navController: NavController, viewModel: BabySitterViewModel) {
     var selectedOption by remember { mutableStateOf("Recommend") }
     var expanded by remember { mutableStateOf(false) }
+    var selectedRating by remember { mutableStateOf(0.0) } // Track selected rating
+
+    val sortingOptions = listOf("Recommend", "Distance", "Cost") // Sorting options
 
     Column(modifier = Modifier.padding(40.dp)) {
         // Title
@@ -578,12 +597,10 @@ fun FilterScreen(navController: NavController) {
         // Dropdown menu
         Text("Sort By")
 
-        // ExposedDropdownMenuBox is used for the dropdown
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded }
         ) {
-            // TextField to show the selected option and the dropdown menu
             TextField(
                 value = selectedOption,
                 onValueChange = { },
@@ -592,27 +609,100 @@ fun FilterScreen(navController: NavController) {
                 trailingIcon = {
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .menuAnchor() // Ensures the dropdown aligns correctly
             )
 
-            // The dropdown itself
             ExposedDropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false }
             ) {
-
+                sortingOptions.forEach { option ->
+                    DropdownMenuItem(
+                        text = { Text(option) },
+                        onClick = {
+                            selectedOption = option // Update selected option
+                            expanded = false       // Close the dropdown
+                        }
+                    )
+                }
             }
         }
-        ParcelSlider("Price/Hour")
+        Text(text = "Price/Hour")
+        Spacer(modifier = Modifier.height(16.dp))
+
+        var sliderValue by remember { mutableStateOf(0f) }
+        Column {
+            Slider(
+                value = sliderValue,
+                onValueChange = { sliderValue = it },
+                valueRange = 0f..60f,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Text(text = "Set: $${sliderValue.toInt()}")
+        }
+
+        Text(text = "Rate")
+
+        // Star Rating Selector
+        StarRatingSelector(
+            initialRating = selectedRating,
+            onRatingSelected = { rating ->
+                selectedRating = rating
+            }
+        )
+
         Button(
             onClick = {
-                navController.navigate(BabySitterScreen.SearchScreen.route)
+                navController.navigate(BabySitterScreen.SearchScreen.withArgs(selectedOption,sliderValue.toString(),selectedRating.toString() ))
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(16.dp)
         ) {
             Text(text = "Apply")
+        }
+    }
+}
+
+@Composable
+fun StarRatingSelector(
+    initialRating: Double = 0.0,
+    onRatingSelected: (Double) -> Unit
+) {
+    var selectedRating by remember { mutableStateOf(initialRating) }
+    val totalStars = 5
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        for (i in 1..totalStars) {
+            val isHalfFilled = selectedRating >= i - 0.5 && selectedRating < i
+            val isFullFilled = selectedRating >= i
+
+            Icon(
+                painter = painterResource(
+                    if (isFullFilled) R.drawable.ic_star_filled
+                    else if (isHalfFilled) R.drawable.ic_star_half
+                    else R.drawable.ic_star_outline
+                ),
+                contentDescription = "Star $i",
+                modifier = Modifier
+                    .size(40.dp)
+                    .clickable {
+                        selectedRating = if (selectedRating == i.toDouble()) {
+                            i - 0.5
+                        } else {
+                            i.toDouble()
+                        }
+                        onRatingSelected(selectedRating)
+                    },
+                tint = Color.Yellow
+            )
         }
     }
 }
@@ -627,15 +717,24 @@ fun ParcelSlider(title: String) {
             valueRange = 0f..60f,
             modifier = Modifier.fillMaxWidth()
         )
-        Text(text = "Value: ${sliderValue.toInt()}")
+        Text(text = "Set: $${sliderValue.toInt()}")
     }
 }
 
 @Composable
-fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel) {
+fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, sort:String?, max:String?, min:String?) {
     var showPopup by remember { mutableStateOf(false) }
     var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
-    val babysitters = viewModel.babysitters
+
+    var babysitters = viewModel.babysitters
+    if (sort.equals("Recommend")){
+        babysitters = viewModel.recommendSortBabysitter
+    } else if (sort.equals("Distance")){
+        babysitters = viewModel.distanceSortBabysitter
+    }else if(sort.equals("Cost")){
+        babysitters = viewModel.priceSortBabysitter
+    }
+
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Image
