@@ -2,7 +2,9 @@ package com.example.common.reuseable.maps.mapui
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.drawable.Icon
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +48,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
     val suggestions = remember { mutableStateOf<List<Pair<String, LatLng>>>(emptyList()) }
     val selectedPosition = remember { mutableStateOf(LatLng(33.7772544, -84.5545472)) }
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(selectedPosition.value, 17f)
+        position = CameraPosition.fromLatLngZoom(selectedPosition.value, 15f)
     }
 
     val route = remember { mutableStateOf<List<LatLng>>(emptyList()) }
@@ -120,22 +122,22 @@ fun MapScreen(modifier: Modifier = Modifier) {
                     val markers = listOf(
                         MarkerInfo(
                             LatLng(33.7782544, -84.5555472),
-                            "Marker 1",
+                            "Current Location",
                             R.drawable.anya
                         ),
                         MarkerInfo(
-                            LatLng(33.7792544, -84.5561472),
-                            "Marker 2",
+                            LatLng(33.7882544, -84.5655472),
+                            "Luffy",
                             R.drawable.luffy
                         ),
                         MarkerInfo(
-                            LatLng(33.7762544, -84.5532472),
-                            "Marker 3",
+                            LatLng(33.7682544, -84.5455472),
+                            "Imotto",
                             R.drawable.clipart5643
                         ),
                         MarkerInfo(
-                            LatLng(33.7772544, -84.5529472),
-                            "Marker 4",
+                            LatLng(33.7582544, -84.5755472),
+                            "Kawaii- Onesaan",
                             R.drawable.maximum_logo
                         ),
                     )
@@ -147,7 +149,11 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             icon = bitmapDescriptorFromVector(
                                 context,
                                 markerInfo.iconResId
-                            )
+                            ),
+                            onClick = {
+                                Toast.makeText(context, "${markerInfo.title} clicked!", Toast.LENGTH_SHORT).show()
+                                true // Returning true to consume the click event
+                            }
                         )
                     }
 
@@ -165,10 +171,9 @@ fun MapScreen(modifier: Modifier = Modifier) {
 }
 private fun getMarkerSuggestions(query: String): List<Pair<String, LatLng>> {
     val markers = listOf(
-        MarkerInfo(LatLng(33.7782544, -84.5555472), "Marker 1", R.drawable.anya),
-        MarkerInfo(LatLng(33.7792544, -84.5561472), "Marker 2", R.drawable.luffy),
-        MarkerInfo(LatLng(33.7762544, -84.5532472), "Marker 3", R.drawable.clipart5643),
-        MarkerInfo(LatLng(33.7772544, -84.5529472), "Marker 4", R.drawable.maximum_logo)
+        MarkerInfo(LatLng(33.7882544, -84.5655472), "Marker 2", R.drawable.luffy),
+        MarkerInfo(LatLng(33.7682544, -84.5455472), "Marker 3", R.drawable.clipart5643),
+        MarkerInfo(LatLng(33.7582544, -84.5755472), "Marker 4", R.drawable.maximum_logo)
     )
 
     return markers.filter { markerInfo ->
