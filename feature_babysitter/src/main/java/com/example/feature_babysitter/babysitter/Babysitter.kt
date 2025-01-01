@@ -9,5 +9,5 @@ data class Babysitter(
     val latitude: Double,
     val longitude: Double,
     val distance : Double,
-    val costPerHour: Int,
+    val costPerHour: Double,
 )

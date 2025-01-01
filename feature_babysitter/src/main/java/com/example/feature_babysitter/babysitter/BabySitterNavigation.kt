@@ -629,7 +629,7 @@ fun FilterScreen(navController: NavController, viewModel: BabySitterViewModel) {
                 }
             }
         }
-        Text(text = "Price/Hour")
+        Text(text = "Max: Price/Hour")
         Spacer(modifier = Modifier.height(16.dp))
 
         var sliderValue by remember { mutableStateOf(0f) }
@@ -643,7 +643,7 @@ fun FilterScreen(navController: NavController, viewModel: BabySitterViewModel) {
             Text(text = "Set: $${sliderValue.toInt()}")
         }
 
-        Text(text = "Rate")
+        Text(text = "Min: Rating")
 
         // Star Rating Selector
         StarRatingSelector(
@@ -734,7 +734,7 @@ fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, s
     }else if(sort.equals("Cost")){
         babysitters = viewModel.priceSortBabysitter
     }
-
+    val filteredBabysitters = babysitters.filter { (it.costPerHour < max!!.toDouble() && it.rating > min!!.toDouble())}
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Image
@@ -809,7 +809,7 @@ fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, s
 
         // Lazy list of babysitters
         LazyColumn(modifier = Modifier.weight(2f)) {
-            items(babysitters) { babysitter ->
+            items(filteredBabysitters) { babysitter ->
                 BabysitterCard(
                     babysitter = babysitter,
                     onClick = { expandedBabysitter = babysitter }
