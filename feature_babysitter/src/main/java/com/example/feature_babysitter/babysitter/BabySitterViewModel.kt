@@ -42,8 +42,6 @@ class BabySitterViewModel : ViewModel() {
     }
     val distanceSortBabysitter: List<Babysitter> get() = sortBabysittersByDistance()
 
-
-
     // Publicly exposed list
     val children: List<Child> get() = _children
     val babysitters: List<Babysitter> get() = _babysitters
@@ -76,5 +74,12 @@ class BabySitterViewModel : ViewModel() {
         }
     }
 
+    fun getRandomChild(): Child? {
+        return if (_children.isNotEmpty()) {
+            _children.random()
+        } else {
+            null // Return null if the list is empty
+        }
+    }
 
 }

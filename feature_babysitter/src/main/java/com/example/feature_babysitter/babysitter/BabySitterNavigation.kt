@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -28,6 +29,7 @@ import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
@@ -138,11 +140,17 @@ fun BabySitterNavigation(
         composable(route = BabySitterScreen.MapScreen.route) {
             MapScreen(navController = navController, viewModel = viewModel)
         }
-        composable(route = BabySitterScreen.OrderScreen.route) {
+        composable(route = BabySitterScreen.OrderScreen.route + "/{indexBabySitter}/{indexChild}",
+                arguments = listOf(
+                    navArgument("indexBabySitter"){type = NavType.StringType},
+                    navArgument("indexChild"){type = NavType.StringType}
+                )
+            ) { entry ->
             OrderScreen(
                 navController = navController,
-                viewModel.babysitters[0],
-                viewModel.children[0]
+                viewModel = viewModel,
+                indexBabySitter = entry.arguments?.getString("indexBabySitter"),
+                indexChild = entry.arguments?.getString("indexChild")
             )
         }
 
@@ -800,9 +808,11 @@ fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, s
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Babysitters")
+            Text(text = "Babysitters: ${filteredBabysitters.size} results")
             Icon(
-                modifier = Modifier.clickable { },
+                modifier = Modifier.clickable {
+                    navController.navigate(BabySitterScreen.FilterScreen.route)
+                },
                 imageVector = Icons.Default.Menu,
                 contentDescription = "Filter",
                 tint = MaterialTheme.colorScheme.primary
@@ -893,6 +903,7 @@ fun OrdersPopupMenu(navController: NavController, onDismiss: () -> Unit) {
 
 @Composable
 fun BabysitterCard(babysitter: Babysitter, onClick: () -> Unit) {
+    var isHeartFilled by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -901,14 +912,30 @@ fun BabysitterCard(babysitter: Babysitter, onClick: () -> Unit) {
     ) {
         Column {
             // Babysitter Image
-            Image(
-                painter = painterResource(id = babysitter.imageResId),
-                contentDescription = "Babysitter Image",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp),
-                contentScale = ContentScale.Crop
-            )
+            Box(modifier = Modifier.height(150.dp)) {
+                Image(
+                    painter = painterResource(id = babysitter.imageResId),
+                    contentDescription = "Babysitter Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    contentScale = ContentScale.Crop
+                )
+                IconButton(
+                    onClick = { isHeartFilled = !isHeartFilled },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(4.dp)
+                        .size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = if (isHeartFilled) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Favorite",
+                        tint = if (isHeartFilled) Color.Red else Color.Gray
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
 
             // Name and Location
@@ -1006,7 +1033,7 @@ fun MapScreen(navController: NavController, viewModel: BabySitterViewModel) {
                 contentPadding = PaddingValues(horizontal = 8.dp)
             ) {
                 items(babysitters) { babysitter ->
-                    BabysitterCard(
+                    BabysitterCardMap(
                         babysitter = babysitter,
                         onClick = { expandedBabysitter = babysitter }
                     )
@@ -1058,7 +1085,8 @@ fun MapScreen(navController: NavController, viewModel: BabySitterViewModel) {
 
                         // Take Appointment Button
                         Button(
-                            onClick = { navController.navigate(BabySitterScreen.OrderScreen.route) },
+//                     navController.navigate(BabySitterScreen.SearchScreen.withArgs(selectedOption,sliderValue.toString(),selectedRating.toString() ))
+                            onClick = { navController.navigate(BabySitterScreen.OrderScreen.withArgs(babysitters.indexOf(babysitter).toString(), "0")) },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(text = "Take Appointment")
@@ -1071,11 +1099,102 @@ fun MapScreen(navController: NavController, viewModel: BabySitterViewModel) {
 }
 
 @Composable
-fun OrderScreen(navController: NavController, babysitter: Babysitter, child: Child) {
+fun BabysitterCardMap(babysitter: Babysitter, onClick: () -> Unit) {
+    var isHeartFilled by remember { mutableStateOf(false) }
+
+    Card(
+        modifier = Modifier
+            .size(width = 200.dp, height = 300.dp)
+            .padding(8.dp)
+            .clickable { onClick() }
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // Babysitter Image
+            Box(modifier = Modifier.height(150.dp)) {
+                Image(
+                    painter = painterResource(id = babysitter.imageResId),
+                    contentDescription = "Babysitter Image",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(),
+                    contentScale = ContentScale.Crop
+                )
+                IconButton(
+                    onClick = { isHeartFilled = !isHeartFilled },
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(4.dp)
+                        .size(24.dp)
+                ) {
+                    Icon(
+                        imageVector = if (isHeartFilled) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Favorite",
+                        tint = if (isHeartFilled) Color.Red else Color.Gray
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Name and Location
+            Text(
+                text = babysitter.name,
+                modifier = Modifier.padding(horizontal = 8.dp),
+            )
+            Text(
+                text = babysitter.location,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            )
+
+            // Rating, Distance, and Cost Per Hour
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Rating
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Rating",
+                        tint = Color.Yellow
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "${babysitter.rating}")
+                }
+
+                // Distance
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "Distance",
+                        tint = Color.Gray
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "${babysitter.distance} m")
+                }
+
+                // Cost Per Hour
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "$${babysitter.costPerHour}/hr")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun OrderScreen(navController: NavController , viewModel: BabySitterViewModel, indexBabySitter:String?, indexChild:String?) {
+    val babysitter = viewModel.babysitters[indexBabySitter!!.toInt()]
+    val child = viewModel.children[indexChild!!.toInt()]
+
+
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Upper Section with Theme Background Color
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -1089,7 +1208,6 @@ fun OrderScreen(navController: NavController, babysitter: Babysitter, child: Chi
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            // Babysitter and Child Row
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
