@@ -16,6 +16,7 @@ import com.example.feature_babysitter.babysitter.BabySitterNavigation
 import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
 import com.example.feature_mover.mover.registerMoverRoutes
 import com.example.feature_learn.LearnNavigation
+import com.example.feature_pcrepair.pcrepair.PcRepairNavigation
 import com.example.feature_pet.pet.PetNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
@@ -56,8 +57,16 @@ class MainActivity : ComponentActivity() {
                     composable<HomeScreenRoute> {
                         HomePageScreen(
                             user = "jim",
-                            navigateToBabySitter = { navController.navigate(BabySitterNavigationRoute) },
-                            navigateToHouseCleaning = { navController.navigate(HouseCleaningNavigationRoute) },
+                            navigateToBabySitter = {
+                                navController.navigate(
+                                    BabySitterNavigationRoute
+                                )
+                            },
+                            navigateToHouseCleaning = {
+                                navController.navigate(
+                                    HouseCleaningNavigationRoute
+                                )
+                            },
 //                            ,navigateToBank = { navController.navigate(BankNavigationRoute) },
 //                            navigateToChat = { navController.navigate(ChatNavigationRoute) },
 //                            navigateToDelivery = { navController.navigate(DeliveryNavigationRoute) },
@@ -68,8 +77,8 @@ class MainActivity : ComponentActivity() {
                             navigateToLearn = { navController.navigate(LearnNavigationRoute) },
 //                            navigateToMechanic = { navController.navigate(MechanicNavigationRoute) },
 //                            navigateToMover = { navController.navigate(MoverNavigationRoute) },
-//                            navigateToPcRepair = { navController.navigate(PcRepairNavigationRoute) },
-                         navigateToPet = { navController.navigate(PetNavigationRoute) }
+                            navigateToPcRepair = { navController.navigate(PcRepairNavigationRoute) },
+                            navigateToPet = { navController.navigate(PetNavigationRoute) }
                         )
                     }
                     composable<BabySitterNavigationRoute> {
@@ -115,12 +124,12 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<PetNavigationRoute> {
                         PetNavigation(
-                            onNavigateBack={navController.navigate(HomeScreenRoute)}
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
                     composable<LearnNavigationRoute> {
                         LearnNavigation(
-                            onNavigateBack={navController.navigate(HomeScreenRoute)}
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
 //                    composable<LaundryNavigationRoute> {
@@ -143,10 +152,10 @@ class MainActivity : ComponentActivity() {
 //                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
 //                        )
 //                    }
-//                    composable<PcRepairNavigationRoute> {
-//                        PcRepairNavigation(
-//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
-//                        )
+                    composable<PcRepairNavigationRoute> {
+                        PcRepairNavigation(
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+                        )
 //                    }
 //                    composable<PetNavigationRoute> {
 //                        PetNavigation(
@@ -154,6 +163,7 @@ class MainActivity : ComponentActivity() {
 //                        )
 //                    }
 
+                    }
                 }
             }
         }

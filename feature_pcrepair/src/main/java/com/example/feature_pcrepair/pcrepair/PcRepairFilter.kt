@@ -9,14 +9,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterScreen() {
+fun PcRepairFilterScreen(navController: NavController) {
     var selectedSortOption by remember { mutableStateOf("Recommend") }
     var expanded by remember { mutableStateOf(false) }
     var priceRange by remember { mutableStateOf(0f..30f) }
@@ -110,7 +109,7 @@ fun FilterScreen() {
 
             // Apply Button
             Button(
-                onClick = { /* Handle apply filters */ },
+                onClick = { navController.navigate(PcRepairScreens.PcRepairSearchListScreen.route) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
@@ -118,12 +117,5 @@ fun FilterScreen() {
                 Text(text = "Apply")
             }
         }
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun PreviewFilterScreen() {
-    MaterialTheme {
-        FilterScreen()
     }
 }
