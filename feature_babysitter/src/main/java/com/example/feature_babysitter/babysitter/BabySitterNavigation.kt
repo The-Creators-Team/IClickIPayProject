@@ -560,7 +560,6 @@ fun ChildCard(
                 )
                 Text(
                     text = child.gender,
-
                 )
             }
 
@@ -632,7 +631,7 @@ fun FilterScreen(navController: NavController, viewModel: BabySitterViewModel) {
         Text(text = "Max: Price/Hour")
         Spacer(modifier = Modifier.height(16.dp))
 
-        var sliderValue by remember { mutableStateOf(0f) }
+        var sliderValue by remember { mutableStateOf(60f) }
         Column {
             Slider(
                 value = sliderValue,
@@ -725,6 +724,9 @@ fun ParcelSlider(title: String) {
 fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, sort:String?, max:String?, min:String?) {
     var showPopup by remember { mutableStateOf(false) }
     var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
+    val children = viewModel.children
+    val randNumber = (0..children.size-1).random()
+    val child = children[randNumber]
 
     var babysitters = viewModel.babysitters
     if (sort.equals("Recommend")){
@@ -739,7 +741,7 @@ fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, s
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Image
         Image(
-            painter = painterResource(id = R.drawable.cam_placeholder),
+            painter = painterResource(child.imageResId),
             contentDescription = "Top Image",
             modifier = Modifier
                 .fillMaxWidth()

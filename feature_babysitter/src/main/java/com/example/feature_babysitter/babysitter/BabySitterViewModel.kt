@@ -24,7 +24,7 @@ class BabySitterViewModel : ViewModel() {
         Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 2.5, 33.92095879668887,-84.46697881555114,3.0, 5.0),
         Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 5.0, 33.92095879668887,-84.46697881555114,50.0, 60.0),
         Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 2.0, 33.92095879668887,-84.46697881555114,70.0, 60.0),
-        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 3.0, 33.92095879668887,-84.46697881555114,2.5, 10.0)
+        Babysitter("Mrs.Doubtfire","When applying for a nanny position, you can highlight relevant childcare experience, education, or certifications in child development.", "Corona", R.drawable.doubtfire, 3.0, 33.92095879668887,-84.46697881555114,2.5, 10.0 )
     )
 
     private fun sortBabysittersByRating(): List<Babysitter> {
