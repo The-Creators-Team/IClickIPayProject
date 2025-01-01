@@ -2,6 +2,8 @@ package com.example.feature_hotel.hotel.presentation.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,10 +15,19 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LibraryBooks
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.LocationSearching
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.OtherHouses
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -33,9 +44,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.feature_hotel.R
+import com.example.feature_hotel.hotel.data.hotelList
+import com.example.feature_hotel.hotel.domain.HotelListDataObject
 
 
 @Composable
@@ -43,19 +58,19 @@ fun HotelSearchScreen() {
     MaterialTheme {
         Box {
             Column {
-                TopHeader()
+                TopHead()
                 Spacer(modifier = Modifier.height(80.dp)) // Leave space for the elevated search section
-                SearchSection()
-                FavoritesAndOrdersRow()
-                TeacherList()
+                SearchSec()
+                FavAndOrdersRow()
+                HotelList()
             }
-            FloatingHomeIcon()
+            FloatHomeIcon()
         }
     }
 }
 
 @Composable
-fun TopHeader() {
+fun TopHead() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -73,7 +88,7 @@ fun TopHeader() {
 }
 
 @Composable
-fun FloatingHomeIcon() {
+fun FloatHomeIcon() {
     Row {
         IconButton(
             onClick = {},
@@ -82,7 +97,7 @@ fun FloatingHomeIcon() {
                 .size(40.dp)
                 .background(MaterialTheme.colorScheme.primary, CircleShape).align(Alignment.Top)
         ) {
-            Icon(Icons.Default.Home, contentDescription = "Home", tint = Color.White)
+            Icon(Icons.Outlined.OtherHouses, contentDescription = "Home", tint = Color.White)
         }
     }
 
@@ -90,7 +105,7 @@ fun FloatingHomeIcon() {
 }
 
 @Composable
-fun SearchSection() {
+fun SearchSec() {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -101,20 +116,31 @@ fun SearchSection() {
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Johannesburg, 1 Road Ubuntu", style = MaterialTheme.typography.bodyLarge)
+            Row{
+                Text(text = "Johannesburg", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.weight(1f))
+                Text(text = "Places",color = Color.Gray, fontSize = 13.sp)
+                Icon(
+                    imageVector = Icons.Filled.LocationSearching,
+                    contentDescription = "Filter",
+                    tint = Color.Red,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 OutlinedTextField(
-                    value = "20 Mar - 10h",
+                    value = "20 Mar - 22 Mar",
                     onValueChange = {},
-                    label = { Text("Choose Date") },
+                    label = { Text("CHOOSE DATES") },
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 OutlinedTextField(
-                    value = "Laptop",
+                    value = "1 Room - 2 Adults",
                     onValueChange = {},
-                    label = { Text("Type") },
+                    label = { Text("NUMBERS OF ROOMS") },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -122,7 +148,7 @@ fun SearchSection() {
             OutlinedTextField(
                 value = "",
                 onValueChange = {},
-                label = { Text("Search location / name") },
+                label = { Text("Search Location / name / country") },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -130,25 +156,31 @@ fun SearchSection() {
                 onClick = {},
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Search")
+                Text("Search hotels")
             }
         }
     }
 }
 
 @Composable
-fun FavoritesAndOrdersRow() {
+fun FavAndOrdersRow() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        //horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Button(
             onClick = {},
             modifier = Modifier.weight(1f),
             shape = RoundedCornerShape(8.dp)
         ) {
+            Icon(
+                imageVector = Icons.Default.FavoriteBorder,
+                contentDescription = "Favorite",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(width = 8.dp))
             Text(text = "Favorites")
         }
         Spacer(modifier = Modifier.width(8.dp))
@@ -157,77 +189,106 @@ fun FavoritesAndOrdersRow() {
             modifier = Modifier.weight(1f),
             shape = RoundedCornerShape(8.dp)
         ) {
+            Icon(
+                imageVector = Icons.Filled.LibraryBooks,
+                contentDescription = "Order",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(width = 8.dp))
             Text(text = "Orders")
         }
 
     }
 }
 
-//@Composable
-//fun FavoriteAndOrderItem(title: String) {
-//    Row {
-//        Button(
-//            onClick = {},
-//            modifier = Modifier.weight(1f),
-//            shape = RoundedCornerShape(8.dp)
-//        ) {
-//            Text(text = title)
-//        }
-//    }
-//
-//}
 
 @Composable
-fun TeacherList() {
+fun HotelList() {
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Teachers (120)", style = MaterialTheme.typography.titleMedium)
+        Row{
+            Text(text = "Recommended hotels", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                imageVector = Icons.Default.FilterList,
+                contentDescription = "Filter",
+                tint = Color.Red,
+                modifier = Modifier.size(24.dp)
+            )
+        }
         Spacer(modifier = Modifier.height(8.dp))
-        TeacherCard(
-            name = "Jessy Jones",
-            location = "Johannesburg",
-            rating = 4.8,
-            distance = 500,
-            price = 15,
-            description = "Computer, Laptop, Mobile"
-        )
+        LazyColumn {
+            items(hotelList){ hotelData ->
+                HotelListItem(hotelData)
+            }
+        }
+
     }
 }
 
 @Composable
-fun TeacherCard(
-    name: String,
-    location: String,
-    rating: Double,
-    distance: Int,
-    price: Int,
-    description: String
+fun HotelListItem(
+    hotelData: HotelListDataObject
 ) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.elevatedCardElevation()
+            .padding(8.dp)
     ) {
-        Row(modifier = Modifier.padding(16.dp)) {
+        Column {
+            // Hotel Image
             Image(
-                painter = painterResource(id = R.drawable.hotel_room), // Replace with your image resource
-                contentDescription = "Teacher",
+                painter = painterResource(id = hotelData.hotelImage),
+                contentDescription = "Babysitter Image",
                 modifier = Modifier
-                    .size(64.dp)
-                    .clip(CircleShape)
+                    .fillMaxWidth()
+                    .height(150.dp),
+                contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(text = name, style = MaterialTheme.typography.titleMedium)
-                Text(text = location, style = MaterialTheme.typography.bodySmall)
-                Text(text = description, style = MaterialTheme.typography.bodySmall)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Name and Location
+            Text(
+                text = hotelData.hotelName,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+            Text(
+                text = hotelData.hotelCity,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            )
+
+            // Rating, Distance, and Cost
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                // Rating
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "$rating ★", style = MaterialTheme.typography.bodyMedium)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "$distance m", style = MaterialTheme.typography.bodySmall)
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = "$$price/h", style = MaterialTheme.typography.bodyMedium)
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = "Rating",
+                        tint = Color.Yellow
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "${hotelData.hotelRating}")
+                }
+
+                // Distance
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.LocationOn,
+                        contentDescription = "Distance",
+                        tint = Color.Gray
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "${hotelData.hotelDistance}")
+                }
+                // Cost
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(text = "$${hotelData.hotelPrice}")
                 }
             }
         }
@@ -237,5 +298,7 @@ fun TeacherCard(
 @Preview(showBackground = true)
 @Composable
 fun HotelSearchScreenPreview() {
-    HotelSearchScreen()
+    MaterialTheme{
+        HotelSearchScreen()
+    }
 }
