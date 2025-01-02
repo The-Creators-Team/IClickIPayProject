@@ -2,7 +2,9 @@
 
 package com.example.feature_delivery.delivery.deliveryui
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -31,13 +33,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.feature_delivery.R
+import com.example.feature_delivery.delivery.nami.DeliveryNamiScreen
 
 @Composable
-fun OrderDetailsPage() {
+fun OrderDetailsPage(
+    navController: NavController,
+) {
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -57,7 +65,9 @@ fun OrderDetailsPage() {
         },
         bottomBar = {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    Toast.makeText(context, "OrderPlaced", Toast.LENGTH_SHORT).show()
+                    navController.navigate(DeliveryNamiScreen.DeliveryMap.route) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -68,7 +78,6 @@ fun OrderDetailsPage() {
         content = { padding ->
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
                     .padding(padding)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -207,5 +216,6 @@ fun SummaryRow(label: String, amount: String, isTotal: Boolean = false) {
 @Preview(showBackground = true)
 @Composable
 fun OrderDetailsPagePreview() {
-    OrderDetailsPage()
+    OrderDetailsPage(navController = NavController(LocalContext.current))
+
 }

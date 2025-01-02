@@ -33,17 +33,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.feature_pcrepair.R
 
-
-import com.example.iclickipay.ui.theme.AppOrange
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview(showBackground = true)
 @Composable
-fun PcRepairHomeScreen(){
+fun PcRepairHomeScreen(
+    navController: NavController,
+    onNavigateBack: () -> Unit
+){
 
     Scaffold(
         topBar = {
@@ -54,11 +55,11 @@ fun PcRepairHomeScreen(){
                     containerColor = Color.White
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = onNavigateBack ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
                             contentDescription = "Localized description",
-                            tint = AppOrange
+
                         )
                     }
                 }
@@ -68,11 +69,13 @@ fun PcRepairHomeScreen(){
         bottomBar = {
             Row(modifier = Modifier.padding(vertical = 12.dp,horizontal = 16.dp)) {
                 Button(
-                    onClick = { /* Place order action */ },
+                    onClick = {
+                        navController.navigate(PcRepairScreens.PcRepairProblemScreen.route)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(75.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = AppOrange),
+                    colors = ButtonDefaults.buttonColors(),
                     shape = RoundedCornerShape(8.dp),
                 ) {
                     Text("Let's go", color = Color.White, fontSize = 16.sp)

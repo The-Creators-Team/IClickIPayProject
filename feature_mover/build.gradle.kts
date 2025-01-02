@@ -2,6 +2,12 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    // Hilt
+    id("com.google.dagger.hilt.android")
+//   id("com.google.devtools.ksp")
+//    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -10,7 +16,6 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -24,14 +29,16 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
-
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         compose = true
     }
@@ -39,6 +46,7 @@ android {
 
 dependencies {
 
+    // Core Libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -51,8 +59,11 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
+
+    // Project-specific dependencies
     implementation(project(":common"))
-//    implementation(project(":app"))
+
+    // Testing Libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,22 +72,32 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //Please separate any added dependencies with a blank line and a comment
-    //with your name describing what the import is needed for
-    //navigation with compose - Jonathan
+    // Navigation with Compose - Jonathan
     implementation(libs.navigation.compose)
+
+    // Kotlin Serialization - Jonathan
     implementation(libs.kotlinx.serialization.json)
 
+    // Map Dependencies - Sebastian
+    implementation(libs.play.services.maps)
+    implementation(libs.maps.compose)
+    implementation(libs.places)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
-    //Map Dependencies - Sebastian
+    // Gson
+    implementation(libs.gson)
 
-    implementation (libs.play.services.maps)
-    implementation (libs.maps.compose)
-    implementation (libs.places)
-    implementation (libs.retrofit)
-    implementation (libs.converter.gson)
+//    // Hilt Dependencies
+   implementation("com.google.dagger:hilt-android:2.51.1")
+   // kapt("com.google.dagger:hilt-compiler:2.44")
+    ksp(libs.hilt.android.compiler)
 
-
-    // different module dependency
-
+//
+//    // Hilt ViewModel and Navigation Compose
+    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+//
+//    // Lifecycle ViewModel Compose
+   implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
 }
