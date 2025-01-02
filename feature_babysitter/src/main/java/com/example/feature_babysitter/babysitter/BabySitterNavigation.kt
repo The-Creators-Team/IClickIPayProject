@@ -66,6 +66,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -126,11 +127,11 @@ fun BabySitterNavigation(
         }
         composable(route = BabySitterScreen.SearchScreen.route + "/{sort}/{max}/{min}",
             arguments = listOf(
-                navArgument("sort"){type = NavType.StringType},
-                navArgument("max"){type = NavType.StringType},
-                navArgument("min"){type = NavType.StringType}
+                navArgument("sort") { type = NavType.StringType },
+                navArgument("max") { type = NavType.StringType },
+                navArgument("min") { type = NavType.StringType }
             )
-        ) {entry ->
+        ) { entry ->
             SearchScreen(
                 navController = navController,
                 viewModel = viewModel,
@@ -139,26 +140,27 @@ fun BabySitterNavigation(
                 min = entry.arguments?.getString("min")
             )
         }
-        composable(route = BabySitterScreen.BabyMapScreen.route+ "/{sort}/{max}/{min}",
+        composable(route = BabySitterScreen.BabyMapScreen.route + "/{sort}/{max}/{min}",
             arguments = listOf(
-                navArgument("sort"){type = NavType.StringType},
-                navArgument("max"){type = NavType.StringType},
-                navArgument("min"){type = NavType.StringType}
+                navArgument("sort") { type = NavType.StringType },
+                navArgument("max") { type = NavType.StringType },
+                navArgument("min") { type = NavType.StringType }
             )
-        ) {entry ->
+        ) { entry ->
             BabyMapScreen(
                 navController = navController,
                 viewModel = viewModel,
                 sort = entry.arguments?.getString("sort"),
                 max = entry.arguments?.getString("max"),
-                min = entry.arguments?.getString("min"))
+                min = entry.arguments?.getString("min")
+            )
         }
         composable(route = BabySitterScreen.OrderScreen.route + "/{indexBabySitter}/{indexChild}",
-                arguments = listOf(
-                    navArgument("indexBabySitter"){type = NavType.StringType},
-                    navArgument("indexChild"){type = NavType.StringType}
-                )
-            ) { entry ->
+            arguments = listOf(
+                navArgument("indexBabySitter") { type = NavType.StringType },
+                navArgument("indexChild") { type = NavType.StringType }
+            )
+        ) { entry ->
             OrderScreen(
                 navController = navController,
                 viewModel = viewModel,
@@ -575,7 +577,7 @@ fun ChildCard(
             )
             Spacer(modifier = Modifier.width(16.dp))
 
-            Column (modifier = Modifier.weight(1f)){
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "${child.name}, Age ${child.age}",
                 )
@@ -675,7 +677,13 @@ fun FilterScreen(navController: NavController, viewModel: BabySitterViewModel) {
 
         Button(
             onClick = {
-                navController.navigate(BabySitterScreen.SearchScreen.withArgs(selectedOption,sliderValue.toString(),selectedRating.toString() ))
+                navController.navigate(
+                    BabySitterScreen.SearchScreen.withArgs(
+                        selectedOption,
+                        sliderValue.toString(),
+                        selectedRating.toString()
+                    )
+                )
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -742,23 +750,31 @@ fun ParcelSlider(title: String) {
 }
 
 @Composable
-fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, sort:String?, max:String?, min:String?) {
+fun SearchScreen(
+    navController: NavController,
+    viewModel: BabySitterViewModel,
+    sort: String?,
+    max: String?,
+    min: String?
+) {
     var showPopup by remember { mutableStateOf(false) }
     var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
     val children = viewModel.children
-    val randNumber = (0..children.size-1).random()
-    val child = children[randNumber]
+    val child = children[0] // You can replace this with your dynamic child list logic
 
     var babysitters = viewModel.babysitters
 
-    if (sort.equals("Recommend")){
+    if (sort.equals("Recommend")) {
         babysitters = viewModel.recommendSortBabysitter
-    } else if (sort.equals("Distance")){
+    } else if (sort.equals("Distance")) {
         babysitters = viewModel.distanceSortBabysitter
-    }else if(sort.equals("Cost")){
+    } else if (sort.equals("Cost")) {
         babysitters = viewModel.priceSortBabysitter
     }
-    babysitters = babysitters.filter { (it.costPerHour < max!!.toDouble() && it.rating > min!!.toDouble())}
+
+    babysitters = babysitters.filter {
+        it.costPerHour < max!!.toDouble() && it.rating > min!!.toDouble()
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Image
@@ -769,6 +785,7 @@ fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, s
                 .fillMaxWidth()
                 .weight(1f)
         )
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -796,9 +813,13 @@ fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, s
             Row(
                 modifier = Modifier
                     .clickable {
-//                        showPopup = true
-
-                        navController.navigate(BabySitterScreen.BabyMapScreen.withArgs(sort.toString(), max.toString(), min.toString()))
+                        navController.navigate(
+                            BabySitterScreen.BabyMapScreen.withArgs(
+                                sort.toString(),
+                                max.toString(),
+                                min.toString()
+                            )
+                        )
                     },
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -813,8 +834,13 @@ fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, s
         }
 
         // Show Popup Menu
-        if (showPopup) {
-            OrdersPopupMenu(navController, onDismiss = { showPopup = false })
+        if (showPopup && expandedBabysitter != null) {
+            OrdersPopupMenu(
+                navController = navController,
+                viewModel = viewModel,
+                babysitter = expandedBabysitter!!, // Passing the selected babysitter to the popup
+                onDismiss = { showPopup = false }
+            )
         }
 
         // Bar with title "Babysitters" and filter icon
@@ -840,17 +866,23 @@ fun SearchScreen(navController: NavController, viewModel: BabySitterViewModel, s
         // Lazy list of babysitters
         LazyColumn(modifier = Modifier.weight(2f)) {
             items(babysitters) { babysitter ->
-                BabysitterCard(
-                    babysitter = babysitter,
-                    onClick = { expandedBabysitter = babysitter }
-                )
+                if (!showPopup) {
+                    BabysitterCard(
+                        babysitter = babysitter,
+                        onClick = {
+                            expandedBabysitter = babysitter  // Set the selected babysitter
+                            showPopup = true                 // Show the popup
+                        }
+                    )
+                }
             }
         }
     }
 }
 
 @Composable
-fun OrdersPopupMenu(navController: NavController, onDismiss: () -> Unit) {
+fun OrdersPopupMenu(navController: NavController, viewModel: BabySitterViewModel,babysitter: Babysitter, onDismiss: () -> Unit) {
+    val babysitters = viewModel.babysitters
     Popup(
         alignment = Alignment.Center,
         onDismissRequest = onDismiss
@@ -861,60 +893,40 @@ fun OrdersPopupMenu(navController: NavController, onDismiss: () -> Unit) {
                 .padding(16.dp)
         ) {
             Column {
-                // Title Row
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.LocationOn,
-                        contentDescription = "Location",
-                        tint = Color.Black
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Location",
-                        color = Color.Black,
-                    )
-                }
-
-                // Choose Dates and Number of Children Row
-                Row(
+                Image(
+                    painter = painterResource(id = babysitter.imageResId),
+                    contentDescription = "Babysitter Image",
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(text = "Choose Dates", color = Color.Black)
-                    Text(text = "Number of Children", color = Color.Black)
-                }
-
-                // Search Location/Name Row
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search",
-                        tint = Color.Black
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "Search location/name",
-                        color = Color.Black
-                    )
-                }
+                        .size(50.dp) // Set the size for the circular image
+                        .clip(CircleShape) // Clip the image into a circle
+                        .border(
+                            1.dp,
+                            Color.Gray,
+                            CircleShape
+                        ), // Optional border around the circle
+                    contentScale = ContentScale.Crop // Crop the image to fill the circle
+                )
+                Text(text = babysitter.name)
+                Text(text = "Location: ${babysitter.location}")
+                Text(text = "Rating: ${babysitter.rating}")
+                Text(text = "Distance: ${babysitter.distance} meters")
+                Text(text = "Cost per hour: $${babysitter.costPerHour}")
                 Button(
                     onClick = {
-//                        navController.navigate(BabySitterScreen.BabyMapScreen.route)
+                        navController.navigate(
+                            BabySitterScreen.OrderScreen.withArgs(
+                                babysitters.indexOf(babysitter).toString(),
+                                "0"
+                            )
+                        )
                     },
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(16.dp)
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(text = "Search")
+                    Text(text = "Take Appointment")
                 }
             }
+
+
         }
     }
 }
@@ -1005,18 +1017,25 @@ fun BabysitterCard(babysitter: Babysitter, onClick: () -> Unit) {
 }
 
 @Composable
-fun BabyMapScreen(navController: NavController, viewModel: BabySitterViewModel , sort:String?, max:String?, min:String?) {
+fun BabyMapScreen(
+    navController: NavController,
+    viewModel: BabySitterViewModel,
+    sort: String?,
+    max: String?,
+    min: String?
+) {
     var expandedBabysitter by remember { mutableStateOf<Babysitter?>(null) }
 
     var babysitters = viewModel.babysitters
-    if (sort.equals("Recommend")){
+    if (sort.equals("Recommend")) {
         babysitters = viewModel.recommendSortBabysitter
-    } else if (sort.equals("Distance")){
+    } else if (sort.equals("Distance")) {
         babysitters = viewModel.distanceSortBabysitter
-    }else if(sort.equals("Cost")){
+    } else if (sort.equals("Cost")) {
         babysitters = viewModel.priceSortBabysitter
     }
-    babysitters = babysitters.filter { (it.costPerHour < max!!.toDouble() && it.rating > min!!.toDouble())}
+    babysitters =
+        babysitters.filter { (it.costPerHour < max!!.toDouble() && it.rating > min!!.toDouble()) }
 
 
     Box(
@@ -1033,7 +1052,13 @@ fun BabyMapScreen(navController: NavController, viewModel: BabySitterViewModel ,
         ) {
             Button(
                 onClick = {
-                        navController.navigate(BabySitterScreen.SearchScreen.withArgs(sort.toString(),max.toString(),min.toString() ))
+                    navController.navigate(
+                        BabySitterScreen.SearchScreen.withArgs(
+                            sort.toString(),
+                            max.toString(),
+                            min.toString()
+                        )
+                    )
                 },
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -1104,7 +1129,14 @@ fun BabyMapScreen(navController: NavController, viewModel: BabySitterViewModel ,
 
                         val unfilterBabysitter = viewModel.babysitters
                         Button(
-                            onClick = { navController.navigate(BabySitterScreen.OrderScreen.withArgs(unfilterBabysitter.indexOf(babysitter).toString(), "0")) },
+                            onClick = {
+                                navController.navigate(
+                                    BabySitterScreen.OrderScreen.withArgs(
+                                        unfilterBabysitter.indexOf(babysitter).toString(),
+                                        "0"
+                                    )
+                                )
+                            },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(text = "Take Appointment")
@@ -1205,7 +1237,12 @@ fun BabysitterCardMap(babysitter: Babysitter, onClick: () -> Unit) {
 }
 
 @Composable
-fun OrderScreen(navController: NavController , viewModel: BabySitterViewModel, indexBabySitter:String?, indexChild:String?) {
+fun OrderScreen(
+    navController: NavController,
+    viewModel: BabySitterViewModel,
+    indexBabySitter: String?,
+    indexChild: String?
+) {
     val babysitter = viewModel.babysitters[indexBabySitter!!.toInt()]
     val child = viewModel.children[indexChild!!.toInt()]
 
