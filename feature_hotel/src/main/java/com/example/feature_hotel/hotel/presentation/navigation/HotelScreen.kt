@@ -5,7 +5,7 @@ sealed class HotelScreen(val route: String) {
     object ChooseDateScreen : HotelScreen("choose_date_screen")
     object FilterScreen : HotelScreen("filter_screen")
     object SearchScreen : HotelScreen("search_screen")
-    object MapScreen : HotelScreen("map_screen")
+    object HotelMapScreen : HotelScreen("hotel_map_screen")
     object OrderScreen : HotelScreen("order_screen")
     object RoomsScreen : HotelScreen("rooms_screen")
     object SingleScreen : HotelScreen("single_screen")

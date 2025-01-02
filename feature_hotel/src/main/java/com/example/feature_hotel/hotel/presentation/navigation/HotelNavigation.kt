@@ -30,25 +30,28 @@ fun HotelNavigation (
             )
         }
         composable(route = HotelScreen.ChooseDateScreen.route) {
-            ChooseDatesScreen(navController = navController)
+            ChooseDatesScreen(navController = navController,)
         }
         composable(route = HotelScreen.FilterScreen.route) {
-            HotelFiltersScreen(navController = navController)
+            HotelFiltersScreen(navController = navController,)
         }
         composable(route = HotelScreen.SearchScreen.route) {
-            HotelSearchScreen(navController = navController)
+            HotelSearchScreen(navController = navController,)
         }
-        composable(route = HotelScreen.MapScreen.route) {
+//        composable(route = HotelScreen.HotelMapScreen.route) {
+//            HotelMaps(navController = navController,)
+//        }
+        composable(route= HotelScreen.HotelMapScreen.route){
             HotelMaps(navController = navController)
         }
         composable(route = HotelScreen.OrderScreen.route) {
-            HotelOrder(navController = navController)
+            HotelOrder(navController = navController,)
         }
         composable(route = HotelScreen.RoomsScreen.route) {
-            HotelRooms(navController = navController)
+            HotelRooms(navController = navController,)
         }
         composable(route = HotelScreen.SingleScreen.route) {
-            HotelSingle(navController = navController)
+            HotelSingle(navController = navController,)
         }
 
     }

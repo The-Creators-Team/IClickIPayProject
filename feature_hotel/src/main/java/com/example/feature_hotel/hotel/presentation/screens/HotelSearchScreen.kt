@@ -63,11 +63,11 @@ fun HotelSearchScreen(navController: NavController) {
             Column {
                 TopHead()
                 Spacer(modifier = Modifier.height(80.dp)) // Leave space for the elevated search section
-                SearchSec(navController = NavController(LocalContext.current))
+                SearchSec(navController = navController)
                 FavAndOrdersRow()
-                HotelList(navController = NavController(LocalContext.current))
+                HotelList(navController = navController)
             }
-            FloatHomeIcon(navController = NavController(LocalContext.current))
+            FloatHomeIcon(navController = navController)
         }
     }
 }
@@ -123,7 +123,7 @@ fun SearchSec(navController: NavController) {
                 Text(text = "Johannesburg", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.weight(1f))
                 Text(text = "Places",color = Color.Gray, fontSize = 13.sp)
-                IconButton(onClick = { navController.navigate(HotelScreen.MapScreen.route) }) {
+                IconButton(onClick = { navController.navigate(HotelScreen.HotelMapScreen.route) }) {
                     Icon(
                         imageVector = Icons.Filled.LocationSearching,
                         contentDescription = "Location",
@@ -228,7 +228,7 @@ fun HotelList(navController: NavController) {
         Spacer(modifier = Modifier.height(8.dp))
         LazyColumn {
             items(hotelList){ hotelData ->
-                HotelListItem(hotelData, navController = NavController(LocalContext.current))
+                HotelListItem(hotelData,navController = navController)
             }
         }
 
