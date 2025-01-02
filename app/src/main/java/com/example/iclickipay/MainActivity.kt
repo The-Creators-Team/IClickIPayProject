@@ -14,6 +14,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.examole.feature_mechanic.presentation.routes.MechanicsNavigation
 import com.example.feature_babysitter.babysitter.BabySitterNavigation
+import com.example.feature_eat.eat.EatNavigation
 import com.example.feature_delivery.delivery.nami.DeliveryNavigation
 import com.example.feature_handyman.handyman.nami.HandymanNavigation
 import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
@@ -75,7 +76,7 @@ class MainActivity : ComponentActivity() {
 //                            ,navigateToBank = { navController.navigate(BankNavigationRoute) },
 //                            navigateToChat = { navController.navigate(ChatNavigationRoute) },
                             navigateToDelivery = { navController.navigate(DeliveryNavigationRoute) },
-//                            navigateToEat = { navController.navigate(EatNavigationRoute) },
+                            navigateToEat = { navController.navigate(EatNavigationRoute) },
                             navigateToHandyMan = { navController.navigate(HandymanNavigationRoute) },
 //                            navigateToHotel = { navController.navigate(HotelNavigationRoute) },
                             navigateToLaundry = { navController.navigate(LaundryNavigationRoute) },
@@ -106,15 +107,15 @@ class MainActivity : ComponentActivity() {
                     composable<DeliveryNavigationRoute> {
                         DeliveryNavigation(
                             onNavigateBack = { navController.navigate(HomeScreenRoute) }
+                       )
+                    }
+                    composable<EatNavigationRoute> {
+                        EatNavigation(
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
-//                    composable<EatNavigationRoute> {
-//                        EatNavigation(
-//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
-//                        )
-//                    }
                     composable<HandymanNavigationRoute> {
-                        HandymanNavigation(
+                       HandymanNavigation(
                             onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
