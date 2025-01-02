@@ -1,4 +1,4 @@
-package com.example.feature_mover.mover
+package com.example.feature_mover.presentation.mover
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -23,23 +23,26 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.feature_mover.R
+import com.example.feature_mover.domain.model.Mover
+import com.example.feature_mover.presentation.mover.routes.MoverScreenRoutes
 
 @Composable
-fun MoverCard(babysitter: Babysitter, navController: NavController) {
+fun MoverCard(movers: Mover, navController: NavController) {
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        onClick = { navController.navigate(MoverScreenRoutes.MoverProfileScreen.route) },
+        onClick = { navController.navigate(MoverScreenRoutes.MoverProfileScreen.route+"/${movers.id}") },
 
 
     ) {
         Column{
 
             Image(
-                painter = painterResource(id = babysitter.imageResId),
-                contentDescription = "Babysitter Image",
+                painter = painterResource(id = R.drawable.moverlogo),
+                contentDescription = "Mover Image",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(150.dp),
@@ -49,11 +52,11 @@ fun MoverCard(babysitter: Babysitter, navController: NavController) {
 
 
             Text(
-                text = babysitter.name,
+                text = movers.name,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
             Text(
-                text = babysitter.location,
+                text = movers.location,
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
             )
 
@@ -68,19 +71,19 @@ fun MoverCard(babysitter: Babysitter, navController: NavController) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(imageVector = Icons.Default.Star, contentDescription = "Rating")
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "${babysitter.rating}")
+                    Text(text = "${movers.rating}")
                 }
 
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Distance", tint = Color.Gray)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "${babysitter.distance} m")
+                    Text(text = "${movers.id} m")
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "$${babysitter.costPerHour}/hr")
+                    Text(text = "$${movers.id}/hr")
                 }
             }
         }

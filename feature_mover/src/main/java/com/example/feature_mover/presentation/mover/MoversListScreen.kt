@@ -1,4 +1,4 @@
-package com.example.feature_mover.mover
+package com.example.feature_mover.presentation.mover
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,10 +37,10 @@ fun MoversListScreen(navController: NavController){
     }
 
     // Lazy list of babysitters
-    LazyColumn(modifier = Modifier) {
-        items(babysitters) { babysitter ->
-            MoverCard(babysitter = babysitter,navController)
-        }
-    }
+//    LazyColumn(modifier = Modifier) {
+//        items(babysitters) { babysitter ->
+//            MoverCard(babysitter = babysitter,navController)
+//        }
+//    }
 
 }

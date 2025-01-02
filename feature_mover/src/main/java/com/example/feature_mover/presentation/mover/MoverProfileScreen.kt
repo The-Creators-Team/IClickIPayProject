@@ -1,4 +1,4 @@
-package com.example.feature_mover.mover
+package com.example.feature_mover.presentation.mover
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,15 +17,23 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.feature_mover.R
+import com.example.feature_mover.presentation.mover.routes.MoverScreenRoutes
+import com.example.feature_mover.presentation.mover.viewmodel.MoverViewModel
 import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @Composable
-fun MoverProfileScreen(navController: NavController) {
+fun MoverProfileScreen(
+    navController: NavController,
+    moverViewModel: MoverViewModel,
+    moverId: String?
+) {
+    // Fetch the mover by id
+    val mover = moverViewModel.fetchMoverById(moverId?.toInt() ?: 0).firstOrNull()
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -76,7 +84,7 @@ fun MoverProfileScreen(navController: NavController) {
 
             // Business Name
             Text(
-                text = "Box Entreprise",
+                text = mover?.name ?: "",
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
@@ -95,7 +103,7 @@ fun MoverProfileScreen(navController: NavController) {
                     modifier = Modifier.size(20.dp)
                 )
                 Text(
-                    text = "4.8",
+                    text = mover?.rating.toString(),
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
@@ -152,7 +160,7 @@ fun MoverProfileScreen(navController: NavController) {
                     style = MaterialTheme.typography.titleMedium
                 )
                 Text(
-                    text = "$ 15",
+                    text = "$ 15/hr",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -166,9 +174,9 @@ fun MoverProfileScreen(navController: NavController) {
     }
 }
 
-@Preview
-@Composable
-fun MoverProfileScreenPreview() {
-    val navController = rememberNavController() // Use rememberNavController() for previews
-    MoverProfileScreen(navController)
-}
+//@Preview
+//@Composable
+//fun MoverProfileScreenPreview() {
+//    val navController = rememberNavController() // Use rememberNavController() for previews
+//    MoverProfileScreen(navController, moverViewModel, entry.arguments?.getString("index"))
+//}

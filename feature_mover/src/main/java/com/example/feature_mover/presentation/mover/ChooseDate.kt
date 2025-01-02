@@ -1,4 +1,4 @@
-package com.example.feature_mover.mover
+package com.example.feature_mover.presentation.mover
 
 
 import android.annotation.SuppressLint
@@ -27,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.feature_mover.R
+import com.example.feature_mover.presentation.mover.routes.MoverScreenRoutes
+import com.example.feature_mover.presentation.mover.viewmodel.MoverViewModel
 
 
 import com.example.iclickipay.presentation.reuseable.CustomButton
@@ -41,9 +43,13 @@ import java.util.*
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChooseDate(navController: NavController) {
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+fun ChooseDate(navController: NavController, moverViewModel: MoverViewModel) {
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
+    val selectedDate by moverViewModel.selectedDate.collectAsState()
+
+    // Get the current date to disable past days
+    val today = LocalDate.now()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -58,7 +64,6 @@ fun ChooseDate(navController: NavController) {
                         )
                     }
                 },
-
                 navigationIcon = {
                     IconButton(onClick = { /* Handle back navigation */ }) {
                         Icon(
@@ -67,8 +72,7 @@ fun ChooseDate(navController: NavController) {
                         )
                     }
                 },
-
-                )
+            )
         },
         content = {
             Column(
@@ -163,20 +167,35 @@ fun ChooseDate(navController: NavController) {
                                 } else if (dayOfMonth <= totalDays) {
                                     val date = currentMonth.atDay(dayOfMonth)
                                     val isSelected = date == selectedDate
+                                    val isPastDate = date.isBefore(today) // Check if it's a past date
 
                                     Box(
                                         modifier = Modifier
                                             .size(40.dp)
                                             .clip(CircleShape)
                                             .background(
-                                                if (isSelected) Color(0xFF10C971) else Color.Transparent
+                                                when {
+                                                    isSelected -> Color(0xFF10C971) // Selected date
+                                                    isPastDate -> Color.Gray.copy(alpha = 0.5f) // Disabled past dates
+                                                    else -> Color.Transparent
+                                                }
                                             )
-                                            .clickable { selectedDate = date },
+                                            .clickable(
+                                                enabled = !isPastDate // Disable clicking on past dates
+                                            ) {
+                                                if (!isPastDate) {
+                                                    moverViewModel.updateSelectedDate(date)
+                                                }
+                                            },
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
                                             text = dayOfMonth.toString(),
-                                            color = if (isSelected) Color.White else Color.Black,
+                                            color = when {
+                                                isSelected -> Color.White
+                                                isPastDate -> Color.White.copy(alpha = 0.5f) // Dim past dates
+                                                else -> Color.Black
+                                            },
                                             style = MaterialTheme.typography.bodyMedium.copy(
                                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                                             )
@@ -194,20 +213,16 @@ fun ChooseDate(navController: NavController) {
                 CustomButton(
                     text = "Next",
                     onClick = { navController.navigate(MoverScreenRoutes.MoverHomeScreen.route) })
-
-
             }
-
         }
     )
-
-
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun ChooseDatePreview() {
     val navController = rememberNavController() // Use rememberNavController() for previews
-    ChooseDate(navController = navController)
+    ChooseDate(navController = navController, moverViewModel = MoverViewModel())
 }

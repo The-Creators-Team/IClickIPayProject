@@ -1,4 +1,4 @@
-package com.example.feature_mover.ui.theme
+package com.example.feature_mover.ui_styles.theme
 
 
 

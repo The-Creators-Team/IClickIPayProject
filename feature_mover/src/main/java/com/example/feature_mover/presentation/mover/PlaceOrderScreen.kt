@@ -1,4 +1,4 @@
-package com.example.feature_mover.mover
+package com.example.feature_mover.presentation.mover
 
 
 import androidx.compose.foundation.Image
@@ -16,17 +16,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.feature_mover.R
-import com.example.feature_mover.ui.theme.btnClr
+import com.example.feature_mover.presentation.mover.viewmodel.MoverViewModel
+import com.example.feature_mover.ui_styles.theme.btnClr
 import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @Composable
-fun PlaceOrderScreen(navController: NavController) {
+fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewModel) {
 
 
     Column(
@@ -220,11 +218,12 @@ fun PlaceOrderScreen(navController: NavController) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun OrderScreenPreview() {
-    val navController = rememberNavController()
-    PlaceOrderScreen(
-        navController
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun OrderScreenPreview() {
+//    val navController = rememberNavController()
+//    PlaceOrderScreen(
+//        navController,
+//        moverViewModel:MoverViewModel()
+//    )
+//}
