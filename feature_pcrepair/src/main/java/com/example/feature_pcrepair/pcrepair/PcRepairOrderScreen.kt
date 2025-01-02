@@ -27,14 +27,14 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Order") },
+                title = { Text("Order", color = Color.White) },
                 actions = {
                     TextButton(onClick = { navController.navigate(PcRepairScreens.PcRepairHomeScreen.route) }) {
                         Text("Cancel", color = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-
+                    containerColor = Color(0xFFF4761D)
                 ),
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate(PcRepairScreens.PcRepairAppointmentPickerScreen.route) }) {
@@ -50,18 +50,15 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding()
-                .background(Color.White),
+                .fillMaxSize().fillMaxWidth()
+                .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
                 Column(
-                    modifier = Modifier
-
-                        .padding(horizontal = 12.dp)
+                    modifier = Modifier.fillMaxWidth()
+                        .background(color = Color(0xFFF4761D)).padding(horizontal = 12.dp)
                 ) {
                     // Handyman Information
                     Row(
@@ -86,12 +83,13 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                         }
 
                         Column {
-                            Text("Pc Repair", style = MaterialTheme.typography.bodyMedium)
+                            Text("Pc Repair", style = MaterialTheme.typography.bodyMedium, color = Color.White)
                             viewModel.selectedRepairTechnician.value?.let {
                                 Text(
                                     it.name,
                                     style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
                                 )
                             }
                         }
@@ -109,12 +107,14 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                             Text(
                                 "Date",
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = Color.Black
+                                color = Color.White
                             )
-                            Text("${viewModel.selectedDate.value} - ${viewModel.selectedTime.value}h", style = MaterialTheme.typography.bodyLarge)
+                            Text("${viewModel.selectedDate.value} - ${viewModel.selectedTime.value}h",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = Color.White)
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text("28 Broad Street", style = MaterialTheme.typography.bodyLarge)
-                            Text("Johannesburg", style = MaterialTheme.typography.bodyLarge)
+                            Text("28 Broad Street", style = MaterialTheme.typography.bodyLarge, color = Color.White)
+                            Text("Johannesburg", style = MaterialTheme.typography.bodyLarge, color = Color.White)
                             Spacer(modifier = Modifier.height(24.dp))
                         }
 
@@ -128,7 +128,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(0.dp),
+                            .padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
 
@@ -140,7 +140,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(0.dp),
+                            .padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         TextButton(onClick = { /* Remove action */ }) {
@@ -153,7 +153,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
 
                     // Subtotal
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Subtotal", style = MaterialTheme.typography.bodyLarge)
@@ -162,7 +162,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
 
                     // Delivery Fees
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Delivery fees", style = MaterialTheme.typography.bodyLarge)

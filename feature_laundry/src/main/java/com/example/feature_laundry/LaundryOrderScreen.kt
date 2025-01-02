@@ -27,14 +27,14 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Order") },
+                title = { Text("Order", color = Color.White) },
                 actions = {
                     TextButton(onClick = { navController.navigate(LaundryScreens.LaundryHomeScreen.route) }) {
                         Text("Cancel", color = Color.White)
                     }
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
-
+                    containerColor = Color(0xFFF4761D)
                 ),
                 navigationIcon = {
                     IconButton(onClick = { navController.navigate(LaundryScreens.LaundryAppointmentPickerScreen.route) }) {
@@ -50,18 +50,16 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize().fillMaxWidth()
                 .padding(paddingValues)
-                .padding()
                 .background(Color.White),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
                 Column(
-                    modifier = Modifier
-
-                        .padding(horizontal = 12.dp)
+                    modifier = Modifier.fillMaxWidth()
+                        .background(color = Color(0xFFF4761D)).padding(horizontal = 12.dp)
                 ) {
                     // Handyman Information
                     Row(
@@ -87,12 +85,13 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
                         }
 
                         Column {
-                            Text("Laundry Professional", style = MaterialTheme.typography.bodyMedium)
+                            Text("Laundry Professional", style = MaterialTheme.typography.bodyMedium, color = Color.White)
                             viewModel.selectedLaundryProfessional.value?.let {
                                 Text(
                                     it.name,
                                     style = MaterialTheme.typography.bodyLarge,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
                                 )
                             }
                         }
@@ -110,12 +109,14 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
                             Text(
                                 "Date",
                                 style = MaterialTheme.typography.bodyMedium,
-                                color = Color.Black
+                                color = Color.White
                             )
-                            Text("${viewModel.selectedDate.value} - ${viewModel.selectedTime.value}h", style = MaterialTheme.typography.bodyLarge)
+                            Text("${viewModel.selectedDate.value} - ${viewModel.selectedTime.value}h",
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = Color.White)
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text("28 Broad Street", style = MaterialTheme.typography.bodyLarge)
-                            Text("Johannesburg", style = MaterialTheme.typography.bodyLarge)
+                            Text("28 Broad Street", style = MaterialTheme.typography.bodyLarge, color = Color.White)
+                            Text("Johannesburg", style = MaterialTheme.typography.bodyLarge, color = Color.White)
                             Spacer(modifier = Modifier.height(24.dp))
                         }
 
@@ -129,7 +130,7 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(0.dp),
+                            .padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
 
@@ -141,7 +142,7 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(0.dp),
+                            .padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         TextButton(onClick = { /* Remove action */ }) {
@@ -154,7 +155,7 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
 
                     // Subtotal
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Subtotal", style = MaterialTheme.typography.bodyLarge)
@@ -163,7 +164,7 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
 
                     // Delivery Fees
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Delivery fees", style = MaterialTheme.typography.bodyLarge)
