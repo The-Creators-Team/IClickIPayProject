@@ -40,7 +40,7 @@ fun HomePageScreen(
 //    navigateToHotel: () -> Unit,
 //    navigateToLaundry: () -> Unit,
 //    navigateToLearn: () -> Unit,
-//    navigateToMechanic: () -> Unit,
+    navigateToMechanic: () -> Unit,
     navigateToMover: () -> Unit,
 //    navigateToPcRepair: () -> Unit,
 //    navigateToPet: () -> Unit
@@ -61,8 +61,8 @@ fun HomePageScreen(
         subApp("Handyman", navigateToHandyman, R.drawable.handyman),
         subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
         subApp("Laundry", navigateToLaundry, R.drawable.laundry),
-        subApp("PC Repair", navigateToPCRepair, R.drawable.pcrepair),
-        subApp("Mechanic", navigateToMechanic, R.drawable.mechanic), */
+        subApp("PC Repair", navigateToPCRepair, R.drawable.pcrepair),*/
+        subApp("Mechanic", navigateToMechanic, R.drawable.mechanic),
         subApp("Hire Movers", navigateToMover, R.drawable.mover)
 
     )
