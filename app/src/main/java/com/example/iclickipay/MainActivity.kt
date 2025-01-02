@@ -17,7 +17,6 @@ import com.example.feature_babysitter.babysitter.BabySitterNavigation
 import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
 import com.example.feature_mover.presentation.mover.routes.MoverNavigation
 import com.example.feature_laundry.LaundryNavigation
-import com.example.feature_mover.mover.registerMoverRoutes
 import com.example.feature_learn.LearnNavigation
 import com.example.feature_pcrepair.pcrepair.PcRepairNavigation
 import com.example.feature_pet.pet.PetNavigation
