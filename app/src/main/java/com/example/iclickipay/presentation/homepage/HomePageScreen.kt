@@ -32,17 +32,17 @@ fun HomePageScreen(
     navigateToHouseCleaning: () -> Unit,
     navigateToPet: () -> Unit,
     navigateToLearn: () -> Unit,
-//    ,navigateToBank: () -> Unit,
+//    navigateToBank: () -> Unit,
 //    navigateToChat: () -> Unit,
     navigateToDelivery: () -> Unit,
 //    navigateToEat: () -> Unit,
     navigateToHandyMan: () -> Unit
 //    navigateToHotel: () -> Unit,
-//    navigateToLaundry: () -> Unit,
+    navigateToLaundry: () -> Unit,
 //    navigateToLearn: () -> Unit,
-//    navigateToMechanic: () -> Unit,
-//    navigateToMover: () -> Unit,
-//    navigateToPcRepair: () -> Unit,
+    navigateToMechanic: () -> Unit,
+    navigateToMover: () -> Unit,
+    navigateToPcRepair: () -> Unit,
 //    navigateToPet: () -> Unit
 ) {
 
@@ -56,15 +56,15 @@ fun HomePageScreen(
         subApp("Tutors", navigateToLearn, R.drawable.learn),
         subApp("Handyman", navigateToHandyMan, R.drawable.handyman),
         subApp("Delivery", navigateToDelivery, R.drawable.delivery),
-    /*    subApp("Bank", navigateToBank, R.drawable.bank),
-        subApp("Chat", navigateToChat, R.drawable.chat),
+        //subApp("Bank", navigateToBank, R.drawable.bank),
+        //subApp("Chat", navigateToChat, R.drawable.chat),
         subApp("Delivery", navigateToDelivery, R.drawable.delivery),
-        subApp("Order Food", navigateToEat, R.drawable.eat),
-        subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
+        //subApp("Order Food", navigateToEat, R.drawable.eat),
+        //subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
         subApp("Laundry", navigateToLaundry, R.drawable.laundry),
-        subApp("PC Repair", navigateToPCRepair, R.drawable.pcrepair),
+        subApp("PC Repair", navigateToPcRepair, R.drawable.pcrepair),
         subApp("Mechanic", navigateToMechanic, R.drawable.mechanic),
-        subApp("Hire Movers", navigateToMover, R.drawable.mover),*/
+        subApp("Hire Movers", navigateToMover, R.drawable.mover)
 
     )
 
