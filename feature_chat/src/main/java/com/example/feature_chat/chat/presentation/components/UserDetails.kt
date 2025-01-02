@@ -60,7 +60,7 @@ fun MessageSubSection(chatData: ChatListDataObject) {
             modifier = Modifier.weight(1f),
             value = chatData.message.content,
             fontSize = 18.sp,
-            color = Color.Black
+            color = Color.Gray
         )
     }
 }
