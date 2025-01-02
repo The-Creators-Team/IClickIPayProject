@@ -47,7 +47,7 @@ fun CarouselButton(item: String, onClick: () -> Unit, imageId: Int) {
         )
         {
             Image(
-                painter = painterResource(id = R.drawable.ic_gear),
+                painter = painterResource(imageId),
                 contentDescription = null,
                 modifier = Modifier.size(200.dp)
             )
