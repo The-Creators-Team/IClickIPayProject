@@ -197,6 +197,7 @@ fun HomeEatApp(navController: NavController) {
                 .clickable {
                         navController.navigate(EatScreens.StoreDetail.route)
                 }
+
         ) {
             Column {
                 Row(
