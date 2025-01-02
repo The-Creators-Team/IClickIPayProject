@@ -1,8 +1,6 @@
 package com.example.feature_pcrepair.pcrepair
 
 import android.annotation.SuppressLint
-
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,19 +13,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.iclickipay.ui.theme.AppOrange
+import androidx.navigation.NavController
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PcRepairProblemScreen() {
+fun PcRepairProblemScreen(
+    navController: NavController,
+    viewModel: PcRepairViewModel
+) {
+
     var selectedType by remember { mutableStateOf("Laptop") }
     var selectedProblem by remember { mutableStateOf("Do not work") }
     var selectedHour by remember { mutableStateOf(14) }
-    var result by remember { mutableStateOf(PcRepair(selectedType, selectedProblem, selectedHour)) }
+
 
     Scaffold(
         topBar = {
@@ -38,7 +40,7 @@ fun PcRepairProblemScreen() {
                     containerColor = Color.White
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.navigate(PcRepairScreens.PcRepairHomeScreen.route) }) {
                         Icon(
                             imageVector = Icons.Filled.Home,
                             contentDescription = "Localized description"
@@ -59,35 +61,32 @@ fun PcRepairProblemScreen() {
         ) {
             Column {
 
-                DropdownField(label = "Type", selectedOption = selectedType, options = listOf("Laptop", "Desktop")) {
+                DropdownField(label = "Type", selectedOption = selectedType, options = listOf("Laptop", "Desktop", "Tablet")) {
                     selectedType = it
-                    result.type = it
+                    viewModel.selectedType.value = it
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 DropdownField(label = "Problem", selectedOption = selectedProblem, options = listOf("Do not work", "Slow performance", "Overheating")) {
                     selectedProblem = it
-                    result.problem = it
+                    viewModel.selectedProblem.value = it
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(text = "Availability", fontSize = 16.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(8.dp))
                 TimePicker(selectedHour = selectedHour) {
                     selectedHour = it
-                    result.availability = it
+                    viewModel.selectedAvailability.value = it.toString()
                 }
             }
             Button(
-                onClick = { /* Handle Next button click */
-                    println(result)
-                    println("Type: ${selectedType} Problem: ${selectedProblem} Availability: ${selectedHour}")
+                onClick = { navController.navigate(PcRepairScreens.PcRepairSearchListScreen.route)
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(75.dp),
                 shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = AppOrange // Orange color
-                )
+
             ) {
                 Text(text = "Next", color = Color.White, fontSize = 16.sp)
             }
@@ -167,8 +166,8 @@ fun TimePicker(selectedHour: Int, onHourSelected: (Int) -> Unit) {
                 onHourSelected(sliderPosition.toInt())
             },
             colors = SliderDefaults.colors(
-                thumbColor = MaterialTheme.colorScheme.secondary,
-                activeTrackColor = Color.Transparent,
+                thumbColor = MaterialTheme.colorScheme.primary,
+                activeTrackColor = MaterialTheme.colorScheme.secondaryContainer,
                 inactiveTrackColor = MaterialTheme.colorScheme.secondaryContainer,
             ),
             steps = 3,
@@ -177,10 +176,5 @@ fun TimePicker(selectedHour: Int, onHourSelected: (Int) -> Unit) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PcRepairScreenPreview(){
-    PcRepairProblemScreen()
-}
 data class PcRepair(var type: String, var problem: String, var availability: Int) {
 }
