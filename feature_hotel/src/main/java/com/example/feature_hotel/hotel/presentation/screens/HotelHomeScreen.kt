@@ -25,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -33,7 +34,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.feature_hotel.R
+import com.example.feature_hotel.hotel.presentation.navigation.HotelScreen
 
 val sarabunFontFamily = FontFamily(Font(R.font.sarabun_semibold))
 
@@ -41,7 +44,8 @@ val sarabunFontFamily = FontFamily(Font(R.font.sarabun_semibold))
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotelHomeScreen(){
+fun HotelHomeScreen(navController: NavController,
+                    onNavigateBack: () -> Unit){
 
     Scaffold(
         topBar = {
@@ -52,12 +56,12 @@ fun HotelHomeScreen(){
                     containerColor = Color.White
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { onNavigateBack() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = "Localized description",
                         )
-                    }
+                   }
                 }
             )
         }
@@ -65,7 +69,7 @@ fun HotelHomeScreen(){
         bottomBar = {
             Row(modifier = Modifier.padding(vertical = 12.dp,horizontal = 16.dp)) {
                 Button(
-                    onClick = { /* Place order action */ },
+                    onClick = {navController.navigate(HotelScreen.SearchScreen.route) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(75.dp),
@@ -128,7 +132,7 @@ fun HotelHomeScreen(){
 @Preview(showBackground = true)
 @Composable
 fun HotelHomeScreenPreview(){
-    HotelHomeScreen()
+    HotelHomeScreen(navController = NavController(LocalContext.current), onNavigateBack = {})
 }
 
 

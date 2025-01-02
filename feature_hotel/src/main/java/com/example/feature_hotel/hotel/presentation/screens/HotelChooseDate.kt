@@ -16,16 +16,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavController
 import com.example.feature_hotel.R
+import com.example.feature_hotel.hotel.presentation.navigation.HotelScreen
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun ChooseDatesScreen() {
+fun ChooseDatesScreen(navController: NavController) {
     var checkInDate by remember { mutableStateOf<String?>(null) }
     var checkOutDate by remember { mutableStateOf<String?>(null) }
     var selectedDate by remember { mutableStateOf(Calendar.getInstance()) }
@@ -40,12 +43,13 @@ fun ChooseDatesScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start){
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.Red,
-                modifier = Modifier.size(24.dp)
-            )
+            IconButton(onClick = { navController.navigate(HotelScreen.SearchScreen.route) }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
 
         Image(
@@ -139,6 +143,6 @@ fun ChooseDatesScreen() {
 @Preview(showBackground = true)
 @Composable
 fun ChooseDatesScreenPreview() {
-    ChooseDatesScreen()
+    ChooseDatesScreen(navController = NavController(LocalContext.current))
 }
 

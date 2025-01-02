@@ -51,4 +51,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     debugImplementation(libs.ui.tooling)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.navigation.compose)
 }

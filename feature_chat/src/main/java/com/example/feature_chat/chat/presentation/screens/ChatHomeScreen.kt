@@ -9,7 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.example.feature_chat.chat.data.INITIAL_SCREEN_INDEX
 import com.example.feature_chat.chat.data.tabs
 import com.example.feature_chat.chat.presentation.components.AppBarComponent
@@ -17,7 +19,8 @@ import com.example.feature_chat.chat.presentation.components.TabBarComponent
 import kotlinx.coroutines.launch
 
 @Composable
-fun HomeScreen(){
+fun ChatHomeScreen(navController: NavController,
+                   onNavigateBack: () -> Unit){
     val pagerState = rememberPagerState(pageCount = { tabs.size }, initialPage = INITIAL_SCREEN_INDEX)
     val scope = rememberCoroutineScope()
 
@@ -44,7 +47,7 @@ fun HomeScreen(){
 @Preview
 @Composable
 fun HomeScreenPreview(){
-    HomeScreen()
+    ChatHomeScreen(navController = NavController(LocalContext.current), onNavigateBack = {})
 }
 
 

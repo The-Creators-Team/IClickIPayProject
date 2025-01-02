@@ -15,14 +15,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.feature_hotel.R
+import com.example.feature_hotel.hotel.presentation.navigation.HotelScreen
 
 @Composable
-fun RoomSelector() {
+fun HotelRooms(navController: NavController) {
     var rooms by remember { mutableStateOf(
         mutableListOf(
             Room(1,2, 1),
@@ -40,12 +43,14 @@ fun RoomSelector() {
     ) {
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start){
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.Red,
-                modifier = Modifier.size(24.dp)
-            )
+            IconButton(onClick = { navController.navigate(HotelScreen.SearchScreen.route) }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.Red,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
 
         Image(
@@ -166,5 +171,5 @@ data class Room(var rooms: Int, var adults: Int, var kids: Int)
 @Preview(showBackground = true)
 @Composable
 fun RoomSelectorPreview() {
-    RoomSelector()
+    HotelRooms(navController = NavController(LocalContext.current))
 }

@@ -10,34 +10,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.feature_hotel.hotel.presentation.navigation.HotelScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HotelOrder() {
+fun HotelOrder(navController: NavController) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Order") },
                 actions = {
-                    TextButton(onClick = { /* Cancel action */ }) {
+                    TextButton(onClick = { navController.navigate(HotelScreen.SingleScreen.route) }) {
                         Text("Cancel", color = Color.White)
                     }
                 },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = Color.Red
-                ),
                 navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
+                    IconButton(onClick = { navController.navigate(HotelScreen.OrderScreen.route) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back button",
-                            tint = Color.White
+                            contentDescription = "Back button"
                         )
                     }
                 }
@@ -55,25 +54,18 @@ fun HotelOrder() {
         ) {
             Column {
                 Column(
-                    modifier = Modifier
-                        .background(Color.Red)
-                        .padding(horizontal = 12.dp)
+                    modifier = Modifier.padding(horizontal = 12.dp)
                 ) {
                     // Handyman Information
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Surface(
-                            modifier = Modifier.size(50.dp),
-                            shape = RoundedCornerShape(25.dp),
-                            color = Color.Gray // Placeholder for image
-                        ) {}
 
                         Column {
-                            Text("Handyman", style = MaterialTheme.typography.bodyMedium)
+                            Text("Hotel", style = MaterialTheme.typography.bodyMedium)
                             Text(
-                                "Jenny Jones",
+                                "Ressort Hotel",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Bold
                             )
@@ -85,19 +77,17 @@ fun HotelOrder() {
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.Red)
                     ) {
                         Column {
                             // Date and Address
                             Text(
-                                "Date",
+                                "Dates",
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = Color.Black
                             )
-                            Text("20 March, Thu - 14h", style = MaterialTheme.typography.bodyLarge)
+                            Text("20 March, Thu - 22 March, Sat", style = MaterialTheme.typography.bodyLarge)
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text("28 Broad Street", style = MaterialTheme.typography.bodyLarge)
-                            Text("Johannesburg", style = MaterialTheme.typography.bodyLarge)
+                            Text("Junior suite", style = MaterialTheme.typography.bodyLarge)
                             Spacer(modifier = Modifier.height(24.dp))
                         }
 
@@ -115,8 +105,8 @@ fun HotelOrder() {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
 
-                        Text("Pc repair", style = MaterialTheme.typography.bodyLarge)
-                        Text("$15/h", style = MaterialTheme.typography.bodyLarge)
+                        Text("Standard", style = MaterialTheme.typography.bodyLarge)
+                        Text("$150", style = MaterialTheme.typography.bodyLarge)
 
 
                     }
@@ -127,10 +117,10 @@ fun HotelOrder() {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         TextButton(onClick = { /* Remove action */ }) {
-                            Text("Remove", color = Color.Red, textAlign = TextAlign.Left)
+                            Text("Remove", textAlign = TextAlign.Left)
 
                         }
-                        Text("x3", style = MaterialTheme.typography.bodyMedium)
+                        Text("x2", style = MaterialTheme.typography.bodyMedium)
                     }
                     HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
 
@@ -140,7 +130,7 @@ fun HotelOrder() {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Subtotal", style = MaterialTheme.typography.bodyLarge)
-                        Text("$45.00", style = MaterialTheme.typography.bodyLarge)
+                        Text("$300.00", style = MaterialTheme.typography.bodyLarge)
                     }
 
                     // Delivery Fees
@@ -149,7 +139,7 @@ fun HotelOrder() {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Delivery fees", style = MaterialTheme.typography.bodyLarge)
-                        Text("$0.00", style = MaterialTheme.typography.bodyLarge)
+                        Text("$2.50", style = MaterialTheme.typography.bodyLarge)
                     }
 
                     Spacer(modifier = Modifier.height(24.dp))
@@ -174,7 +164,7 @@ fun HotelOrder() {
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            "$45.00",
+                            "$302.50",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp
@@ -196,7 +186,6 @@ fun HotelOrder() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(75.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                     shape = RoundedCornerShape(8.dp),
                 ) {
                     Text("Place order", color = Color.White, fontSize = 16.sp)
@@ -210,5 +199,5 @@ fun HotelOrder() {
 @Preview(showBackground = true)
 @Composable
 fun HotelOrderPreview() {
-    HotelOrder()
+    HotelOrder(navController = NavController(LocalContext.current))
 }

@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,6 +18,7 @@ import com.example.feature_chat.chat.data.chatList
 import com.example.feature_chat.chat.domain.ChatListDataObject
 import com.example.feature_chat.chat.presentation.components.UserDetails
 import com.example.feature_chat.chat.presentation.components.UserImage
+
 
 @Composable
 fun ChatsScreen(){
@@ -42,6 +45,7 @@ fun ChatListItem(chatData: ChatListDataObject){
         UserDetails(chatData)
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

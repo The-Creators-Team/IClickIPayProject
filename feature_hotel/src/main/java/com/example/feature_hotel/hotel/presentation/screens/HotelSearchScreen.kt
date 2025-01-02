@@ -43,28 +43,31 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.feature_hotel.R
 import com.example.feature_hotel.hotel.data.hotelList
 import com.example.feature_hotel.hotel.domain.HotelListDataObject
+import com.example.feature_hotel.hotel.presentation.navigation.HotelScreen
 
 
 @Composable
-fun HotelSearchScreen() {
+fun HotelSearchScreen(navController: NavController) {
     MaterialTheme {
         Box {
             Column {
                 TopHead()
                 Spacer(modifier = Modifier.height(80.dp)) // Leave space for the elevated search section
-                SearchSec()
+                SearchSec(navController = NavController(LocalContext.current))
                 FavAndOrdersRow()
-                HotelList()
+                HotelList(navController = NavController(LocalContext.current))
             }
-            FloatHomeIcon()
+            FloatHomeIcon(navController = NavController(LocalContext.current))
         }
     }
 }
@@ -80,7 +83,7 @@ fun TopHead() {
     ) {
         Image(
             painter = painterResource(id = R.drawable.hotel_room), // Replace with your image resource
-            contentDescription = "Laptop Image",
+            contentDescription = "Hotel Room",
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
@@ -88,10 +91,10 @@ fun TopHead() {
 }
 
 @Composable
-fun FloatHomeIcon() {
+fun FloatHomeIcon(navController: NavController) {
     Row {
         IconButton(
-            onClick = {},
+            onClick = {navController.navigate(HotelScreen.HotelMainScreen.route)},
             modifier = Modifier
                 .padding(16.dp)
                 .size(40.dp)
@@ -105,7 +108,7 @@ fun FloatHomeIcon() {
 }
 
 @Composable
-fun SearchSec() {
+fun SearchSec(navController: NavController) {
     Card(
         modifier = Modifier
             .padding(horizontal = 16.dp)
@@ -120,12 +123,13 @@ fun SearchSec() {
                 Text(text = "Johannesburg", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.weight(1f))
                 Text(text = "Places",color = Color.Gray, fontSize = 13.sp)
-                Icon(
-                    imageVector = Icons.Filled.LocationSearching,
-                    contentDescription = "Filter",
-                    tint = Color.Red,
-                    modifier = Modifier.size(24.dp)
-                )
+                IconButton(onClick = { navController.navigate(HotelScreen.MapScreen.route) }) {
+                    Icon(
+                        imageVector = Icons.Filled.LocationSearching,
+                        contentDescription = "Location",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -134,14 +138,18 @@ fun SearchSec() {
                     value = "20 Mar - 22 Mar",
                     onValueChange = {},
                     label = { Text("CHOOSE DATES") },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).clickable{
+                        navController.navigate(HotelScreen.ChooseDateScreen.route)
+                    }
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 OutlinedTextField(
                     value = "1 Room - 2 Adults",
                     onValueChange = {},
                     label = { Text("NUMBERS OF ROOMS") },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).clickable{
+                        navController.navigate(HotelScreen.RoomsScreen.route)
+                    }
                 )
             }
             Spacer(modifier = Modifier.height(8.dp))
@@ -204,22 +212,23 @@ fun FavAndOrdersRow() {
 
 
 @Composable
-fun HotelList() {
+fun HotelList(navController: NavController) {
     Column(modifier = Modifier.padding(16.dp)) {
         Row{
             Text(text = "Recommended hotels", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.weight(1f))
-            Icon(
-                imageVector = Icons.Default.FilterList,
-                contentDescription = "Filter",
-                tint = Color.Red,
-                modifier = Modifier.size(24.dp)
-            )
+            IconButton(onClick = { navController.navigate(HotelScreen.FilterScreen.route)}) {
+                Icon(
+                    imageVector = Icons.Default.FilterList,
+                    contentDescription = "Filter",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
         Spacer(modifier = Modifier.height(8.dp))
         LazyColumn {
             items(hotelList){ hotelData ->
-                HotelListItem(hotelData)
+                HotelListItem(hotelData, navController = NavController(LocalContext.current))
             }
         }
 
@@ -228,7 +237,7 @@ fun HotelList() {
 
 @Composable
 fun HotelListItem(
-    hotelData: HotelListDataObject
+    hotelData: HotelListDataObject,navController: NavController
 ) {
     Card(
         modifier = Modifier
@@ -242,7 +251,7 @@ fun HotelListItem(
                 contentDescription = "Babysitter Image",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp),
+                    .height(150.dp).clickable { navController.navigate(HotelScreen.SingleScreen.route) },
                 contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -299,6 +308,6 @@ fun HotelListItem(
 @Composable
 fun HotelSearchScreenPreview() {
     MaterialTheme{
-        HotelSearchScreen()
+        HotelSearchScreen(navController = NavController(LocalContext.current))
     }
 }

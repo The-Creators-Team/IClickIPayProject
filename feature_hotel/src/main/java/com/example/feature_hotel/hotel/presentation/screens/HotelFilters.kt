@@ -17,11 +17,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.example.feature_hotel.hotel.presentation.navigation.HotelScreen
 
 @Composable
-fun FiltersScreen() {
+fun HotelFiltersScreen(navController: NavController) {
     var priceRange by remember { mutableStateOf(300f) }
     var rating by remember { mutableStateOf(3) }
     var selectedEquipments by remember { mutableStateOf(setOf<String>()) }
@@ -34,16 +37,17 @@ fun FiltersScreen() {
             .padding(16.dp)
     ) {
         Row{
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.Red,
-                modifier = Modifier.size(24.dp)
-            )
+            IconButton(onClick = { navController.navigate(HotelScreen.SearchScreen.route) }) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
             Spacer(modifier =  Modifier.width(width = 110.dp))
             Text("Filters", style = MaterialTheme.typography.headlineLarge, fontSize = 30.sp)
             Spacer(modifier =  Modifier.width(width = 110.dp))
-            Text("Clear", style = MaterialTheme.typography.headlineLarge.copy(color = Color.Red), fontSize = 14.sp)
+            Text("Clear", style = MaterialTheme.typography.headlineLarge, fontSize = 14.sp)
         }
       
 
@@ -75,8 +79,7 @@ fun FiltersScreen() {
                 ) {
                     Icon(
                         imageVector = if (i <= rating) Icons.Default.Star else Icons.Default.StarBorder,
-                        contentDescription = "Star",
-                        tint = Color.Red
+                        contentDescription = "Star"
                     )
                 }
             }
@@ -141,5 +144,5 @@ fun FilterCheckbox(label: String, isChecked: Boolean, onCheckedChange: (Boolean)
 @Preview(showBackground = true)
 @Composable
 fun FiltersScreenPreview() {
-    FiltersScreen()
+    HotelFiltersScreen(navController = NavController(LocalContext.current))
 }
