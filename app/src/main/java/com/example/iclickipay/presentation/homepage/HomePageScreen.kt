@@ -31,19 +31,17 @@ fun HomePageScreen(
     //Nav Step 3 add fun to you module from activity
     navigateToHouseCleaning: () -> Unit,
     navigateToPet: () -> Unit,
-    navigateToLearn: () -> Unit
-//    ,navigateToBank: () -> Unit,
+    navigateToLearn: () -> Unit,
+//    navigateToBank: () -> Unit,
 //    navigateToChat: () -> Unit,
-//    navigateToDelivery: () -> Unit,
-//    navigateToEat: () -> Unit,
-//    navigateToHandyMan: () -> Unit,
-//    navigateToHotel: () -> Unit,
-//    navigateToLaundry: () -> Unit,
-//    navigateToLearn: () -> Unit,
-//    navigateToMechanic: () -> Unit,
-//    navigateToMover: () -> Unit,
-//    navigateToPcRepair: () -> Unit,
-//    navigateToPet: () -> Unit
+    navigateToDelivery: () -> Unit,
+    navigateToEat: () -> Unit,
+    navigateToHandyMan: () -> Unit,
+   // navigateToHotel: () -> Unit,
+    navigateToLaundry: () -> Unit,
+    navigateToMechanic: () -> Unit,
+    navigateToMover: () -> Unit,
+    navigateToPcRepair: () -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -54,16 +52,16 @@ fun HomePageScreen(
         subApp("House Cleaning", navigateToHouseCleaning, R.drawable.housecleaning),
         subApp("Pet Care", navigateToPet, R.drawable.pet),
         subApp("Tutors", navigateToLearn, R.drawable.learn),
-    /*    subApp("Bank", navigateToBank, R.drawable.bank),
-        subApp("Chat", navigateToChat, R.drawable.chat),
+        subApp("Handyman", navigateToHandyMan, R.drawable.handyman),
         subApp("Delivery", navigateToDelivery, R.drawable.delivery),
+        //subApp("Bank", navigateToBank, R.drawable.bank),
+        //subApp("Chat", navigateToChat, R.drawable.chat),
         subApp("Order Food", navigateToEat, R.drawable.eat),
-        subApp("Handyman", navigateToHandyman, R.drawable.handyman),
-        subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
+        //subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
         subApp("Laundry", navigateToLaundry, R.drawable.laundry),
-        subApp("PC Repair", navigateToPCRepair, R.drawable.pcrepair),
+        subApp("PC Repair", navigateToPcRepair, R.drawable.pcrepair),
         subApp("Mechanic", navigateToMechanic, R.drawable.mechanic),
-        subApp("Hire Movers", navigateToMover, R.drawable.mover),*/
+        subApp("Hire Movers", navigateToMover, R.drawable.mover)
 
     )
 
