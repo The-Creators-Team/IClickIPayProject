@@ -21,11 +21,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.iclickipay.R.*
+import androidx.navigation.NavController
+import com.example.feature_eat.R
+
 
 
 @Composable
-fun EatActivity() {
+fun WelcomeEatApp(navController: NavController) {
     Box(
         Modifier
             .fillMaxSize()
@@ -38,7 +40,7 @@ fun EatActivity() {
                 .fillMaxWidth()
                 .fillMaxHeight(0.40f)
             Image(
-                painter = painterResource(drawable.rest_hamburger),
+                painter = painterResource(R.drawable.rest_hamburger),
                 contentDescription = "Restorant Location",
                 modifier = imageModifier
             )
@@ -65,7 +67,7 @@ fun EatActivity() {
                 )
 
                 Button(onClick = {
-                    //your onclick code here
+                    navController.navigate(EatScreens.HomeEatApp.route)
                 },elevation =  ButtonDefaults.elevatedButtonElevation(
                     defaultElevation = 10.dp,
                     pressedElevation = 15.dp,
@@ -88,8 +90,8 @@ fun EatActivity() {
     }
 }
 
-@Preview
-@Composable
-fun EatActivityPreview() {
-    EatActivity()
-}
+//@Preview
+//@Composable
+//fun EatActivityPreview() {
+//    WelcomeEatApp()
+//}
