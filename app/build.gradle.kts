@@ -60,6 +60,7 @@ dependencies {
     implementation(project(":feature_chat"))
     implementation(project(":feature_pet"))
     implementation(project(":feature_learn"))
+    implementation(project(":feature_eat"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

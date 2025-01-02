@@ -1,8 +1,9 @@
-package com.example.iclickipay.presentation.eat
-
+//package com.example.iclickipay.presentation.eat
+package com.example.feature_eat
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,18 +36,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
-import com.example.feature_eat.R
+import androidx.navigation.NavController
+import com.example.feature_eat.eat.EatScreens
 import kotlin.math.absoluteValue
 
 
 @ExperimentalFoundationApi
-@Preview
 @Composable
-fun HomeEatApp() {
+fun HomeEatApp(navController: NavController) {
 
     Column(
         modifier = Modifier
@@ -193,7 +193,10 @@ fun HomeEatApp() {
                 .background(
                     Color.White,
                     shape = RoundedCornerShape(8.dp)
-                )  // Background color with rounded corners
+                )
+                .clickable {
+                        navController.navigate(EatScreens.StoreDetail.route)
+                }
         ) {
             Column {
                 Row(

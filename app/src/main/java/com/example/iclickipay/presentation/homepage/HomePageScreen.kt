@@ -31,11 +31,11 @@ fun HomePageScreen(
     //Nav Step 3 add fun to you module from activity
     navigateToHouseCleaning: () -> Unit,
     navigateToPet: () -> Unit,
-    navigateToLearn: () -> Unit
+    navigateToLearn: () -> Unit,
 //    ,navigateToBank: () -> Unit,
 //    navigateToChat: () -> Unit,
 //    navigateToDelivery: () -> Unit,
-//    navigateToEat: () -> Unit,
+    navigateToEat: () -> Unit,
 //    navigateToHandyMan: () -> Unit,
 //    navigateToHotel: () -> Unit,
 //    navigateToLaundry: () -> Unit,
@@ -56,9 +56,9 @@ fun HomePageScreen(
         subApp("Tutors", navigateToLearn, R.drawable.learn),
     /*    subApp("Bank", navigateToBank, R.drawable.bank),
         subApp("Chat", navigateToChat, R.drawable.chat),
-        subApp("Delivery", navigateToDelivery, R.drawable.delivery),
+        subApp("Delivery", navigateToDelivery, R.drawable.delivery), */
         subApp("Order Food", navigateToEat, R.drawable.eat),
-        subApp("Handyman", navigateToHandyman, R.drawable.handyman),
+    /*    subApp("Handyman", navigateToHandyman, R.drawable.handyman),
         subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
         subApp("Laundry", navigateToLaundry, R.drawable.laundry),
         subApp("PC Repair", navigateToPCRepair, R.drawable.pcrepair),
