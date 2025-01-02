@@ -35,15 +35,13 @@ fun HomePageScreen(
 //    navigateToBank: () -> Unit,
 //    navigateToChat: () -> Unit,
     navigateToDelivery: () -> Unit,
-//    navigateToEat: () -> Unit,
+    navigateToEat: () -> Unit,
     navigateToHandyMan: () -> Unit,
-//    navigateToHotel: () -> Unit,
+   // navigateToHotel: () -> Unit,
     navigateToLaundry: () -> Unit,
-//    navigateToLearn: () -> Unit,
     navigateToMechanic: () -> Unit,
     navigateToMover: () -> Unit,
     navigateToPcRepair: () -> Unit,
-//    navigateToPet: () -> Unit
 ) {
 
     val context = LocalContext.current
@@ -58,7 +56,7 @@ fun HomePageScreen(
         subApp("Delivery", navigateToDelivery, R.drawable.delivery),
         //subApp("Bank", navigateToBank, R.drawable.bank),
         //subApp("Chat", navigateToChat, R.drawable.chat),
-        //subApp("Order Food", navigateToEat, R.drawable.eat),
+        subApp("Order Food", navigateToEat, R.drawable.eat),
         //subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
         subApp("Laundry", navigateToLaundry, R.drawable.laundry),
         subApp("PC Repair", navigateToPcRepair, R.drawable.pcrepair),
