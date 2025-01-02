@@ -2,8 +2,6 @@ package com.example.feature_housecleaning.housecleaning
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
-import com.example.feature_babysitter.babysitter.Babysitter
-import com.example.feature_babysitter.babysitter.Child
 import com.example.feature_housecleaning.R
 
 class HouseCleaningViewModel : ViewModel(){

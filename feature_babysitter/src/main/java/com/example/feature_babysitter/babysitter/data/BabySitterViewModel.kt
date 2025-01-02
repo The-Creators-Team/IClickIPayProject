@@ -1,4 +1,4 @@
-package com.example.feature_babysitter.babysitter
+package com.example.feature_babysitter.babysitter.data
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel

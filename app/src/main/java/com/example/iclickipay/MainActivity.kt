@@ -13,7 +13,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.examole.feature_mechanic.presentation.routes.MechanicsNavigation
-import com.example.feature_babysitter.babysitter.BabySitterNavigation
+import com.example.feature_babysitter.babysitter.navigation.BabySitterNavigation
 import com.example.feature_chat.chat.presentation.navigation.ChatNavigation
 import com.example.feature_eat.eat.EatNavigation
 import com.example.feature_delivery.delivery.nami.DeliveryNavigation
