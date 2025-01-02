@@ -38,9 +38,9 @@ import com.example.feature_delivery.R
 import com.example.feature_delivery.delivery.DeliveryData
 
 val deliveryData = listOf<DeliveryData>(
-    DeliveryData("Goku", "Earth", com.example.feature_delivery.R.drawable.cam_placeholder, 3.0, 500, 15),
-    DeliveryData("Gohan", "Earth",  com.example.feature_delivery.R.drawable.cam_placeholder, 3.0, 500, 15),
-    DeliveryData("Goten", "Earth",  com.example.feature_delivery.R.drawable.cam_placeholder, 3.0, 500, 15),
+    DeliveryData("Goku", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
+    DeliveryData("Gohan", "Earth",  R.drawable.cam_placeholder, 3.0, 500, 15),
+    DeliveryData("Goten", "Earth",  R.drawable.cam_placeholder, 3.0, 500, 15),
     )
 
 @Composable
@@ -99,9 +99,13 @@ fun DeliverySearchScreen(navController: NavController) {
         }
 
         // Show Popup Menu
-        if (showPopup) {
-            OrdersPopupMenu(navController, onDismiss = { showPopup = false })
-        }
+//        if (showPopup) {
+//            OrdersPopupMenu(
+//                navController, onDismiss = { showPopup = false },
+//                viewModel =
+//                babysitter =
+//            )
+//        }
 
         // Bar with title "Babysitters" and filter icon
         Row(

@@ -101,9 +101,9 @@ fun SearchScreen(navController: NavController) {
         }
 
         // Show Popup Menu
-        if (showPopup) {
+        /*if (showPopup) {
             OrdersPopupMenu(navController, onDismiss = { showPopup = false })
-        }
+        }*/
 
         // Bar with title "Babysitters" and filter icon
         Row(
