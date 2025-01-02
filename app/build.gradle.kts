@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
     //compose nav plugin
     alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -95,4 +96,6 @@ dependencies {
     implementation(project(":feature_mover"))
 //    implementation(project(":feature_pcrepair"))
     implementation(project(":feature_pet"))
+
+
 }

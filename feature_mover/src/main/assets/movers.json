@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Fast Movers",
+    "rating": 4.5,
+    "location": "New York, NY"
+  },
+  {
+    "id": 2,
+    "name": "Smooth Shifters",
+    "rating": 4.8,
+    "location": "San Francisco, CA"
+  },
+  {
+    "id": 3,
+    "name": "Quick Transporters",
+    "rating": 4.2,
+    "location": "Chicago, IL"
+  }
+]
