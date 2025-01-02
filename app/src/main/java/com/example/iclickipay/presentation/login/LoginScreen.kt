@@ -2,11 +2,14 @@ package com.example.iclickipay.presentation.login
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MailOutline
@@ -25,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.iclickipay.R
@@ -45,22 +49,22 @@ fun LoginScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.secondary)
     )
 
     {
-     /*   Image(
-            //ADD LOGO
-            painter = painterResource(id = R.drawable.old_national_logo),
+        Image(
+            painter = painterResource(id = R.drawable.iclickipaylogo),
             contentDescription = null,
             Modifier
-                .size(150.dp)
+                .size(250.dp)
                 .padding(20.dp)
-        )*/
+        )
         Surface(
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.border(
                 5.dp,
-                MaterialTheme.colorScheme.secondary,
+                MaterialTheme.colorScheme.tertiary,
                 shape = MaterialTheme.shapes.medium
             ),
 

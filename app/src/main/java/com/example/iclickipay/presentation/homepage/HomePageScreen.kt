@@ -32,18 +32,16 @@ fun HomePageScreen(
     navigateToHouseCleaning: () -> Unit,
     navigateToPet: () -> Unit,
     navigateToLearn: () -> Unit,
-//    ,navigateToBank: () -> Unit,
-//    navigateToChat: () -> Unit,
+    //navigateToBank: () -> Unit,
+    navigateToChat: () -> Unit,
     navigateToDelivery: () -> Unit,
-//    navigateToEat: () -> Unit,
-    navigateToHandyMan: () -> Unit
-//    navigateToHotel: () -> Unit,
-//    navigateToLaundry: () -> Unit,
-//    navigateToLearn: () -> Unit,
-//    navigateToMechanic: () -> Unit,
-//    navigateToMover: () -> Unit,
-//    navigateToPcRepair: () -> Unit,
-//    navigateToPet: () -> Unit
+    navigateToEat: () -> Unit,
+    navigateToHandyMan: () -> Unit,
+    navigateToHotel: () -> Unit,
+    navigateToLaundry: () -> Unit,
+    navigateToMechanic: () -> Unit,
+    navigateToMover: () -> Unit,
+    navigateToPcRepair: () -> Unit,
 ) {
 
     val context = LocalContext.current
@@ -56,15 +54,14 @@ fun HomePageScreen(
         subApp("Tutors", navigateToLearn, R.drawable.learn),
         subApp("Handyman", navigateToHandyMan, R.drawable.handyman),
         subApp("Delivery", navigateToDelivery, R.drawable.delivery),
-    /*    subApp("Bank", navigateToBank, R.drawable.bank),
+        //subApp("Bank", navigateToBank, R.drawable.bank),
         subApp("Chat", navigateToChat, R.drawable.chat),
-        subApp("Delivery", navigateToDelivery, R.drawable.delivery),
         subApp("Order Food", navigateToEat, R.drawable.eat),
         subApp("Book a Hotel", navigateToHotel, R.drawable.hotel),
         subApp("Laundry", navigateToLaundry, R.drawable.laundry),
-        subApp("PC Repair", navigateToPCRepair, R.drawable.pcrepair),
+        subApp("PC Repair", navigateToPcRepair, R.drawable.pcrepair),
         subApp("Mechanic", navigateToMechanic, R.drawable.mechanic),
-        subApp("Hire Movers", navigateToMover, R.drawable.mover),*/
+        subApp("Hire Movers", navigateToMover, R.drawable.mover)
 
     )
 
@@ -93,23 +90,6 @@ fun HomePageScreen(
                 onClick = listOfSubApps[page].navFunction,
                 imageId = listOfSubApps[page].imageId
             )
-        }
-        Button(
-            onClick = navigateToBabySitter,
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(text = "Go to Babysitter Section")
-        }
-
-
-
-
-        Button(
-            //Nav step 4 add nav call to button click also don't forgot to import module in app.gradle file step 5
-            onClick = navigateToHouseCleaning,
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(text = "Go to Housecleaning Section")
         }
     }
 }
