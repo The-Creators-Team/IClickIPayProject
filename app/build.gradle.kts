@@ -85,6 +85,11 @@ dependencies {
     implementation (libs.places)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
+    
+    implementation (libs.material3) // Asegúrate de usar una versión reciente
+    implementation (libs.ui) // Actualiza la versión de Compose si es necesario
+    implementation (libs.androidx.runtime)
+
     implementation(project(":feature_babysitter"))
 //    implementation(project(":feature_bank"))
 //    implementation(project(":feature_chat"))
@@ -99,4 +104,6 @@ dependencies {
 //    implementation(project(":feature_mover"))
 //    implementation(project(":feature_pcrepair"))
     implementation(project(":feature_pet"))
+
+
 }

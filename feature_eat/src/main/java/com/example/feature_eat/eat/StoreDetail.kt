@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.feature_eat.eat
 
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -19,7 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
@@ -27,12 +27,19 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,18 +47,24 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.feature_eat.R
+import kotlinx.coroutines.launch
 
 @ExperimentalFoundationApi
 @Composable
 fun StoreDetail(navController: NavController) {
+//fun StoreDetail() {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .verticalScroll(rememberScrollState())
+
     ) {
 
         Column(
@@ -67,11 +80,12 @@ fun StoreDetail(navController: NavController) {
                 modifier = imageModifier
             )
         }
-        Column {
+        Column(
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 16.dp, end = 16.dp, top = 160.dp, bottom = 16.dp)
+                    .padding(start = 16.dp, end = 16.dp, top = 160.dp, bottom = 40.dp)
                     .shadow(4.dp, shape = RoundedCornerShape(8.dp))  // Apply elevation (shadow)
                     .background(
                         Color.White,
@@ -274,6 +288,7 @@ fun FoodCategoryItem(label: String) {
 fun FoodItemsRow() {
     LazyColumn(
         modifier = Modifier
+            .height(400.dp)
             .fillMaxWidth() // Ensure the LazyRow takes full width
             .padding(8.dp) // Add padding around the LazyRow
     ) {
@@ -298,18 +313,54 @@ fun FoodItemsRow() {
                 labelPrice = "\$13.50"
             )
         }
+        item {
+            FoodItem(
+                label = "Spinach and ricotta raviolis",
+                labelDescription = "Spinach and ricotta raviolis",
+                labelPrice = "\$13.50"
+            )
+        }
+        item {
+            FoodItem(
+                label = "Spinach and ricotta raviolis",
+                labelDescription = "Spinach and ricotta raviolis",
+                labelPrice = "\$13.50"
+            )
+        }
+        item {
+            FoodItem(
+                label = "Spinach and ricotta raviolis",
+                labelDescription = "Spinach and ricotta raviolis",
+                labelPrice = "\$13.50"
+            )
+        }
+        item {
+            FoodItem(
+                label = "Spinach and ricotta raviolis",
+                labelDescription = "Spinach and ricotta raviolis",
+                labelPrice = "\$13.50"
+            )
+        }
+        item {
+            FoodItem(
+                label = "Spinach and ricotta raviolis",
+                labelDescription = "Spinach and ricotta raviolis",
+                labelPrice = "\$13.50"
+            )
+        }
     }
 }
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FoodItem(label: String, labelDescription: String, labelPrice: String) {
-    var showBottomSheet by remember { mutableStateOf(false) }
-//    val sheetState = rememberModalBottomSheetState(
-//        skipPartiallyExpanded = false,
-//    )
-//
-//    if (showBottomSheet) {
-        /*ModalBottomSheet(
+
+    /*var showBottomSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = false,
+    )
+
+    if (showBottomSheet) {
+        ModalBottomSheet(
             modifier = Modifier.fillMaxHeight(),
             sheetState = sheetState,
             onDismissRequest = { showBottomSheet = false }
@@ -341,7 +392,7 @@ fun FoodItem(label: String, labelDescription: String, labelPrice: String) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .clickable { /*showBottomSheet = true*/  }
+            .clickable { /*showBottomSheet = true */ }
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -470,4 +521,11 @@ fun AddToOrderSection(
             }
         }
     }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Preview
+@Composable
+fun StoreDetailPreview() {
+    StoreDetail(navController = rememberNavController())
 }
