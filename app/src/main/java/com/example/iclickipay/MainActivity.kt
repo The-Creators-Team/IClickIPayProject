@@ -15,8 +15,11 @@ import androidx.navigation.compose.rememberNavController
 import com.examole.feature_mechanic.presentation.routes.MechanicsNavigation
 import com.example.feature_babysitter.babysitter.BabySitterNavigation
 import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
-import com.example.feature_learn.LearnNavigation
 import com.example.feature_mover.presentation.mover.routes.MoverNavigation
+import com.example.feature_laundry.LaundryNavigation
+import com.example.feature_mover.mover.registerMoverRoutes
+import com.example.feature_learn.LearnNavigation
+import com.example.feature_pcrepair.pcrepair.PcRepairNavigation
 import com.example.feature_pet.pet.PetNavigation
 import com.example.iclickipay.presentation.homepage.HomePageScreen
 import com.example.iclickipay.ui.theme.IClickIPayTheme
@@ -74,11 +77,11 @@ class MainActivity : ComponentActivity() {
 //                            navigateToEat = { navController.navigate(EatNavigationRoute) },
 //                            navigateToHandyMan = { navController.navigate(HandymanNavigationRoute) },
 //                            navigateToHotel = { navController.navigate(HotelNavigationRoute) },
-//                            navigateToLaundry = { navController.navigate(LaundryNavigationRoute) },
+                            navigateToLaundry = { navController.navigate(LaundryNavigationRoute) },
                             navigateToLearn = { navController.navigate(LearnNavigationRoute) },
                             navigateToMechanic = { navController.navigate(MechanicNavigationRoute) },
                             navigateToMover = { navController.navigate(MoverNavigationRoute) },
-//                            navigateToPcRepair = { navController.navigate(PcRepairNavigationRoute) },
+                            navigateToPcRepair = { navController.navigate(PcRepairNavigationRoute) },
                             navigateToPet = { navController.navigate(PetNavigationRoute) },
 
                         )
@@ -126,24 +129,19 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<PetNavigationRoute> {
                         PetNavigation(
-                            onNavigateBack={navController.navigate(HomeScreenRoute)}
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
                     composable<LearnNavigationRoute> {
                         LearnNavigation(
-                            onNavigateBack={navController.navigate(HomeScreenRoute)}
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
-//                    composable<LaundryNavigationRoute> {
-//                        LaundryNavigation(
-//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
-//                        )
-//                    }
-//                    composable<LearnNavigationRoute> {
-//                        LearnNavigation(
-//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
-//                        )
-//                    }
+                    composable<LaundryNavigationRoute> {
+                        LaundryNavigation(
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+                        )
+                    }
                     composable<MechanicNavigationRoute> {
                         MechanicsNavigation(
                             onNavigateBack = { navController.navigate(HomeScreenRoute) }
@@ -154,17 +152,13 @@ class MainActivity : ComponentActivity() {
                             onNavigateBack = { navController.navigate(HomeScreenRoute) }
                         )
                     }
-//                    composable<PcRepairNavigationRoute> {
-//                        PcRepairNavigation(
-//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
-//                        )
-//                    }
-//                    composable<PetNavigationRoute> {
-//                        PetNavigation(
-//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
-//                        )
-//                    }
 
+                    composable<PcRepairNavigationRoute> {
+                        PcRepairNavigation(
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+                        )
+
+                    }
                 }
             }
         }
@@ -212,7 +206,6 @@ object HouseCleaningNavigationRoute
 
 @Serializable
 object LaundryNavigationRoute
-
 
 @Serializable
 object MechanicNavigationRoute

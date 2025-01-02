@@ -1,4 +1,5 @@
-package com.example.feature_pcrepair.pcrepair
+package com.example.feature_laundry
+
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,14 +19,14 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PcRepairAppointmentPicker(navController: NavController, viewModel: PcRepairViewModel) {
+fun LaundryAppointmentPicker(navController: NavController, viewModel: LaundryViewModel) {
     var selectedDay by remember { mutableStateOf(6) }
     var selectedTime by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { viewModel.selectedRepairTechnician.value?.let { Text(it.name) } },
+                title = { viewModel.selectedLaundryProfessional.value?.let { Text(it.name) } },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
             )
         }
@@ -87,7 +88,7 @@ fun PcRepairAppointmentPicker(navController: NavController, viewModel: PcRepairV
                             .clickable {
                                 selectedTime = time
                                 viewModel.selectedTime.value = hour
-                                navController.navigate(PcRepairScreens.PcRepairOrderScreen.route)
+                                navController.navigate(LaundryScreens.LaundryOrderScreen.route)
                             }
                             .background(
                                 if (selectedTime == time) MaterialTheme.colorScheme.primary else Color.Transparent,

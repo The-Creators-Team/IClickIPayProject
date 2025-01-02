@@ -1,4 +1,4 @@
-package com.example.feature_pcrepair.pcrepair
+package com.example.feature_laundry
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
@@ -34,18 +34,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.feature_pcrepair.R
-
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PcRepairHomeScreen(
+fun LaundryHomeScreen(
     navController: NavController,
     onNavigateBack: () -> Unit
 ){
-
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -60,7 +56,7 @@ fun PcRepairHomeScreen(
                             imageVector = Icons.AutoMirrored.Default.ArrowBack,
                             contentDescription = "Localized description",
 
-                        )
+                            )
                     }
                 }
             )
@@ -70,7 +66,7 @@ fun PcRepairHomeScreen(
             Row(modifier = Modifier.padding(vertical = 12.dp,horizontal = 16.dp)) {
                 Button(
                     onClick = {
-                        navController.navigate(PcRepairScreens.PcRepairProblemScreen.route)
+                        navController.navigate(LaundryScreens.LaundryProblemScreen.route)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -93,7 +89,7 @@ fun PcRepairHomeScreen(
             ) {
                 // Image Section
                 Image(
-                    painter = painterResource(id = R.drawable.pcrepairlogo), // Replace with your image resource
+                    painter = painterResource(id = R.drawable.laundryhome), // Replace with your image resource
                     contentDescription = "Mover Illustration",
                     modifier = Modifier
                         .size(300.dp)
@@ -105,7 +101,7 @@ fun PcRepairHomeScreen(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {  // Title
                     Text(
-                        text = "Pc Repair",
+                        text = "Laundry",
                         style = TextStyle(
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
@@ -117,7 +113,7 @@ fun PcRepairHomeScreen(
 
                     // Subtitle
                     Text(
-                        text = "We make desktop and laptop repair simple and stress-free. Schedule your repair today! Click below to book an appointment with a technician near you.",
+                        text = "We make clean laundry simple and stress-free. Schedule your laundry wash today! Click below to book an appointment with a professional near you.",
                         style = TextStyle(
                             fontSize = 14.sp,
                             color = Color.Gray
@@ -131,11 +127,4 @@ fun PcRepairHomeScreen(
             }
         }
     )
-
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun PcRepairHomeScreenPreview(){
-//    PcRepairHomeScreen()
-//}

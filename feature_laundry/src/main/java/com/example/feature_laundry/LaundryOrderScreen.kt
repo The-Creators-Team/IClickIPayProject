@@ -1,4 +1,4 @@
-package com.example.feature_pcrepair.pcrepair
+package com.example.feature_laundry
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,13 +23,13 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewModel) {
+fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Order") },
                 actions = {
-                    TextButton(onClick = { navController.navigate(PcRepairScreens.PcRepairHomeScreen.route) }) {
+                    TextButton(onClick = { navController.navigate(LaundryScreens.LaundryHomeScreen.route) }) {
                         Text("Cancel", color = Color.White)
                     }
                 },
@@ -37,7 +37,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
 
                 ),
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(PcRepairScreens.PcRepairAppointmentPickerScreen.route) }) {
+                    IconButton(onClick = { navController.navigate(LaundryScreens.LaundryAppointmentPickerScreen.route) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back button",
@@ -71,13 +71,14 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                         Surface(
                             modifier = Modifier.size(50.dp),
                             shape = RoundedCornerShape(25.dp),
-                            color = Color.Gray
+                            color = Color.Gray,
+                            // Placeholder for image
                         ) {
-                            viewModel.selectedRepairTechnician.value?.let { painterResource(id = it.image) }
+                            viewModel.selectedLaundryProfessional.value?.let { painterResource(id = it.image) }
                                 ?.let {
                                     Image(
                                         painter = it, // Replace with your drawable resource name
-                                        contentDescription = "Repair technicial Image",
+                                        contentDescription = "Laundry Professional Image",
                                         modifier = Modifier
                                             .size(50.dp)
                                             .clip(RoundedCornerShape(25.dp))
@@ -86,8 +87,8 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                         }
 
                         Column {
-                            Text("Pc Repair", style = MaterialTheme.typography.bodyMedium)
-                            viewModel.selectedRepairTechnician.value?.let {
+                            Text("Laundry Professional", style = MaterialTheme.typography.bodyMedium)
+                            viewModel.selectedLaundryProfessional.value?.let {
                                 Text(
                                     it.name,
                                     style = MaterialTheme.typography.bodyLarge,
@@ -132,8 +133,8 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
 
-                        Text("Pc repair", style = MaterialTheme.typography.bodyLarge)
-                        Text("$${viewModel.selectedRepairTechnician.value?.price}.00", style = MaterialTheme.typography.bodyLarge)
+                        Text("Laundry Service", style = MaterialTheme.typography.bodyLarge)
+                        Text("$${viewModel.selectedLaundryProfessional.value?.price}.00", style = MaterialTheme.typography.bodyLarge)
 
 
                     }
@@ -157,7 +158,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Subtotal", style = MaterialTheme.typography.bodyLarge)
-                        Text("$${ viewModel.selectedRepairTechnician.value!!.price * 3 }.00", style = MaterialTheme.typography.bodyLarge)
+                        Text("$${ viewModel.selectedLaundryProfessional.value!!.price * 3 }.00", style = MaterialTheme.typography.bodyLarge)
                     }
 
                     // Delivery Fees
@@ -191,7 +192,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            "$${viewModel.selectedRepairTechnician.value!!.price * 3}.00",
+                            "$${viewModel.selectedLaundryProfessional.value!!.price * 3}.00",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold,
                             fontSize = 24.sp
@@ -209,7 +210,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
 
             Row(modifier = Modifier.padding(vertical = 12.dp,horizontal = 16.dp)) {
                 Button(
-                    onClick = { navController.navigate(PcRepairScreens.PcRepairHomeScreen.route) },
+                    onClick = { navController.navigate(LaundryScreens.LaundryHomeScreen.route) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(75.dp),
