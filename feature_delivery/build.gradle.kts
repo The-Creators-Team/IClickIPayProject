@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(project(":feature_babysitter"))
     implementation(project(":common"))
+    implementation(project(":feature_babysitter"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -33,14 +33,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.feature_babysitter.babysitter.OrdersPopupMenu
 import com.example.feature_handyman.R
 import com.example.feature_handyman.handyman.HandyData
 
 
 val handymen = listOf<HandyData>(
-    HandyData("Goku", "Earth", R.drawable.babysitter, 3.0, 500, 15),
-    HandyData("Gohan", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
-    HandyData("Goten", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
+    HandyData("Goku", "Earth", com.example.feature_babysitter.R.drawable.cam_placeholder, 3.0, 500, 15),
+    HandyData("Gohan", "Earth", com.example.feature_babysitter.R.drawable.cam_placeholder, 3.0, 500, 15),
+    HandyData("Goten", "Earth", com.example.feature_babysitter.R.drawable.cam_placeholder, 3.0, 500, 15),
 
 )
 
@@ -100,9 +101,9 @@ fun SearchScreen(navController: NavController) {
         }
 
         // Show Popup Menu
-        if (showPopup) {
-            //OrdersPopupMenu(navController, onDismiss = { showPopup = false })
-        }
+        /*if (showPopup) {
+            OrdersPopupMenu(navController, onDismiss = { showPopup = false })
+        }*/
 
         // Bar with title "Babysitters" and filter icon
         Row(
