@@ -38,12 +38,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.feature_babysitter.babysitter.BabySitterScreen
-import com.example.feature_babysitter.babysitter.Babysitter
-import com.example.feature_babysitter.babysitter.BabysitterCard
-import com.example.feature_babysitter.babysitter.Child
-import com.example.feature_babysitter.babysitter.ParcelSlider
-import com.example.feature_babysitter.babysitter.babysitters
+
 import com.example.feature_housecleaning.R
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -64,6 +59,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import com.example.common.reuseable.maps.mapui.MapScreen
+import com.example.feature_babysitter.babysitter.BabySitterViewModel
 
 
 @Composable
@@ -71,6 +68,7 @@ fun HouseCleaningNavigation(
     //NAV STEP 1 add nav param for mainactivity/homescreen to use
     onNavigateBack: () -> Unit
 ) {
+    val viewModel = remember { HouseCleaningViewModel() }
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -90,13 +88,13 @@ fun HouseCleaningNavigation(
             FilterScreen(navController = navController)
         }
         composable(route = HouseCleaningScreen.SearchScreen.route) {
-            SearchScreen(navController = navController)
+            SearchScreen(navController = navController,viewModel = viewModel)
         }
-        composable(route = HouseCleaningScreen.MapScreen.route) {
-            MapScreen(navController = navController)
+        composable(route = HouseCleaningScreen.HouseMapScreen.route) {
+            HouseMapScreen(navController = navController, viewModel = viewModel)
         }
         composable(route = HouseCleaningScreen.OrderScreen.route) {
-            OrderScreen(navController = navController, Cleaners[0], House("white House", 100, R.drawable.cam_placeholder))
+            OrderScreen(navController = navController,viewModel.cleaners[0], viewModel.houses[0])
         }
 
 
@@ -317,26 +315,11 @@ fun FilterScreen(navController: NavController) {
     }
 }
 
-data class Cleaner(
-    val name: String,
-    val location: String,
-    val imageResId: Int,
-    val rating: Double,
-    val distance: Int,
-    val costPerHour:Int
-)
-
-val Cleaners = listOf<Cleaner>(
-    Cleaner("Lee", "Corona", R.drawable.cam_placeholder,3.0,500,15 ),
-    Cleaner("Alice", "Corona", R.drawable.cam_placeholder,3.0,500,15 ),
-    Cleaner("Nina", "Corona", R.drawable.cam_placeholder,3.0,500,15 )
-
-)
-
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchScreen(navController: NavController, viewModel: HouseCleaningViewModel) {
     var showPopup by remember { mutableStateOf(false) }
     var expandedCleaner by remember { mutableStateOf<Cleaner?>(null) }
+    val cleaners = viewModel.cleaners
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Image
@@ -413,7 +396,7 @@ fun SearchScreen(navController: NavController) {
 
         // Lazy list of babysitters
         LazyColumn(modifier = Modifier.weight(2f)) {
-            items(Cleaners) { cleaner ->
+            items(cleaners) { cleaner ->
                 CleanerCard(
                     cleaner = cleaner,
                     onClick = { expandedCleaner = cleaner }
@@ -480,7 +463,7 @@ fun OrdersPopupMenu(navController: NavController,onDismiss: () -> Unit) {
                 }
                 Button(
                     onClick = {
-                        navController.navigate(HouseCleaningScreen.MapScreen.route)
+                        navController.navigate(HouseCleaningScreen.HouseMapScreen.route)
                     },
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
@@ -553,19 +536,21 @@ fun CleanerCard(cleaner: Cleaner, onClick: () -> Unit) {
 }
 
 @Composable
-fun MapScreen(navController: NavController){
+fun HouseMapScreen(navController: NavController, viewModel: HouseCleaningViewModel){
     var expandedCleaner by remember { mutableStateOf<Cleaner?>(null) }
+    val cleaners = viewModel.cleaners
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // Background Image
-        Image(
-            painter = painterResource(id = R.drawable.map_temp), // Replace with your drawable resource
-            contentDescription = "Background Image",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        // Background Map
+        MapScreen(modifier = Modifier.fillMaxSize())
+//        Image(
+//            painter = painterResource(id = R.drawable.map_temp), // Replace with your drawable resource
+//            contentDescription = "Background Image",
+//            modifier = Modifier.fillMaxSize(),
+//            contentScale = ContentScale.Crop
+//        )
 
         // Search Bar
         Column(
@@ -596,7 +581,7 @@ fun MapScreen(navController: NavController){
                     .padding(vertical = 16.dp),
                 contentPadding = PaddingValues(horizontal = 8.dp)
             ) {
-                items(Cleaners) { cleaner ->
+                items(cleaners) { cleaner ->
                     CleanerCard(
                         cleaner = cleaner,
                         onClick = { expandedCleaner = cleaner }
@@ -656,12 +641,6 @@ fun MapScreen(navController: NavController){
         }
     }
 }
-
-data class House(
-    val name: String,
-    var age:Int,
-    val imageResId: Int // Drawable resource ID for the image
-)
 
 @Composable
 fun OrderScreen(navController: NavController, cleaner: Cleaner, house: House) {

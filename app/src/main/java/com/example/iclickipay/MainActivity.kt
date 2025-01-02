@@ -213,7 +213,6 @@ object HouseCleaningNavigationRoute
 @Serializable
 object LaundryNavigationRoute
 
-
 @Serializable
 object MechanicNavigationRoute
 
