@@ -1,6 +1,6 @@
-package com.example.feature_pcrepair.pcrepair
+package com.example.feature_laundry
 
-data class PcRepairTechnician(
+data class LaundryProfessional(
     val name: String,
     val location: String,
     val rating: Double,

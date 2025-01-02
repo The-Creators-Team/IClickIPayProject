@@ -1,4 +1,4 @@
-package com.example.feature_pcrepair.pcrepair
+package com.example.feature_laundry
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -14,7 +14,9 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PcRepairFilterScreen(navController: NavController, viewModel: PcRepairViewModel) {
+fun LaundryFilterScreen(
+    navController: NavController,
+    viewModel: LaundryViewModel){
     var selectedSortOption by remember { mutableStateOf("Recommend") }
     var expanded by remember { mutableStateOf(false) }
     var priceRange by remember { mutableStateOf(0f..30f) }
@@ -114,8 +116,8 @@ fun PcRepairFilterScreen(navController: NavController, viewModel: PcRepairViewMo
             Button(
                 onClick = {
                     viewModel.isFiltered.value = true
-                    navController.navigate(PcRepairScreens.PcRepairSearchListScreen.route)
-                          },
+                    navController.navigate(LaundryScreens.LaundrySearchListScreen.route)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)

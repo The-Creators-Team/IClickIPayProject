@@ -1,54 +1,55 @@
-package com.example.feature_pcrepair.pcrepair
+package com.example.feature_laundry
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun PcRepairNavigation(
+fun LaundryNavigation(
     onNavigateBack: () -> Unit
 ){
     val navController = rememberNavController()
-    val viewModel = remember { PcRepairViewModel() }
+    val viewModel = remember { LaundryViewModel() }
 
     NavHost(
         navController = navController,
-        startDestination = PcRepairScreens.PcRepairHomeScreen.route
+        startDestination = LaundryScreens.LaundryHomeScreen.route
     ){
-        composable(route = PcRepairScreens.PcRepairHomeScreen.route) {
-            PcRepairHomeScreen(
+        composable(route = LaundryScreens.LaundryHomeScreen.route) {
+            LaundryHomeScreen(
                 navController = navController,
                 onNavigateBack = onNavigateBack
             )
         }
-        composable(route = PcRepairScreens.PcRepairProblemScreen.route) {
-            PcRepairProblemScreen(
+        composable(route = LaundryScreens.LaundryProblemScreen.route) {
+            LaundryProblemsScreen(
                 navController = navController,
                 viewModel = viewModel
             )
         }
-        composable(route = PcRepairScreens.PcRepairOrderScreen.route) {
-            PcRepairOrderScreen(
+        composable(route = LaundryScreens.LaundryOrderScreen.route) {
+            LaundryOrderScreen(
                 navController = navController,
                 viewModel = viewModel
             )
         }
-        composable(route = PcRepairScreens.PcRepairSearchListScreen.route){
-           PcRepairSearchList(
-               navController = navController,
-               viewModel = viewModel
-           )
-        }
-        composable(route = PcRepairScreens.PcRepairFilterScreen.route){
-            PcRepairFilterScreen(
+        composable(route = LaundryScreens.LaundrySearchListScreen.route){
+            LaundrySearchList(
                 navController = navController,
                 viewModel = viewModel
             )
         }
-        composable(route = PcRepairScreens.PcRepairAppointmentPickerScreen.route){
-            PcRepairAppointmentPicker(
+        composable(route = LaundryScreens.LaundryFilterScreen.route){
+            LaundryFilterScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
+        }
+        composable(route = LaundryScreens.LaundryAppointmentPickerScreen.route){
+            LaundryAppointmentPicker(
                 navController = navController,
                 viewModel = viewModel
             )
