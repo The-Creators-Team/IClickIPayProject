@@ -1,10 +1,7 @@
 package com.example.feature_learn
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,7 +21,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,8 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.common.reuseable.DividerWithText
+import com.example.feature_learn.model.TutorLevel
+import com.example.feature_learn.model.TutorSubject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,11 +64,15 @@ fun LearnFilter() {
 
             DividerWithText("Subject")
             val subjects = listOf(
-                "English", "Math", "Science", "Art", "Music"
+                TutorSubject.ENGLISH,
+                TutorSubject.MATH,
+                TutorSubject.SCIENCE,
+                TutorSubject.ART,
+                TutorSubject.MUSIC
             )
 
             // Track the selected radio button
-            var selectedSubject by remember { mutableStateOf(subjects[0]) }
+            var selectedSubject by remember { mutableStateOf(TutorSubject.ENGLISH) }
 
             LazyRow(
                 verticalAlignment = Alignment.CenterVertically
@@ -80,14 +81,17 @@ fun LearnFilter() {
                     val option = subjects[index]
                     RadioButton(selected = selectedSubject == option,
                         onClick = { selectedSubject = option })
-                    Text(option)
+                    Text(option.toString().lowercase())
                 }
             }
             DividerWithText("Level")
 
             // Track the selected radio button
             val levels = listOf(
-                "Elementary", "Middle School", "High School", "College"
+                TutorLevel.ELEMENTARY,
+                TutorLevel.MIDDLE,
+                TutorLevel.HIGH,
+                TutorLevel.COLLEGE
             )
 
             // Track the selected radio button
@@ -100,7 +104,7 @@ fun LearnFilter() {
                     val option = levels[index]
                     RadioButton(selected = selectedLevel == option,
                         onClick = { selectedLevel = option })
-                    Text(option)
+                    Text(option.toString().lowercase())
                 }
             }
             HorizontalDivider(

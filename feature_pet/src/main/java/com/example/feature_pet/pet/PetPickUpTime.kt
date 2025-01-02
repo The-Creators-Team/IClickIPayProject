@@ -25,26 +25,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PetDepositTime(
-    navigateToPickUp: () -> Unit
+fun PetPickUpTime(
+    navigateToOrder: () -> Unit
 ) {
     var selectedTime by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text("Deposit Time") },
+                title = { Text("Pick Up Time") },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             )
         }
-    ) { paddingValues ->
+    )  { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -78,8 +77,8 @@ fun PetDepositTime(
                     HorizontalDivider()
                 }
             }
-            Button(onClick={navigateToPickUp()}) {
-                Text("Move to Pick Up Time")
+            Button(onClick={navigateToOrder()}) {
+                Text("Move to Finalize Order")
             }
         }
     }

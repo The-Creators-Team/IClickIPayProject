@@ -95,27 +95,7 @@ fun PetFilterScreen(
 
 
             DividerWithText("Rating")
-
-            /*val selectedSize = remember { mutableStateOf("Small") }
-        Row(verticalAlignment = Alignment.CenterVertically
-        ){
-            RadioButton(
-                selected = selectedSize.value=="Small",
-                onClick = { selectedSize.value = "Small" }
-            )
-            Text("Small")
-            RadioButton(
-                selected = selectedSize.value=="Medium",
-                onClick = { selectedSize.value = "Medium" }
-            )
-            Text("Medium")
-            RadioButton(
-                selected = selectedSize.value=="Large",
-                onClick = { selectedSize.value = "Large" }
-            )
-            Text("Large")
-        }*/
-            RatingExample()
+            RatingLayout()
             HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -143,7 +123,7 @@ fun PetFilterScreen(
 }
 
 @Composable
-fun RatingExample() {
+fun RatingLayout() {
     var userRating by remember { mutableFloatStateOf(3f) }
 
     RatingBarStars(

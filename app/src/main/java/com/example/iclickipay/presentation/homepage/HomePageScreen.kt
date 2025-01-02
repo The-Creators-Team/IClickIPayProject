@@ -31,7 +31,7 @@ fun HomePageScreen(
     //Nav Step 3 add fun to you module from activity
     navigateToHouseCleaning: () -> Unit,
     navigateToPet: () -> Unit,
-    navigateToLearn: () -> Unit
+    navigateToLearn: () -> Unit,
 //    ,navigateToBank: () -> Unit,
 //    navigateToChat: () -> Unit,
 //    navigateToDelivery: () -> Unit,

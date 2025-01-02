@@ -1,4 +1,4 @@
-package com.example.feature_pet.pet
+package com.example.feature_learn.viewmodel
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,13 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PetOrderScreen(
+fun LearnOrderScreen(
     navigateBackToHomeScreen: () ->Unit
 ) {
     Scaffold(
@@ -93,23 +92,9 @@ fun PetOrderScreen(
                         ) {}
 
                         Column {
-                            Text("Guard", style = MaterialTheme.typography.bodyMedium)
+                            Text("Tutor", style = MaterialTheme.typography.bodyMedium)
                             Text(
-                                "Jenny Jones",
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        Surface(
-                            modifier = Modifier.size(50.dp),
-                            shape = RoundedCornerShape(25.dp),
-                            color = Color.Gray // Placeholder for image
-                        ) {}
-
-                        Column {
-                            Text("Dog", style = MaterialTheme.typography.bodyMedium)
-                            Text(
-                                "Sprinkles",
+                                "John Teacher",
                                 style = MaterialTheme.typography.bodyLarge,
                                 fontWeight = FontWeight.Bold
                             )
@@ -151,7 +136,7 @@ fun PetOrderScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
 
-                        Text("Care", style = MaterialTheme.typography.bodyLarge)
+                        Text("English/College", style = MaterialTheme.typography.bodyLarge)
                         Text("$15/h", style = MaterialTheme.typography.bodyLarge)
 
 

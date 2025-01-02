@@ -1,4 +1,4 @@
-package com.example.feature_pet.pet
+package com.example.feature_learn
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -40,18 +40,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.feature_pet.R
-import com.example.feature_pet.pet.model.Guardian
-import com.example.feature_pet.viewmodel.GuardianViewModel
+import com.example.feature_learn.model.Tutor
+import com.example.feature_learn.viewmodel.TutorViewModel
 
 @Composable
-fun PetMapScreen(
-    guardianViewModel: GuardianViewModel,
-    navigateToPetCalendar: () -> Unit
+fun LearnMapScreen(
+    tutorViewModel: TutorViewModel,
+    navigateAppointmentPicker: () -> Unit
 ) {
 
-    var expandedGuardian by remember { mutableStateOf<Guardian?>(null) }
-    val guardians = guardianViewModel.guardianList
+    var expandedTutor by remember { mutableStateOf<Tutor?>(null) }
+    val tutors = tutorViewModel.tutorList
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -94,22 +93,22 @@ fun PetMapScreen(
                     .padding(vertical = 16.dp),
                 contentPadding = PaddingValues(horizontal = 8.dp)
             ) {
-                items(guardians.size) { guardian ->
-                    GuardianCard(
-                        guardian = guardians.get(guardian),
-                        onClick = { expandedGuardian = guardians.get(guardian) }
+                items(tutors.size) { tutor ->
+                    TutorCard(
+                        tutor = tutors.get(tutor),
+                        onClick = { expandedTutor =tutors.get(tutor) }
                     )
                 }
             }
         }
 
-        // Expanded Babysitter Details
-        expandedGuardian?.let { guardian ->
+        // Expanded Tutor Details
+        expandedTutor?.let { tutor ->
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.Black.copy(alpha = 0.5f))
-                    .clickable { expandedGuardian = null }, // Dismiss when clicking outside
+                    .clickable { expandedTutor = null }, // Dismiss when clicking outside
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Card(
@@ -126,7 +125,7 @@ fun PetMapScreen(
                         // Babysitter Details
                         Column {
                             Image(
-                                painter = painterResource(id = guardian.imageResId),
+                                painter = painterResource(id = tutor.imageResId),
                                 contentDescription = "Babysitter Image",
                                 modifier = Modifier
                                     .size(50.dp) // Set the size for the circular image
@@ -138,14 +137,14 @@ fun PetMapScreen(
                                     ), // Optional border around the circle
                                 contentScale = ContentScale.Crop // Crop the image to fill the circle
                             )
-                            Text(text = guardian.name)
-                            Text(text = "Rating: ${guardian.rating}")
-                            Text(text = "Cost per hour: $${guardian.price}")
+                            Text(text = tutor.name)
+                            Text(text = "Rating: ${tutor.rating}")
+                            Text(text = "Cost per hour: $${tutor.price}")
                         }
 
                         // Take Appointment Button
                         Button(
-                            onClick = { navigateToPetCalendar()},
+                            onClick = { navigateAppointmentPicker()},
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(text = "Take Appointment")
@@ -158,7 +157,7 @@ fun PetMapScreen(
 }
 
 @Composable
-fun GuardianCard(guardian: Guardian, onClick: () -> Unit) {
+fun TutorCard(tutor: Tutor, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -168,7 +167,7 @@ fun GuardianCard(guardian: Guardian, onClick: () -> Unit) {
         Column {
             // Babysitter Image
             Image(
-                painter = painterResource(id = guardian.imageResId),
+                painter = painterResource(id = tutor.imageResId),
                 contentDescription = "Dog Sitter Image",
                 modifier = Modifier
                     .height(150.dp)
@@ -179,7 +178,7 @@ fun GuardianCard(guardian: Guardian, onClick: () -> Unit) {
 
             // Name and Location
             Text(
-                text = guardian.name,
+                text = tutor.name,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
 
@@ -198,7 +197,7 @@ fun GuardianCard(guardian: Guardian, onClick: () -> Unit) {
                         tint = Color.Yellow
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "${guardian.rating}")
+                    Text(text = "${tutor.rating}")
                 }
 
                 // Distance
@@ -213,11 +212,9 @@ fun GuardianCard(guardian: Guardian, onClick: () -> Unit) {
                 // Cost Per Hour
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "$${guardian.price}/day")
+                    Text(text = "$${tutor.price}/day")
                 }
             }
         }
     }
 }
-
-
