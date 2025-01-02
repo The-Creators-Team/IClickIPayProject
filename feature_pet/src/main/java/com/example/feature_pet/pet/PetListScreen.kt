@@ -14,79 +14,128 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.feature_pet.R
+import com.example.feature_pet.pet.model.Dog
+import com.example.feature_pet.pet.model.DogSex
+import com.example.feature_pet.pet.model.DogSize
+import com.example.feature_pet.viewmodel.DogViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-
 fun PetListScreen(
-    @PreviewParameter(SampleDogProvider::class) dogs: List<Dog>,
-    navigateToNewPet: () -> Unit
+    navigateToNewPet: () -> Unit,
+    navigateBack: () -> Unit,
+    navigateToPetMap: () -> Unit,
+    dogViewModel: DogViewModel
 ) {
 
-    Column {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-                .clickable {
-                    navigateToNewPet()
-                },
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
-        ) {
-            Row(
+    //observing the dog list viewmodel with a local variable
+    val dogs = dogViewModel.dogList
+
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { Text("Pet List") },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                navigationIcon = {
+                    IconButton(onClick = { navigateBack() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back button",
+                            tint = Color.White
+                        )
+                    }
+                }
+            )
+        }
+    ) { paddingValues ->
+        Column {
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                    .padding(paddingValues)
+                    //.padding(8.dp)
+                    .clickable {
+                        navigateToNewPet()
+                    },
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_gear),
-                    contentDescription = "Dog Image",
+                Row(
                     modifier = Modifier
-                        .size(50.dp)
-                        .clip(CircleShape)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_gear),
+                        contentDescription = "Dog Image",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
 
-                // Child Name
-                Text(
-                    text = "New Dog",
-                    modifier = Modifier.weight(1f)
-                )
+                    Text(
+                        text = "New Dog",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
             }
-        }
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(dogs) { dog ->
-                DogCard(dog = dog)
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(dogs) { dog ->
+                    DogCard(
+                        dog = dog,
+                        deleteDog = { dogViewModel.removeDog(dog) },
+                        navigateToPetMap = { navigateToPetMap() }
+                    )
+                }
             }
-        }
 
+        }
     }
 }
 
 @Composable
-fun DogCard(dog: Dog) {
+fun DogCard(
+    dog: Dog,
+    deleteDog: () -> Unit,
+    navigateToPetMap: () -> Unit
+) {
     Card(
+
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable {
+                navigateToPetMap()
+            },
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Row(
             modifier = Modifier
@@ -94,7 +143,7 @@ fun DogCard(dog: Dog) {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Image in CircleCrop
+
             Image(
                 painter = painterResource(id = dog.imageResId),
                 contentDescription = "Dog Image",
@@ -109,47 +158,13 @@ fun DogCard(dog: Dog) {
                 text = dog.name,
                 modifier = Modifier.weight(1f)
             )
-            // Edit Icon
-            IconButton(onClick = { }) {
-                Icon(imageVector = Icons.Default.Edit, contentDescription = "Edit Dog")
-            }
             // Delete Icon
-            IconButton(onClick = { }) {
+            IconButton(onClick = deleteDog) {
                 Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete Dog")
             }
         }
     }
 }
 
-enum class Size {
-    SMALL,
-    MEDIUM,
-    LARGE
-}
 
-enum class Sex {
-    MALE,
-    FEMALE
-}
-
-data class Dog(
-    val name: String,
-    var race: String,
-    var sex: Sex,
-    var age: Int,
-    var size: Size,
-    val imageResId: Int
-)
-
-class SampleDogProvider : PreviewParameterProvider<List<Dog>> {
-    override val values: Sequence<List<Dog>> = sequenceOf(
-        listOf(
-        Dog("Chris", "Labrador", Sex.FEMALE, 3, Size.MEDIUM, R.drawable.ic_gear),
-        Dog("Rebecca", "Chihuahua", Sex.FEMALE, 4, Size.SMALL, R.drawable.ic_gear),
-        Dog("Jill", "Bulldog", Sex.MALE, 2, Size.SMALL, R.drawable.ic_gear),
-        Dog("Leon", "Pug", Sex.MALE, 1, Size.SMALL, R.drawable.ic_gear),
-    )
-
-    )
-}
 

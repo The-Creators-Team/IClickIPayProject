@@ -75,7 +75,8 @@ class MainActivity : ComponentActivity() {
                                     HouseCleaningNavigationRoute
                                 )
                             },
-//                            ,navigateToBank = { navController.navigate(BankNavigationRoute) },
+
+//                          navigateToBank = { navController.navigate(BankNavigationRoute) },
                             navigateToChat = { navController.navigate(ChatNavigationRoute) },
                             navigateToDelivery = { navController.navigate(DeliveryNavigationRoute) },
                             navigateToEat = { navController.navigate(EatNavigationRoute) },
