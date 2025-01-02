@@ -9,14 +9,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilterScreen() {
+fun PcRepairFilterScreen(navController: NavController, viewModel: PcRepairViewModel) {
     var selectedSortOption by remember { mutableStateOf("Recommend") }
     var expanded by remember { mutableStateOf(false) }
     var priceRange by remember { mutableStateOf(0f..30f) }
@@ -81,6 +79,7 @@ fun FilterScreen() {
                 valueRange = 0f..60f,
                 onValueChange = {
                     priceRange = priceRange.start..it
+                    viewModel.selectedPriceRange.value = it.toInt()
                 },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -96,7 +95,10 @@ fun FilterScreen() {
             Spacer(modifier = Modifier.height(8.dp))
             Row {
                 for (i in 1..5) {
-                    IconButton(onClick = { selectedRating = i }) {
+                    IconButton(onClick = {
+                        selectedRating = i
+                        viewModel.selectedRating.value = i
+                    }) {
                         Icon(
                             imageVector = if (i <= selectedRating) Icons.Filled.Star else Icons.Outlined.Star,
                             contentDescription = null,
@@ -110,7 +112,10 @@ fun FilterScreen() {
 
             // Apply Button
             Button(
-                onClick = { /* Handle apply filters */ },
+                onClick = {
+                    viewModel.isFiltered.value = true
+                    navController.navigate(PcRepairScreens.PcRepairSearchListScreen.route)
+                          },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp)
@@ -118,12 +123,5 @@ fun FilterScreen() {
                 Text(text = "Apply")
             }
         }
-    }
-}
-@Preview(showBackground = true)
-@Composable
-fun PreviewFilterScreen() {
-    MaterialTheme {
-        FilterScreen()
     }
 }

@@ -18,17 +18,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.feature_delivery.R
+import com.example.feature_delivery.delivery.nami.DeliveryNamiScreen
 
 @Composable
-fun DeliveryHome() {
+fun DeliveryHome(
+    navController: NavController,
+    onNavigateBack: () -> Unit,
+) {
     Scaffold(
         topBar = {
             // You can add a top app bar here if needed.
         },
         bottomBar = {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(DeliveryNamiScreen.ParcelDetailsPage.route) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)

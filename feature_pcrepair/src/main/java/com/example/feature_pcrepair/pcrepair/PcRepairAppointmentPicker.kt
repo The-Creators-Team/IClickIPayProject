@@ -12,21 +12,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
-fun CalendarAndTimePicker() {
+fun PcRepairAppointmentPicker(navController: NavController, viewModel: PcRepairViewModel) {
     var selectedDay by remember { mutableStateOf(6) }
     var selectedTime by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Jenny Jones") },
+                title = { viewModel.selectedRepairTechnician.value?.let { Text(it.name) } },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
             )
         }
@@ -39,7 +38,7 @@ fun CalendarAndTimePicker() {
         ) {
             // Calendar Picker
             Text(
-                text = "March 2019",
+                text = viewModel.selectedDate.value.toString(),
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
             Spacer(modifier = Modifier.height(8.dp))
@@ -80,11 +79,16 @@ fun CalendarAndTimePicker() {
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(48) { index ->
+                    val hour = "${0 + (index / 2)}:${if (index % 2 == 0) "00" else "30"} "
                     val time = "${0 + (index / 2)}:${if (index % 2 == 0) "00" else "30"} ${if ((index /2) < 12)" AM" else " PM"} "
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { selectedTime = time }
+                            .clickable {
+                                selectedTime = time
+                                viewModel.selectedTime.value = hour
+                                navController.navigate(PcRepairScreens.PcRepairOrderScreen.route)
+                            }
                             .background(
                                 if (selectedTime == time) MaterialTheme.colorScheme.primary else Color.Transparent,
                                 MaterialTheme.shapes.medium
