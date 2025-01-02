@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.examole.feature_mechanic.presentation.routes.MechanicsNavigation
 import com.example.feature_babysitter.babysitter.BabySitterNavigation
 import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
 import com.example.feature_learn.LearnNavigation
@@ -57,8 +58,16 @@ class MainActivity : ComponentActivity() {
                     composable<HomeScreenRoute> {
                         HomePageScreen(
                             user = "jim",
-                            navigateToBabySitter = { navController.navigate(BabySitterNavigationRoute) },
-                            navigateToHouseCleaning = { navController.navigate(HouseCleaningNavigationRoute) },
+                            navigateToBabySitter = {
+                                navController.navigate(
+                                    BabySitterNavigationRoute
+                                )
+                            },
+                            navigateToHouseCleaning = {
+                                navController.navigate(
+                                    HouseCleaningNavigationRoute
+                                )
+                            },
 //                            ,navigateToBank = { navController.navigate(BankNavigationRoute) },
 //                            navigateToChat = { navController.navigate(ChatNavigationRoute) },
 //                            navigateToDelivery = { navController.navigate(DeliveryNavigationRoute) },
@@ -67,10 +76,11 @@ class MainActivity : ComponentActivity() {
 //                            navigateToHotel = { navController.navigate(HotelNavigationRoute) },
 //                            navigateToLaundry = { navController.navigate(LaundryNavigationRoute) },
                             navigateToLearn = { navController.navigate(LearnNavigationRoute) },
-//                            navigateToMechanic = { navController.navigate(MechanicNavigationRoute) },
+                            navigateToMechanic = { navController.navigate(MechanicNavigationRoute) },
                             navigateToMover = { navController.navigate(MoverNavigationRoute) },
 //                            navigateToPcRepair = { navController.navigate(PcRepairNavigationRoute) },
-                         navigateToPet = { navController.navigate(PetNavigationRoute) }
+                            navigateToPet = { navController.navigate(PetNavigationRoute) },
+
                         )
                     }
                     composable<BabySitterNavigationRoute> {
@@ -134,11 +144,11 @@ class MainActivity : ComponentActivity() {
 //                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
 //                        )
 //                    }
-//                    composable<MechanicNavigationRoute> {
-//                        MechanicNavigation(
-//                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
-//                        )
-//                    }
+                    composable<MechanicNavigationRoute> {
+                        MechanicsNavigation(
+                            onNavigateBack = { navController.navigate(HomeScreenRoute) }
+                        )
+                    }
                     composable<MoverNavigationRoute> {
                         MoverNavigation(
                             onNavigateBack = { navController.navigate(HomeScreenRoute) }

@@ -92,7 +92,7 @@ dependencies {
     implementation(project(":feature_housecleaning"))
 //    implementation(project(":feature_laundry"))
     implementation(project(":feature_learn"))
-//    implementation(project(":feature_mechanic"))
+    implementation(project(":feature_mechanic"))
     implementation(project(":feature_mover"))
 //    implementation(project(":feature_pcrepair"))
     implementation(project(":feature_pet"))
