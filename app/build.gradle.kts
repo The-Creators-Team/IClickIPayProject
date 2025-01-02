@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
     //compose nav plugin
     alias(libs.plugins.kotlin.serialization)
+
 }
 
 android {
@@ -57,10 +58,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.foundation.layout.android)
-    implementation(project(":feature_chat"))
-    implementation(project(":feature_pet"))
-    implementation(project(":feature_learn"))
-    implementation(project(":feature_eat"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -88,15 +85,15 @@ dependencies {
     implementation(project(":feature_babysitter"))
 //    implementation(project(":feature_bank"))
 //    implementation(project(":feature_chat"))
-//    implementation(project(":feature_delivery"))
-//    implementation(project(":feature_eat"))
-//    implementation(project(":feature_handyman"))
+    implementation(project(":feature_delivery"))
+    implementation(project(":feature_eat"))
+    implementation(project(":feature_handyman"))
 //    implementation(project(":feature_hotel"))
     implementation(project(":feature_housecleaning"))
-//    implementation(project(":feature_laundry"))
+    implementation(project(":feature_laundry"))
     implementation(project(":feature_learn"))
-//    implementation(project(":feature_mechanic"))
-//    implementation(project(":feature_mover"))
-//    implementation(project(":feature_pcrepair"))
+    implementation(project(":feature_mechanic"))
+    implementation(project(":feature_mover"))
+    implementation(project(":feature_pcrepair"))
     implementation(project(":feature_pet"))
 }
