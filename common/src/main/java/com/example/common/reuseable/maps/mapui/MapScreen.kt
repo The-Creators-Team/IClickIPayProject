@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Icon
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -20,7 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,11 +52,11 @@ fun MapScreen(modifier: Modifier = Modifier) {
     val suggestions = remember { mutableStateOf<List<Pair<String, LatLng>>>(emptyList()) }
     val selectedPosition = remember { mutableStateOf(LatLng(33.7772544, -84.5545472)) }
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(selectedPosition.value, 15f)
+        position = CameraPosition.fromLatLngZoom(selectedPosition.value, 13f)
     }
 
     val route = remember { mutableStateOf<List<LatLng>>(emptyList()) }
-    val originPosition = remember { mutableStateOf(LatLng(33.7782544, -84.5555472)) } // Marker 1
+    val originPosition = remember { mutableStateOf(LatLng(33.7782544, -84.5555472)) }
 
     LaunchedEffect(selectedPosition.value) {
         if (selectedPosition.value != originPosition.value) {
@@ -64,7 +68,6 @@ fun MapScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    // Fetch suggestions when search query changes
     LaunchedEffect(searchQuery.value) {
         if (searchQuery.value.isNotBlank()) {
             suggestions.value = getMarkerSuggestions(searchQuery.value)
@@ -73,27 +76,85 @@ fun MapScreen(modifier: Modifier = Modifier) {
         }
     }
 
-    Scaffold(
-        modifier = modifier
-    ) { padding ->
-        Column(
-            modifier = Modifier
-                .padding(padding)
-        ) {
+    Scaffold(modifier = modifier) { padding ->
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Background Map
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(),
+                cameraPositionState = cameraPositionState
+            ) {
+                // Markers and Polylines logic
+                val markers = listOf(
+                    MarkerInfo(
+                        LatLng(33.7782544, -84.5555472),
+                        "Current Location",
+                        R.drawable.anya
+                    ),
+                    MarkerInfo(
+                        LatLng(33.7882544, -84.5655472),
+                        "Luffy",
+                        R.drawable.luffy
+                    ),
+                    MarkerInfo(
+                        LatLng(33.7682544, -84.5455472),
+                        "Imotto",
+                        R.drawable.clipart5643
+                    ),
+                    MarkerInfo(
+                        LatLng(33.7582544, -84.5755472),
+                        "Kawaii- Onesaan",
+                        R.drawable.maximum_logo
+                    ),
+                )
+
+                markers.forEach { markerInfo ->
+                    Marker(
+                        state = MarkerState(position = markerInfo.position),
+                        title = markerInfo.title,
+                        icon = bitmapDescriptorFromVector(context, markerInfo.iconResId),
+                        onClick = {
+                            Toast.makeText(
+                                context,
+                                "${markerInfo.title} clicked!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            true
+                        }
+                    )
+                }
+
+                if (route.value.isNotEmpty()) {
+                    Polyline(
+                        points = route.value,
+                        color = Color.Blue,
+                        width = 5f
+                    )
+                }
+            }
+
+            // Floating Search Bar
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp)
+                    .padding(16.dp)
+                    .align(Alignment.TopCenter)
             ) {
                 OutlinedTextField(
                     value = searchQuery.value,
                     onValueChange = { query -> searchQuery.value = query },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp)
+                        .background(Color.White), // Set alpha value here (0.0f = fully transparent, 1.0f = fully opaque)
                     label = { Text("Search") },
-                    singleLine = true
+                    singleLine = true,
+                    shape = RoundedCornerShape(30.dp)
                 )
 
-                LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                LazyColumn(modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.White)
+                ) {
                     items(suggestions.value) { suggestion ->
                         Text(
                             text = suggestion.first,
@@ -101,6 +162,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(8.dp)
+                                .background(Color.White)
                                 .clickable {
                                     selectedPosition.value = suggestion.second
                                     cameraPositionState.position = CameraPosition.fromLatLngZoom(
@@ -108,60 +170,6 @@ fun MapScreen(modifier: Modifier = Modifier) {
                                         15f
                                     )
                                 }
-
-                        )
-                    }
-                }
-            }
-
-            Box(modifier = Modifier.weight(1f)) {
-                GoogleMap(
-                    modifier = Modifier.fillMaxSize(),
-                    cameraPositionState = cameraPositionState
-                ) {
-                    val markers = listOf(
-                        MarkerInfo(
-                            LatLng(33.7782544, -84.5555472),
-                            "Current Location",
-                            R.drawable.anya
-                        ),
-                        MarkerInfo(
-                            LatLng(33.7882544, -84.5655472),
-                            "Luffy",
-                            R.drawable.luffy
-                        ),
-                        MarkerInfo(
-                            LatLng(33.7682544, -84.5455472),
-                            "Imotto",
-                            R.drawable.clipart5643
-                        ),
-                        MarkerInfo(
-                            LatLng(33.7582544, -84.5755472),
-                            "Kawaii- Onesaan",
-                            R.drawable.maximum_logo
-                        ),
-                    )
-
-                    markers.forEach { markerInfo ->
-                        Marker(
-                            state = MarkerState(position = markerInfo.position),
-                            title = markerInfo.title,
-                            icon = bitmapDescriptorFromVector(
-                                context,
-                                markerInfo.iconResId
-                            ),
-                            onClick = {
-                                Toast.makeText(context, "${markerInfo.title} clicked!", Toast.LENGTH_SHORT).show()
-                                true // Returning true to consume the click event
-                            }
-                        )
-                    }
-
-                    if (route.value.isNotEmpty()) {
-                        Polyline(
-                            points = route.value,
-                            color = Color.Blue,
-                            width = 5f
                         )
                     }
                 }
@@ -169,6 +177,7 @@ fun MapScreen(modifier: Modifier = Modifier) {
         }
     }
 }
+
 private fun getMarkerSuggestions(query: String): List<Pair<String, LatLng>> {
     val markers = listOf(
         MarkerInfo(LatLng(33.7882544, -84.5655472), "Marker 2", R.drawable.luffy),

@@ -1,4 +1,4 @@
-package com.example.feature_handyman.handyman.ui
+package com.example.feature_delivery.delivery.deliveryui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,21 +34,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.feature_babysitter.babysitter.OrdersPopupMenu
-import com.example.feature_handyman.R
-import com.example.feature_handyman.handyman.HandyData
+import com.example.feature_delivery.R
+import com.example.feature_delivery.delivery.DeliveryData
 
-
-val handymen = listOf<HandyData>(
-    HandyData("Goku", "Earth", com.example.feature_babysitter.R.drawable.cam_placeholder, 3.0, 500, 15),
-    HandyData("Gohan", "Earth", com.example.feature_babysitter.R.drawable.cam_placeholder, 3.0, 500, 15),
-    HandyData("Goten", "Earth", com.example.feature_babysitter.R.drawable.cam_placeholder, 3.0, 500, 15),
-
-)
+val deliveryData = listOf<DeliveryData>(
+    DeliveryData("Goku", "Earth", com.example.feature_delivery.R.drawable.cam_placeholder, 3.0, 500, 15),
+    DeliveryData("Gohan", "Earth",  com.example.feature_delivery.R.drawable.cam_placeholder, 3.0, 500, 15),
+    DeliveryData("Goten", "Earth",  com.example.feature_delivery.R.drawable.cam_placeholder, 3.0, 500, 15),
+    )
 
 @Composable
-fun SearchScreen(navController: NavController) {
+fun DeliverySearchScreen(navController: NavController) {
     var showPopup by remember { mutableStateOf(false) }
-    var expandedHandyData by remember { mutableStateOf<HandyData?>(null) }
+    var expandedDeliveryData by remember { mutableStateOf<DeliveryData?>(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Top Image
@@ -124,10 +122,10 @@ fun SearchScreen(navController: NavController) {
         }
 
         LazyColumn(modifier = Modifier.weight(2f)) {
-            items(handymen) { handymen ->
-                HandyManCard(
-                    handyData = handymen,
-                    onClick = {  expandedHandyData  = handymen }
+            items(deliveryData) { deliveryData ->
+                DeliveryCard(
+                    deliveryData = deliveryData,
+                    onClick = {  expandedDeliveryData  = deliveryData }
                 )
             }
         }
@@ -136,7 +134,7 @@ fun SearchScreen(navController: NavController) {
 
 @Preview
 @Composable
-fun SearchScreenPreview() {
-    SearchScreen(navController = NavController(LocalContext.current))
+fun DeliverySearchScreenPreview() {
+    DeliverySearchScreen(navController = NavController(LocalContext.current))
 
 }

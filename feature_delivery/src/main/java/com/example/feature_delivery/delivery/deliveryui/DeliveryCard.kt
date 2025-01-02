@@ -1,4 +1,4 @@
-package com.example.feature_handyman.handyman.ui
+package com.example.feature_delivery.delivery.deliveryui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -24,12 +24,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.feature_handyman.handyman.HandyData
-
+import com.example.feature_delivery.delivery.DeliveryData
 
 @Composable
-fun HandyManCard(
-    handyData: HandyData,
+fun DeliveryCard(
+    deliveryData: DeliveryData,
     onClick: () -> Unit
 ) {
     Card(
@@ -45,7 +44,7 @@ fun HandyManCard(
                     .height(110.dp),
             ){
                 Image(
-                    painter = painterResource(id = handyData.imageResId),
+                    painter = painterResource(id = deliveryData.imageResId),
                     contentDescription = "Babysitter Image",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -57,11 +56,11 @@ fun HandyManCard(
 
             // Name and Location
             Text(
-                text = handyData.name,
+                text = deliveryData.name,
                 modifier = Modifier.padding(horizontal = 8.dp)
             )
             Text(
-                text = handyData.location,
+                text = deliveryData.location,
                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
             )
 
@@ -80,7 +79,7 @@ fun HandyManCard(
                         tint = Color.Yellow
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "${handyData.rating}")
+                    Text(text = "${deliveryData.rating}")
                 }
 
                 // Distance
@@ -91,12 +90,12 @@ fun HandyManCard(
                         tint = Color.Gray
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "${handyData.distance} m")
+                    Text(text = "${deliveryData.distance} m")
                 }
                 // Cost Per Hour
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "$${handyData.costPerHour}/hr")
+                    Text(text = "$${deliveryData.costPerHour}/hr")
                 }
             }
         }

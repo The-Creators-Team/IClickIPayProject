@@ -36,7 +36,6 @@ fun HandyManHome(
             Button(
                 onClick = {
                     navController.navigate(HandyManNamiScreen.YourHandyMan.route)
-                    //navController.navigate(HandyManNamiScreen.PlaceOrderScreen.route)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

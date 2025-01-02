@@ -1,25 +1,25 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.feature_handyman.handyman.ui
+package com.example.feature_delivery.delivery.deliveryui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,16 +34,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.common.reuseable.maps.mapui.MapScreen
-import com.example.feature_handyman.handyman.HandyData
-import com.example.feature_handyman.handyman.nami.HandyManNamiScreen
+import com.example.feature_delivery.delivery.DeliveryData
+import com.example.feature_delivery.delivery.nami.DeliveryNamiScreen
 
 @Composable
-fun HandyManMap(navController: NavController) {
-    var expandedHandyData by remember { mutableStateOf<HandyData?>(null) }
+fun DeliveryMap(navController: NavController) {
+    var expandedHandyData by remember { mutableStateOf<DeliveryData?>(null) }
     Scaffold(
         topBar = {
         },
-
     ) { innerPadding ->
 
         Box(modifier = Modifier.fillMaxSize()){
@@ -63,15 +62,15 @@ fun HandyManMap(navController: NavController) {
         ) {
             LazyRow(
                 modifier = Modifier
-                    .fillMaxWidth(0.9F)
+                    .fillMaxWidth()
                     .padding(vertical = 16.dp),
                 contentPadding = PaddingValues(horizontal = 8.dp)
             ) {
-                items(handymen) { handymen ->
-                    HandyManCard(
-                        handyData = handymen,
+                items(deliveryData) { deliveryData ->
+                    DeliveryCard(
+                        deliveryData = deliveryData,
                         onClick = {
-                            navController.navigate(HandyManNamiScreen.HandyManProfile.route)
+                            navController.navigate(DeliveryNamiScreen.DeliveryDate.route)
                         }
                     )
                 }
@@ -82,6 +81,7 @@ fun HandyManMap(navController: NavController) {
 
 @Preview
 @Composable
-fun HandyManMapPreview() {
-    HandyManMap(navController = NavController(LocalContext.current))
+fun DeliveryMapPreview() {
+    DeliveryMap(navController = NavController(LocalContext.current))
+
 }

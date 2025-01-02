@@ -1,33 +1,15 @@
-package com.example.feature_handyman.handyman.nami
+package com.example.feature_delivery.delivery.nami
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,67 +17,63 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.feature_handyman.R
-import com.example.feature_handyman.handyman.ui.HandyManDate
-import com.example.feature_handyman.handyman.ui.HandyManFilters
-import com.example.feature_handyman.handyman.ui.HandyManHome
-import com.example.feature_handyman.handyman.ui.HandyManMap
-import com.example.feature_handyman.handyman.ui.HandymanProfile
-import com.example.feature_handyman.handyman.ui.HandyPlaceOrderScreen
-import com.example.feature_handyman.handyman.ui.YourHandyMan
+import com.example.feature_delivery.delivery.deliveryui.DeliveryDate
+import com.example.feature_delivery.delivery.deliveryui.DeliveryFilters
+import com.example.feature_delivery.delivery.deliveryui.DeliveryHome
+import com.example.feature_delivery.delivery.deliveryui.DeliveryMap
+import com.example.feature_delivery.delivery.deliveryui.DeliveryProfile
+import com.example.feature_delivery.delivery.deliveryui.DeliverySearchScreen
+import com.example.feature_delivery.delivery.deliveryui.OrderDetailsPage
+import com.example.feature_delivery.delivery.deliveryui.ParcelDetailsPage
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HandymanNavigation(
+fun DeliveryNavigation(
     onNavigateBack: () -> Unit,
 ) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = HandyManNamiScreen.HandyManHome.route
+        startDestination = DeliveryNamiScreen.DeliveryHome.route
     ) {
-        composable(route = HandyManNamiScreen.HandyManHome.route) {
-            HandyManHome(navController = navController, onNavigateBack = onNavigateBack)
+        composable(route = DeliveryNamiScreen.DeliveryHome.route) {
+            DeliveryHome(navController = navController, onNavigateBack = onNavigateBack)
         }
-        composable(route = HandyManNamiScreen.YourHandyMan.route) {
-            YourHandyMan(navController = navController,)
+        composable(route = DeliveryNamiScreen.OrderDetailsPage.route) {
+            OrderDetailsPage(navController = navController,)
         }
 
-        composable(route = HandyManNamiScreen.HandyPlaceOrderScreen.route) {
-            HandyPlaceOrderScreen(
+        composable(route = DeliveryNamiScreen.DeliverySearch.route) {
+            DeliverySearchScreen(
                 navController = navController,
             )
         }
-        composable(route = HandyManNamiScreen.HandyManProfile.route) {
-            HandymanProfile(
+        composable(route = DeliveryNamiScreen.DeliveryProfile.route) {
+            DeliveryProfile(
                 navController = navController,
             )
         }
-        composable(route = HandyManNamiScreen.HandyManFilters.route) {
-            HandyManFilters(
+        composable(route = DeliveryNamiScreen.DeliveryFilters.route) {
+            DeliveryFilters(
                 navController = navController,
             )
         }
-        composable(route = HandyManNamiScreen.HandyManSearch.route) {
-            HandyManFilters(
+        composable(route = DeliveryNamiScreen.ParcelDetailsPage.route) {
+            ParcelDetailsPage(
                 navController = navController,
             )
         }
-        composable(route = HandyManNamiScreen.HandyManMap.route) {
-            HandyManMap(
+        composable(route = DeliveryNamiScreen.DeliveryMap.route) {
+            DeliveryMap(
                 navController = navController,
             )
         }
-        composable(route = HandyManNamiScreen.HandyManDate.route) {
-            HandyManDate(
+        composable(route = DeliveryNamiScreen.DeliveryDate.route) {
+            DeliveryDate(
                 navController = navController,
             )
         }

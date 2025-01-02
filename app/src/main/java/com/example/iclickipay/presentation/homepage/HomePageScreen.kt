@@ -34,7 +34,7 @@ fun HomePageScreen(
     navigateToLearn: () -> Unit,
 //    ,navigateToBank: () -> Unit,
 //    navigateToChat: () -> Unit,
-//    navigateToDelivery: () -> Unit,
+    navigateToDelivery: () -> Unit,
 //    navigateToEat: () -> Unit,
     navigateToHandyMan: () -> Unit
 //    navigateToHotel: () -> Unit,
@@ -55,6 +55,7 @@ fun HomePageScreen(
         subApp("Pet Care", navigateToPet, R.drawable.pet),
         subApp("Tutors", navigateToLearn, R.drawable.learn),
         subApp("Handyman", navigateToHandyMan, R.drawable.handyman),
+        subApp("Delivery", navigateToDelivery, R.drawable.delivery),
     /*    subApp("Bank", navigateToBank, R.drawable.bank),
         subApp("Chat", navigateToChat, R.drawable.chat),
         subApp("Delivery", navigateToDelivery, R.drawable.delivery),

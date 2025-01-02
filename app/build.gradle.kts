@@ -87,7 +87,7 @@ dependencies {
     implementation(project(":feature_babysitter"))
 //    implementation(project(":feature_bank"))
 //    implementation(project(":feature_chat"))
-//    implementation(project(":feature_delivery"))
+    implementation(project(":feature_delivery"))
 //    implementation(project(":feature_eat"))
     implementation(project(":feature_handyman"))
 //    implementation(project(":feature_hotel"))
