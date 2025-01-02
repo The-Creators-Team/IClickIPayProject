@@ -99,9 +99,9 @@ fun DeliverySearchScreen(navController: NavController) {
         }
 
         // Show Popup Menu
-        if (showPopup) {
-            OrdersPopupMenu(navController, onDismiss = { showPopup = false })
-        }
+//        if (showPopup) {
+//            OrdersPopupMenu(navController, onDismiss = { showPopup = false })
+//        }
 
         // Bar with title "Babysitters" and filter icon
         Row(
