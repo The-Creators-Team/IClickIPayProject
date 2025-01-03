@@ -324,7 +324,7 @@ fun PcTechnicianList(navController: NavController, viewModel: PcRepairViewModel)
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(16.dp).fillMaxSize(),
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     // Babysitter Details
@@ -346,14 +346,18 @@ fun PcTechnicianList(navController: NavController, viewModel: PcRepairViewModel)
                         Text(text = "Rating: ${tutor.rating}")
                         Text(text = "Cost per hour: $${tutor.price}")
                     }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row {
+                        Button(
+                            onClick = { navController.navigate(PcRepairScreens.PcRepairAppointmentPickerScreen.route) },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "Take Appointment")
+                        }
+                    }
 
                     // Take Appointment Button
-                    Button(
-                        onClick = { navController.navigate(PcRepairScreens.PcRepairAppointmentPickerScreen.route) },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(text = "Take Appointment")
-                    }
+
                 }
             }
         }
