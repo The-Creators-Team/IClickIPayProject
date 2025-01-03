@@ -36,10 +36,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.feature_eat.eat.EatOrderScreen
 import com.example.feature_eat.eat.EatScreens
 import kotlin.math.absoluteValue
 
@@ -67,7 +70,7 @@ fun HomeEatApp(navController: NavController) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(6.dp),
+                .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 6.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Icon(
@@ -374,4 +377,13 @@ fun FoodItem(imageRes: Int, description: String, label: String) {
             text = label
         )
     }
+}
+
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Preview
+@Composable
+fun HomeEatAppPreview() {
+    HomeEatApp(navController = rememberNavController())
 }

@@ -27,15 +27,11 @@ import androidx.compose.material3.BottomSheetScaffoldState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberBottomSheetScaffoldState
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -65,6 +61,9 @@ fun StoreDetail(navController: NavController) {
 
     val scaffoldState = rememberBottomSheetScaffoldState()
     val scope = rememberCoroutineScope()
+    var quantity by remember { mutableStateOf(2) }
+    val pricePerItem = 13.50
+    val totalPrice = quantity * pricePerItem
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
@@ -84,9 +83,7 @@ fun StoreDetail(navController: NavController) {
                     Modifier.padding(20.dp),
                     Color.Gray)
 
-                var quantity by remember { mutableStateOf(2) }
-                val pricePerItem = 13.50
-                val totalPrice = quantity * pricePerItem
+
 
                 AddToOrderSection(
                     quantity = quantity,
@@ -270,6 +267,7 @@ fun StoreDetail(navController: NavController) {
                     )
                     FoodCategoryItemRow()
                     FoodItemsRow(scope,scaffoldState)
+                    BtnNvigateToOrder(navController, totalPrice)
                     }
                 }
             }
@@ -496,7 +494,8 @@ fun AddToOrderSection(
             Text(
                 text = quantity.toString(),
                 modifier = Modifier.padding(horizontal = 16.dp),
-                fontSize = 30.sp
+                fontSize = 30.sp,
+                color = Color.Black
 
             )
 
@@ -526,6 +525,10 @@ fun AddToOrderSection(
             onClick = { onAddToOrder() },
             modifier = Modifier
                 .fillMaxWidth()
+                .height(75.dp),
+
+            shape = RoundedCornerShape(8.dp),
+
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -538,9 +541,36 @@ fun AddToOrderSection(
                 )
                 Text(
                     text = "$${"%.2f".format(totalPrice)}",
-                    color = Color.Black
+                    color = Color.White
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun BtnNvigateToOrder(navController: NavController, totalPrice: Double){
+   // navController.navigate("order")
+    Button(
+        onClick = { navController.navigate(EatScreens.EatOrder.route) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(75.dp),
+        shape = RoundedCornerShape(8.dp, 8.dp, 0.dp, 0.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Add to order",
+                color = Color.White
+            )
+            Text(
+                text = "$${"%.2f".format(totalPrice)}",
+                color = Color.White
+            )
         }
     }
 }
