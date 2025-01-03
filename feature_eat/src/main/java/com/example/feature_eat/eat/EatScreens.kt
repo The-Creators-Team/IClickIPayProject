@@ -5,6 +5,7 @@ sealed class EatScreens(val route: String){
     object StoreDetail: EatScreens("store_detail")
     object WelcomeEatApp: EatScreens("welcome_eat_app")
     object EatOrder: EatScreens("eat_order_screen")
+    object FilterEat: EatScreens("filter_eat_screen")
 
     fun withArgs(vararg args: String): String{
         return buildString {

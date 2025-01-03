@@ -1,5 +1,6 @@
 //package com.example.iclickipay.presentation.eat
 package com.example.feature_eat
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -36,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -121,7 +124,7 @@ fun HomeEatApp(navController: NavController) {
             ) { page ->
             Card(
                 Modifier
-                    .padding(8. dp)
+                    .padding(8.dp)
                     .shadow(6.dp, shape = RoundedCornerShape(10.dp))
                     .fillMaxWidth()
                     .size(280.dp)
@@ -144,12 +147,14 @@ fun HomeEatApp(navController: NavController) {
                 Image(
                     modifier = Modifier
                         .fillMaxSize(),
-                    painter = painterResource(id = when (page) {
-                        0 -> R.drawable.pasta_plate
-                        1 -> R.drawable.rabiloes
-                        2 -> R.drawable.pizza2
-                        else -> R.drawable.rabiloes
-                    }),
+                    painter = painterResource(
+                        id = when (page) {
+                            0 -> R.drawable.pasta_plate
+                            1 -> R.drawable.rabiloes
+                            2 -> R.drawable.pizza2
+                            else -> R.drawable.rabiloes
+                        }
+                    ),
                     contentDescription = "Image $page",
                     contentScale = ContentScale.Crop
                 )
@@ -174,124 +179,42 @@ fun HomeEatApp(navController: NavController) {
             }
         }
         FoodItemsRow()
-        Text(
-            modifier = Modifier
-                .padding(start = 40.dp, top = 16.dp),
-            color = Color.Black,
-            text = "All restaurants",
-            fontSize = 20.sp,
-        )
-        Text(
-            modifier = Modifier
+
+        Row(
+            modifier =
+            Modifier
                 .fillMaxWidth()
-                .padding(start = 40.dp),
-            color = Color.Gray,
-            text = "Sort by fastest delivery",
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 26.dp, end = 26.dp, top = 16.dp, bottom = 16.dp)
-                .shadow(4.dp, shape = RoundedCornerShape(8.dp))  // Apply elevation (shadow)
-                .background(
-                    Color.White,
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .clickable {
-                        navController.navigate(EatScreens.StoreDetail.route)
-                }
+                .padding(start = 16.dp, end = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
 
         ) {
-            Column {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
 
-                    Column(
-                    ) {
-                        Text(
-                            color = Color.Black,
-                            text = "The big mama",
-                            fontSize = 20.sp,
-                        )
-                        Text(
-                            color = Color.Gray,
-                            text = "Italian food",
-                        )
-                    }
-                    Image(
-                        modifier = Modifier
-                            .size(40.dp),
-                        painter = painterResource(id = R.drawable.big_mama),
-                        contentDescription = "Hamburger",
-                    )
-                }
-
-                Divider(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(horizontal = 16.dp),
-                    color = Color.Gray,
-                    thickness = 1.dp
+            Column(
+                modifier = Modifier
+                    .padding(start = 16.dp)
+            ) {
+                Text(
+                    color = Color.Black,
+                    fontSize = 20.sp,
+                    text = "All restaurants"
                 )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(6.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(start = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            modifier = Modifier.size(20.dp),
-                            painter = painterResource(id = R.drawable.path),
-                            contentDescription = "Breakfast",
-                        )
-                        Text(text = "Left",
-                            Modifier.padding(start = 4.dp))
-                    }
-                    Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-
-                    ) {
-                        Image(
-                            modifier = Modifier.size(20.dp),
-                            painter = painterResource(id = R.drawable.time),
-                            contentDescription = "Breakfast",
-                        )
-                        Text(text = "15-25 min",
-                            Modifier.padding(start = 4.dp))
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(end = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.End
-                    ) {
-                        Image(
-                            modifier = Modifier.size(20.dp),
-                            painter = painterResource(id = R.drawable.circle_plus),
-                            contentDescription = "Breakfast",
-                        )
-                        Text(text = "\$\$\$",
-                            Modifier.padding(start = 4.dp))
-                    }
-                }
+                Text(
+                    color = Color.Gray,
+                    fontSize = 14.sp,
+                    text = "Sort by fastest delivery"
+                )
             }
+            Image(
+                modifier = Modifier
+                    .size(40.dp)
+                    .clickable { navController.navigate(EatScreens.FilterEat.route) },
+                painter = painterResource(id = R.drawable.options_eat),
+                contentDescription = "Breakfast",
+            )
         }
+
+
+        ListFoodItemsColum(navController)
     }
 }
 
@@ -362,6 +285,139 @@ fun FoodItemsRow() {
 }
 
 @Composable
+fun ListFoodItemsColum(navController: NavController) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth() // Ensure the LazyRow takes full width
+            .padding(8.dp) // Add padding around the LazyRow
+    ) {
+        item {
+            RestourantItem(navController)
+        }
+        item {
+            RestourantItem(navController)
+        }
+
+
+    }
+}
+
+@Composable
+fun RestourantItem(navController: NavController = rememberNavController()) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 26.dp, end = 26.dp, top = 16.dp, bottom = 16.dp)
+            .shadow(4.dp, shape = RoundedCornerShape(8.dp))  // Apply elevation (shadow)
+            .background(
+                Color.White,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .clickable {
+                navController.navigate(EatScreens.StoreDetail.route)
+            }
+
+    ) {
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+
+                Column(
+                ) {
+                    Text(
+                        color = Color.Black,
+                        text = "The big mama",
+                        fontSize = 20.sp,
+                    )
+                    Text(
+                        color = Color.Gray,
+                        text = "Italian food",
+                    )
+                }
+                Image(
+                    modifier = Modifier
+                        .size(40.dp),
+                    painter = painterResource(id = R.drawable.big_mama),
+                    contentDescription = "Hamburger",
+                )
+            }
+
+            Divider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                color = Color.Gray,
+                thickness = 1.dp
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        modifier = Modifier.size(20.dp),
+                        painter = painterResource(id = R.drawable.path),
+                        contentDescription = "Breakfast",
+                    )
+                    Text(
+                        text = "Left",
+                        Modifier.padding(start = 4.dp)
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+
+                ) {
+                    Image(
+                        modifier = Modifier.size(20.dp),
+                        painter = painterResource(id = R.drawable.time),
+                        contentDescription = "Breakfast",
+                    )
+                    Text(
+                        text = "15-25 min",
+                        Modifier.padding(start = 4.dp)
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Image(
+                        modifier = Modifier.size(20.dp),
+                        painter = painterResource(id = R.drawable.circle_plus),
+                        contentDescription = "Breakfast",
+                    )
+                    Text(
+                        text = "\$\$\$",
+                        Modifier.padding(start = 4.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun FoodItem(imageRes: Int, description: String, label: String) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -378,7 +434,6 @@ fun FoodItem(imageRes: Int, description: String, label: String) {
         )
     }
 }
-
 
 
 @OptIn(ExperimentalFoundationApi::class)
