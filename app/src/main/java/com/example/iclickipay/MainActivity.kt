@@ -19,7 +19,7 @@ import com.example.feature_eat.eat.EatNavigation
 import com.example.feature_delivery.delivery.nami.DeliveryNavigation
 import com.example.feature_handyman.handyman.nami.HandymanNavigation
 import com.example.feature_hotel.hotel.presentation.navigation.HotelNavigation
-import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
+import com.example.feature_housecleaning.housecleaning.navigation.HouseCleaningNavigation
 import com.example.feature_mover.presentation.mover.routes.MoverNavigation
 import com.example.feature_laundry.LaundryNavigation
 import com.example.feature_learn.LearnNavigation

@@ -176,7 +176,6 @@ fun BabySitterNavigation(
                 indexChild = entry.arguments?.getString("indexChild")
             )
         }
-
     }
 }
 
