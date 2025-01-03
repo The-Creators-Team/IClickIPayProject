@@ -55,24 +55,11 @@ fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewMode
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { /* Handle back navigation */ }) {
-                    Icon(
-                        Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
                 Text(
                     text = "Order",
                     style = MaterialTheme.typography.titleLarge,
                     color = Color.White
                 )
-                TextButton(onClick = { /* Handle cancel */ }) {
-                    Text(
-                        text = "Cancel",
-                        color = Color.White
-                    )
-                }
             }
 
             // Mover Info
