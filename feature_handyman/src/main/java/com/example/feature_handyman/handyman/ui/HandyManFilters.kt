@@ -37,10 +37,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.feature_handyman.handyman.nami.DividerSection
+
 
 @Composable
-fun HandyManFilters(navController: NavController) {
+fun HandyManFilters(
+    navController: NavController,
+    selectedOption: String,
+    rating: Int,
+    onApplyFilters: (String, Int) -> Unit
+) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -49,18 +54,18 @@ fun HandyManFilters(navController: NavController) {
                     containerColor = Color.White
                 ),
                 navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Filled.Home,
-                            contentDescription = "Home"
-                        )
+                    IconButton(onClick = { navController.popBackStack() }) {
+                        Icon(imageVector = Icons.Filled.Home, contentDescription = "Home")
                     }
                 }
             )
         },
         bottomBar = {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    onApplyFilters(selectedOption, rating) // Apply the filters only when the button is pressed
+                    navController.popBackStack() // Go back after applying filters
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -76,20 +81,17 @@ fun HandyManFilters(navController: NavController) {
                     .padding(16.dp)
                     .padding(bottom = 25.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally // Aligns content horizontally
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Exposed Dropdown Menu
+                // Exposed Dropdown Menu for Sorting
                 var expanded by remember { mutableStateOf(false) }
-                var selectedOption by remember { mutableStateOf("Sort by") }
-                val options = listOf("Price", "Popularity", "Rating")
-
                 ExposedDropdownMenuBox(
                     expanded = expanded,
                     onExpandedChange = { expanded = !expanded }
                 ) {
                     OutlinedTextField(
                         value = selectedOption,
-                        onValueChange = { },
+                        onValueChange = {},
                         modifier = Modifier
                             .menuAnchor()
                             .fillMaxWidth(),
@@ -101,10 +103,11 @@ fun HandyManFilters(navController: NavController) {
                         expanded = expanded,
                         onDismissRequest = { expanded = false }
                     ) {
+                        val options = listOf("Price", "Popularity", "Rating")
                         options.forEach { option ->
                             DropdownMenuItem(
                                 onClick = {
-                                    selectedOption = option
+                                    onApplyFilters(option, rating) // Apply the filter and update the parent state
                                     expanded = false
                                 },
                                 text = { Text(option) }
@@ -113,17 +116,13 @@ fun HandyManFilters(navController: NavController) {
                     }
                 }
 
-                // Price/kg Slider
-                DividerSection(label = "Price/kg")
-
                 // Rate Your Experience (Star Rating)
                 DividerSection(label = "Rate") {
                     Row(
-                        modifier = Modifier.fillMaxWidth(), // Make the Row take the full width of its parent
-                        horizontalArrangement = Arrangement.Center, // Center the stars horizontally
-                        verticalAlignment = Alignment.CenterVertically // Align stars vertically in the center
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        var rating by remember { mutableStateOf(0) }
                         for (i in 1..5) {
                             Icon(
                                 imageVector = if (i <= rating) Icons.Filled.Star else Icons.Outlined.Star,
@@ -131,7 +130,7 @@ fun HandyManFilters(navController: NavController) {
                                 modifier = Modifier
                                     .size(40.dp)
                                     .padding(4.dp)
-                                    .clickable { rating = i }
+                                    .clickable { onApplyFilters(selectedOption, i) } // Apply rating filter
                             )
                         }
                     }

@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.feature_delivery.R
 import com.example.feature_delivery.delivery.nami.DeliveryNamiScreen
+import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @Composable
 fun DeliveryHome(
@@ -32,14 +34,11 @@ fun DeliveryHome(
             // You can add a top app bar here if needed.
         },
         bottomBar = {
-            Button(
-                onClick = { navController.navigate(DeliveryNamiScreen.ParcelDetailsPage.route) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Text(text = "Let's Go!")
-            }
+            CustomButton(
+                text = "Continue",
+                onClick = { navController.navigate(DeliveryNamiScreen.DeliveryProfile.route) }
+            )
+
         }
     ) { innerPadding ->
         Column(
@@ -80,4 +79,10 @@ fun DeliveryHome(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun DeliveryHomePreview() {
+    DeliveryHome(navController = NavController(LocalContext.current), onNavigateBack = {})
 }
