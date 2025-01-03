@@ -17,7 +17,7 @@ import com.example.feature_mover.presentation.mover.MoverScreen
 import com.example.feature_mover.presentation.mover.PlaceOrderScreen
 import com.example.feature_mover.presentation.mover.YourArrivalScreen
 import com.example.feature_mover.presentation.mover.YourStartScreen
-import com.example.feature_mover.presentation.mover.filter.MoverFilter
+import com.example.feature_mover.presentation.mover.filter.MoverFilterScreen
 import com.example.feature_mover.presentation.mover.viewmodel.MoverViewModel
 
 
@@ -54,14 +54,22 @@ fun MoverNavigation(
         composable(
             route = MoverScreenRoutes.MoverProfileScreen.route + "/{index}",
             arguments = listOf(navArgument("index") { type = NavType.StringType })
-        ) {entry ->
-            MoverProfileScreen(navController = navController, moverViewModel,entry.arguments?.getString("index"))
+        ) { entry ->
+            MoverProfileScreen(
+                navController = navController,
+                moverViewModel,
+                entry.arguments?.getString("index")
+            )
         }
         composable(route = MoverScreenRoutes.ChooseDateTimeScreen.route) {
             ChooseDateTime(navController = navController, moverViewModel)
         }
         composable(route = MoverScreenRoutes.FilterScreen.route) {
-            MoverFilter(navController = navController, moverViewModel)
+            MoverFilterScreen(
+                navController = navController, moverViewModel
+
+
+            )
         }
 //        composable(route = MoverScreenRoutes.SearchScreen.route) {
 //            SearchScreen(navController = navController)
@@ -70,7 +78,7 @@ fun MoverNavigation(
 //            MapScreen(navController = navController)
 //        }
         composable(route = MoverScreenRoutes.OrderScreen.route) {
-            PlaceOrderScreen(navController = navController,moverViewModel)
+            PlaceOrderScreen(navController = navController, moverViewModel)
         }
 
 

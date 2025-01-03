@@ -45,6 +45,13 @@ fun YourStartScreen(navController: NavController, moverViewModel: MoverViewModel
 
     val focusRequester = remember { FocusRequester() }
 
+    // Trigger re-validation on text change using LaunchedEffect
+    LaunchedEffect(startAddress) {
+        if (startAddress.isNotEmpty() && startAddressErrorMessage.isNotEmpty()) {
+            moverViewModel.clearStartAddressError()
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(

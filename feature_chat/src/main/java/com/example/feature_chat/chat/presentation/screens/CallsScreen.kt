@@ -1,7 +1,10 @@
 package com.example.feature_chat.chat.presentation.screens
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,18 +23,21 @@ import androidx.compose.material.icons.filled.CallReceived
 import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.Videocam
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.example.feature_chat.R
 import com.example.feature_chat.chat.data.callList
 import com.example.feature_chat.chat.domain.CallListDataObject
@@ -39,6 +45,7 @@ import com.example.feature_chat.chat.domain.CallListDataObject
 
 @Composable
 fun CallsScreen() {
+    val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxSize().background(Color.LightGray)) {
         Text(
@@ -78,12 +85,14 @@ fun CallsScreen() {
                             modifier = Modifier.padding(bottom = 4.dp).weight(1f)
                         )
 
-                        Icon(
-                            imageVector = Icons.Outlined.Videocam,
-                            contentDescription = "Video Icon",
-                           tint = Color.Green,
-                            modifier = Modifier.size(30.dp)
-                        )
+                        IconButton(onClick = { initiateCall(context, callList[0].userNumber)  }) {
+                            Icon(
+                                imageVector = Icons.Outlined.Call,
+                                contentDescription = "Call Icon",
+                                tint = Color.Green,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
 
 
@@ -130,12 +139,14 @@ fun CallsScreen() {
                             modifier = Modifier.padding(bottom = 4.dp).weight(1f)
                         )
 
-                        Icon(
-                            imageVector = Icons.Filled.Call,
-                            contentDescription = "Call Icon",
-                            tint = Color.Green,
-                            modifier = Modifier.size(30.dp)
-                        )
+                        IconButton(onClick = { initiateCall(context, callList[1].userNumber)  }) {
+                            Icon(
+                                imageVector = Icons.Filled.Call,
+                                contentDescription = "Call Icon",
+                                tint = Color.Green,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
 
 
@@ -191,12 +202,14 @@ fun CallsScreen() {
                             modifier = Modifier.padding(bottom = 4.dp).weight(1f)
                         )
 
-                        Icon(
-                            imageVector = Icons.Filled.Call,
-                            contentDescription = "Call Icon",
-                            tint = Color.Green,
-                            modifier = Modifier.size(30.dp)
-                        )
+                        IconButton(onClick = { initiateCall(context, callList[2].userNumber)  }) {
+                            Icon(
+                                imageVector = Icons.Filled.Call,
+                                contentDescription = "Call Icon",
+                                tint = Color.Green,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
 
 
@@ -243,12 +256,14 @@ fun CallsScreen() {
                             modifier = Modifier.padding(bottom = 4.dp).weight(1f)
                         )
 
-                        Icon(
-                            imageVector = Icons.Filled.Call,
-                            contentDescription = "Call Icon",
-                            tint = Color.Green,
-                            modifier = Modifier.size(30.dp)
-                        )
+                        IconButton(onClick = { initiateCall(context, callList[3].userNumber)  }) {
+                            Icon(
+                                imageVector = Icons.Filled.Call,
+                                contentDescription = "Call Icon",
+                                tint = Color.Green,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
 
 
@@ -295,12 +310,14 @@ fun CallsScreen() {
                             modifier = Modifier.padding(bottom = 4.dp).weight(1f)
                         )
 
-                        Icon(
-                            imageVector = Icons.Filled.Call,
-                            contentDescription = "Call Icon",
-                            tint = Color.Green,
-                            modifier = Modifier.size(30.dp)
-                        )
+                        IconButton(onClick = { initiateCall(context, callList[4].userNumber)  }) {
+                            Icon(
+                                imageVector = Icons.Filled.Call,
+                                contentDescription = "Call Icon",
+                                tint = Color.Green,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
 
 
@@ -356,12 +373,14 @@ fun CallsScreen() {
                             modifier = Modifier.padding(bottom = 4.dp).weight(1f)
                         )
 
-                        Icon(
-                            imageVector = Icons.Filled.Call,
-                            contentDescription = "Call Icon",
-                            tint = Color.Green,
-                            modifier = Modifier.size(30.dp)
-                        )
+                        IconButton(onClick = { initiateCall(context, callList[5].userNumber)  }) {
+                            Icon(
+                                imageVector = Icons.Filled.Call,
+                                contentDescription = "Call Icon",
+                                tint = Color.Green,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
 
 
@@ -408,12 +427,14 @@ fun CallsScreen() {
                             modifier = Modifier.padding(bottom = 4.dp).weight(1f)
                         )
 
-                        Icon(
-                            imageVector = Icons.Filled.Call,
-                            contentDescription = "Call Icon",
-                            tint = Color.Green,
-                            modifier = Modifier.size(30.dp)
-                        )
+                        IconButton(onClick = { initiateCall(context, callList[6].userNumber) }) {
+                            Icon(
+                                imageVector = Icons.Filled.Call,
+                                contentDescription = "Call Icon",
+                                tint = Color.Green,
+                                modifier = Modifier.size(30.dp)
+                            )
+                        }
                     }
 
 
@@ -432,6 +453,13 @@ fun CallsScreen() {
             }
         }
     }
+}
+
+fun initiateCall(context: android.content.Context, phoneNumber: String) {
+    val intent = Intent(Intent.ACTION_DIAL).apply {
+        data = Uri.parse("tel:$phoneNumber")
+    }
+    ContextCompat.startActivity(context, intent, null)
 }
 //
 //@Composable

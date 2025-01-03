@@ -19,9 +19,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.feature_mover.R
 import com.example.feature_mover.presentation.mover.routes.MoverScreenRoutes
 import com.example.feature_mover.presentation.mover.viewmodel.MoverViewModel
+import com.example.feature_mover.ui_styles.theme.btnClr
 import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @Composable
@@ -43,7 +45,7 @@ fun MoverProfileScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp)
+                .height(200.dp).background(btnClr)
         ) {
             // Map would be implemented here using Google Maps Compose
             IconButton(
@@ -178,5 +180,5 @@ fun MoverProfileScreen(
 //@Composable
 //fun MoverProfileScreenPreview() {
 //    val navController = rememberNavController() // Use rememberNavController() for previews
-//    MoverProfileScreen(navController, moverViewModel, entry.arguments?.getString("index"))
+//    MoverProfileScreen(navController, MechanicViewModel, entry.arguments?.getString("index"))
 //}

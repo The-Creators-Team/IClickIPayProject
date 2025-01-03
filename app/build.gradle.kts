@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.foundation.layout.android)
     implementation(project(":feature_chat"))
+    implementation(project(":common"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,7 +73,7 @@ dependencies {
     //navigation with compose - Jonathan
     implementation(libs.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
-    implementation(project(":feature_mover"))
+
 
 
 
@@ -99,6 +100,4 @@ dependencies {
     implementation(project(":feature_mover"))
     implementation(project(":feature_pcrepair"))
     implementation(project(":feature_pet"))
-
-
 }
