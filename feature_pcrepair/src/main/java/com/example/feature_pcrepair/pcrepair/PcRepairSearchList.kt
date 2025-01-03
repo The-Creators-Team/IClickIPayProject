@@ -5,6 +5,7 @@ import android.content.Context
 import android.widget.DatePicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +25,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -258,15 +261,30 @@ fun FavoriteAndOrderItem(title: String) {
 fun PcTechnicianList(navController: NavController, viewModel: PcRepairViewModel) {
 
     var pcTechnicians = viewModel.repairTechnicians
+    var expandedPcTech by remember { mutableStateOf<PcRepairTechnician?>(null) }
 
-    if (viewModel.isFiltered.value == true){
-        pcTechnicians =pcTechnicians.filter { it.price < viewModel.selectedPriceRange.value!! && it.rating > viewModel.selectedRating.value!! }
+    if (viewModel.isFiltered.value == true) {
+        pcTechnicians =
+            pcTechnicians.filter { it.price < viewModel.selectedPriceRange.value!! && it.rating > viewModel.selectedRating.value!! }
         println("Filtered: ${pcTechnicians.toString()}")
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Repair Technicians (${pcTechnicians.size})", style = MaterialTheme.typography.titleMedium)
-        Spacer(modifier = Modifier.height(8.dp))
+        Row {
+            Text(
+                text = "Repair Technicians (${pcTechnicians.size})",
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            IconButton(onClick = { navController.navigate(PcRepairScreens.PcRepairFilterScreen.route) }) {
+                Icon(
+                    imageVector = Icons.Default.FilterList,
+                    contentDescription = "Filter",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
@@ -281,11 +299,69 @@ fun PcTechnicianList(navController: NavController, viewModel: PcRepairViewModel)
                     image = pcRepairTechnician.image,
                     onClick = { //save selected PC tech to viewModel
                         viewModel.selectedRepairTechnician.value = pcRepairTechnician
-                        navController.navigate(PcRepairScreens.PcRepairAppointmentPickerScreen.route)
+                        expandedPcTech = pcRepairTechnician
+                        //navController.navigate(PcRepairScreens.PcRepairAppointmentPickerScreen.route)
                     }
                 )
             }
         }
+
+    }
+    // Expanded Tutor Details
+    expandedPcTech?.let { tutor ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.5f))
+                .clickable { expandedPcTech = null }, // Dismiss when clicking outside
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp) // Half-screen height
+                    .padding(16.dp),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp).fillMaxSize(),
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    // Babysitter Details
+                    Column {
+                        Image(
+                            painter = painterResource(id = tutor.image),
+                            contentDescription = "Babysitter Image",
+                            modifier = Modifier
+                                .size(50.dp) // Set the size for the circular image
+                                .clip(CircleShape) // Clip the image into a circle
+                                .border(
+                                    1.dp,
+                                    Color.Gray,
+                                    CircleShape
+                                ), // Optional border around the circle
+                            contentScale = ContentScale.Crop // Crop the image to fill the circle
+                        )
+                        Text(text = tutor.name)
+                        Text(text = "Rating: ${tutor.rating}")
+                        Text(text = "Cost per hour: $${tutor.price}")
+                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Row {
+                        Button(
+                            onClick = { navController.navigate(PcRepairScreens.PcRepairAppointmentPickerScreen.route) },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(text = "Take Appointment")
+                        }
+                    }
+
+                    // Take Appointment Button
+
+                }
+            }
+        }
+    }
     }
 }
 
@@ -304,7 +380,7 @@ fun PcTechnicianCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .clickable(onClick = onClick),
+            .clickable{onClick()},
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.elevatedCardElevation()
     ) {
