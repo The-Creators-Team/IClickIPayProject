@@ -4,5 +4,6 @@ data class MoverDTO(
     val id: Int,
     val name: String,
     val rating: Double,
-    val location: String
+    val location: String,
+    val price: Double
 )

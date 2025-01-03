@@ -82,7 +82,7 @@ fun MechanicsPlaceOrderScreen(navController: NavController, moverViewModel: Mech
                     modifier = Modifier.padding(start = 12.dp)
                 ) {
                     Text(
-                        text = "Mover",
+                        text = "Mechanic",
                         color = Color.White.copy(alpha = 0.8f),
                         style = MaterialTheme.typography.bodyMedium
                     )
