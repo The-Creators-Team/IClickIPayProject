@@ -43,10 +43,7 @@ import com.example.feature_handyman.handyman.nami.HandyManNamiScreen
 
 
 
-val handymen = listOf<HandyData>(
-    HandyData("Goku", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
-    HandyData("Gohan", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
-    HandyData("Goten", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
+
 @Composable
 fun HandyManSearchScreen(
     navController: NavController,
@@ -54,6 +51,7 @@ fun HandyManSearchScreen(
     rating: Int,
     handymen: List<HandyData> // All the handymen data
 ) {
+
     // State to track the currently selected handyman
     val (selectedHandyman, setSelectedHandyman) = remember { mutableStateOf<HandyData?>(null) }
 
