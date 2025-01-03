@@ -84,6 +84,8 @@ dependencies {
     implementation (libs.places)
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
+
+
     implementation(project(":feature_babysitter"))
 //    implementation(project(":feature_bank"))
     implementation(project(":feature_chat"))
@@ -98,5 +100,4 @@ dependencies {
     implementation(project(":feature_mover"))
     implementation(project(":feature_pcrepair"))
     implementation(project(":feature_pet"))
-    implementation(project(":feature_mover"))
 }
