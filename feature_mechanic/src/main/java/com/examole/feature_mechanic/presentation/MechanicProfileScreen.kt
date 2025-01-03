@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.examole.feature_mechanic.presentation.routes.MechanicsScreenRoutes
 import com.examole.feature_mechanic.presentation.viewmodel.MechanicsViewModel
 import com.example.feature_mechanic.R
@@ -37,7 +38,7 @@ fun MechanicProfileScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.White)
+            .background(Color.Gray)
     ) {
         // Map Section with Back Button
         Box(

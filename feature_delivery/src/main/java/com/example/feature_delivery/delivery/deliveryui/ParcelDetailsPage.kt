@@ -30,14 +30,18 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import com.example.feature_delivery.delivery.nami.DeliveryNamiScreen
 
 @Composable
-fun ParcelDetailsPage() {
+fun ParcelDetailsPage(navController: NavController,) {
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = "Your pc repair") },
+                title = { Text(text = "Your Parcel") },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color.White
                 ),
@@ -53,7 +57,7 @@ fun ParcelDetailsPage() {
         },
         bottomBar = {
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { navController.navigate(DeliveryNamiScreen.DeliveryMap.route) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp)
@@ -141,4 +145,10 @@ fun CheckboxWithLabel(label: String) {
         )
         Text(text = label)
     }
+}
+
+@Preview
+@Composable
+fun ParcelDetailsPagePreview() {
+    ParcelDetailsPage(navController = NavController(LocalContext.current))
 }

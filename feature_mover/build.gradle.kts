@@ -100,4 +100,5 @@ dependencies {
 //
 //    // Lifecycle ViewModel Compose
    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
+    implementation("androidx.compose.material3:material3:1.1.0")
 }
