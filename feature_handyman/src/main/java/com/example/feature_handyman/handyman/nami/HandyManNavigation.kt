@@ -24,6 +24,7 @@ import com.example.feature_handyman.handyman.ui.HandyManSearchScreen
 import com.example.feature_handyman.handyman.ui.HandymanProfile
 import com.example.feature_handyman.handyman.ui.HandyPlaceOrderScreen
 import com.example.feature_handyman.handyman.ui.YourHandyMan
+import com.example.feature_handyman.handyman.viewmodel.DateViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -35,6 +36,7 @@ fun HandymanNavigation(
     // States for selected filters
     var selectedOption by remember { mutableStateOf("Sort by") }
     var rating by remember { mutableStateOf(0) }
+    val dateViewModel: DateViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
 
     // Handyman data
     val handymen = remember { GenerateDummyHandymen() }
