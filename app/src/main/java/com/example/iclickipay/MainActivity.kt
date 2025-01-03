@@ -34,13 +34,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.examole.feature_mechanic.presentation.routes.MechanicsNavigation
-import com.example.feature_babysitter.babysitter.BabySitterNavigation
+import com.example.feature_babysitter.babysitter.navigation.BabySitterNavigation
 import com.example.feature_chat.chat.presentation.navigation.ChatNavigation
 import com.example.feature_eat.eat.EatNavigation
 import com.example.feature_delivery.delivery.nami.DeliveryNavigation
 import com.example.feature_handyman.handyman.nami.HandymanNavigation
 import com.example.feature_hotel.hotel.presentation.navigation.HotelNavigation
-import com.example.feature_housecleaning.housecleaning.HouseCleaningNavigation
+import com.example.feature_housecleaning.housecleaning.navigation.HouseCleaningNavigation
 import com.example.feature_mover.presentation.mover.routes.MoverNavigation
 import com.example.feature_laundry.LaundryNavigation
 import com.example.feature_learn.LearnNavigation

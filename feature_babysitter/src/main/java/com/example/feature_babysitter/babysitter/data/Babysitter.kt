@@ -1,4 +1,4 @@
-package com.example.feature_babysitter.babysitter
+package com.example.feature_babysitter.babysitter.data
 
 data class Babysitter(
     val name: String,
@@ -9,5 +9,5 @@ data class Babysitter(
     val latitude: Double,
     val longitude: Double,
     val distance : Double,
-    val costPerHour: Double,
+    val costPerHour: Double
 )

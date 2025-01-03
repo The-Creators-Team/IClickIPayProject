@@ -1,4 +1,4 @@
-package com.example.feature_handyman.handyman.ui
+package com.example.feature_housecleaning.housecleaning.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,38 +29,52 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.feature_handyman.R
-import com.example.feature_handyman.handyman.HandyData
-
-
-val handymen = listOf<HandyData>(
-    HandyData("Goku", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
-    HandyData("Gohan", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
-    HandyData("Goten", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
-
-)
+import com.example.feature_babysitter.babysitter.navigation.BabySitterScreen
+import com.example.feature_babysitter.babysitter.view.BabysitterCard
+import com.example.feature_housecleaning.R
+import com.example.feature_housecleaning.housecleaning.data.Cleaner
+import com.example.feature_housecleaning.housecleaning.data.HouseCleaningViewModel
+import com.example.feature_housecleaning.housecleaning.navigation.HouseCleaningScreen
 
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchScreen(
+    navController: NavController,
+    viewModel: HouseCleaningViewModel,
+    sort: String?,
+    max: String?,
+    min: String?
+    ) {
     var showPopup by remember { mutableStateOf(false) }
-    var expandedHandyData by remember { mutableStateOf<HandyData?>(null) }
+    var expandedCleaner by remember { mutableStateOf<Cleaner?>(null) }
+    val houses = viewModel.houses
+    val house = houses[houses.size-1]
+
+    var cleaners = viewModel.cleaners
+
+    if (sort.equals("Recommend")) {
+        cleaners = viewModel.recommendSortCleaner
+    } else if (sort.equals("Distance")) {
+        cleaners = viewModel.distanceSortBabysitter
+    } else if (sort.equals("Cost")) {
+        cleaners = viewModel.priceSortBabysitter
+    }
+
+    cleaners = cleaners.filter {
+        it.costPerHour < max!!.toDouble() && it.rating > min!!.toDouble()
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        // Top Image
         Image(
-            painter = painterResource(id = R.drawable.cam_placeholder),
+            painter = painterResource(R.drawable.cleaners_background),
             contentDescription = "Top Image",
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
         )
 
-        // Bar with two options: Favorites and Orders
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -86,23 +101,36 @@ fun SearchScreen(navController: NavController) {
             // Orders Row
             Row(
                 modifier = Modifier
-                    .clickable { showPopup = true },
+                    .clickable {
+                        navController.navigate(
+                            HouseCleaningScreen.HouseMapScreen.withArgs(
+                                sort.toString(),
+                                max.toString(),
+                                min.toString()
+                            )
+                        )
+                    },
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Default.AddCircle,
-                    contentDescription = "Orders",
+                    imageVector = Icons.Default.Place,
+                    contentDescription = "Map View ",
                     tint = Color.White
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = "Orders", color = Color.White)
+                Text(text = "Map View", color = Color.White)
             }
         }
 
         // Show Popup Menu
-        /*if (showPopup) {
-            OrdersPopupMenu(navController, onDismiss = { showPopup = false })
-        }*/
+        if (showPopup && expandedCleaner != null) {
+            OrdersPopupMenu(
+                navController,
+                viewModel,
+                cleaner = expandedCleaner!!,
+                onDismiss = {showPopup = false}
+            )
+        }
 
         // Bar with title "Babysitters" and filter icon
         Row(
@@ -113,29 +141,30 @@ fun SearchScreen(navController: NavController) {
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Babysitters")
+            Text(text = "Babysitters: ${cleaners.size} results")
             Icon(
-                modifier = Modifier.clickable { },
+                modifier = Modifier.clickable {
+                    navController.navigate(BabySitterScreen.FilterScreen.route)
+                },
                 imageVector = Icons.Default.Menu,
                 contentDescription = "Filter",
                 tint = MaterialTheme.colorScheme.primary
             )
         }
 
+        // Lazy list of babysitters
         LazyColumn(modifier = Modifier.weight(2f)) {
-            items(handymen) { handymen ->
-                HandyManCard(
-                    handyData = handymen,
-                    onClick = {  expandedHandyData  = handymen }
-                )
+            items(cleaners) { cleaner ->
+                if (!showPopup) {
+                    CleanerCard(
+                        cleaner = cleaner,
+                        onClick = {
+                            expandedCleaner = cleaner
+                            showPopup = true
+                        }
+                    )
+                }
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun SearchScreenPreview() {
-    SearchScreen(navController = NavController(LocalContext.current))
-
 }
