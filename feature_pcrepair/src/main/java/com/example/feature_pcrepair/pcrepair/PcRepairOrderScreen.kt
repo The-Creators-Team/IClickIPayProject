@@ -24,34 +24,11 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewModel) {
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Order", color = Color.White) },
-                actions = {
-                    TextButton(onClick = { navController.navigate(PcRepairScreens.PcRepairHomeScreen.route) }) {
-                        Text("Cancel", color = Color.White)
-                    }
-                },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = Color(0xFFF4761D)
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigate(PcRepairScreens.PcRepairAppointmentPickerScreen.route) }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back button",
-                            tint = Color.White
-                        )
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
+
+
         Column(
             modifier = Modifier
-                .fillMaxSize().fillMaxWidth()
-                .padding(paddingValues),
+                .fillMaxSize().fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -222,6 +199,5 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
 
         }
     }
-}
 
 

@@ -29,23 +29,9 @@ fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text("Order", color = Color.White) },
-                actions = {
-                    TextButton(onClick = { navController.navigate(LaundryScreens.LaundryHomeScreen.route) }) {
-                        Text("Cancel", color = Color.White)
-                    }
-                },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = Color(0xFFF4761D)
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigate(LaundryScreens.LaundryAppointmentPickerScreen.route) }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back button",
-                            tint = Color.White
-                        )
-                    }
-                }
+                )
             )
         }
     ) { paddingValues ->

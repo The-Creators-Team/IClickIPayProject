@@ -25,8 +25,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -100,7 +100,7 @@ fun LaundryProfessionalsList(navController: NavController, viewModel: LaundryVie
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(onClick = { navController.navigate(LaundryScreens.LaundryFilterScreen.route)}) {
                     Icon(
-                        imageVector = Icons.Default.FilterList,
+                        imageVector = Icons.Default.Build,
                         contentDescription = "Filter",
                         modifier = Modifier.size(24.dp)
                     )
@@ -141,8 +141,7 @@ fun LaundryProfessionalsList(navController: NavController, viewModel: LaundryVie
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(300.dp) // Half-screen height
-                            .padding(16.dp),
+                            .height(300.dp), // Half-screen height
                         shape = RoundedCornerShape(16.dp)
                     ) {
                         Column(
