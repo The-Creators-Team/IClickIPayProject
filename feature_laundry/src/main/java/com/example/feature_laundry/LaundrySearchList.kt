@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -88,8 +89,19 @@ fun LaundryProfessionalsList(navController: NavController, viewModel: LaundryVie
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Laundry Professionals (${LaundryProfessional.size})", style = MaterialTheme.typography.titleMedium)
-        Spacer(modifier = Modifier.height(8.dp))
+        Row {
+            Text(text = "Repair Technicians (${LaundryProfessional.size})", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.weight(1f))
+            IconButton(onClick = { navController.navigate(LaundryScreens.LaundryFilterScreen.route)}) {
+                Icon(
+                    imageVector = Icons.Default.FilterList,
+                    contentDescription = "Filter",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
+//        Text(text = "Laundry Professionals (${LaundryProfessional.size})", style = MaterialTheme.typography.titleMedium)
+//        Spacer(modifier = Modifier.height(8.dp))
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {

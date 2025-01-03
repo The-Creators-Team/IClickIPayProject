@@ -157,7 +157,7 @@ fun PcRepairOrderScreen(navController: NavController, viewModel: PcRepairViewMod
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text("Subtotal", style = MaterialTheme.typography.bodyLarge)
-                        Text("$${ viewModel.selectedRepairTechnician.value!!.price * 3 }.00", style = MaterialTheme.typography.bodyLarge)
+                        Text("$${ (viewModel.selectedRepairTechnician.value?.price ?: 0) * 3 }.00", style = MaterialTheme.typography.bodyLarge)
                     }
 
                     // Delivery Fees

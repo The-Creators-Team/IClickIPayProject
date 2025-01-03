@@ -24,6 +24,7 @@ import androidx.navigation.NavController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LaundryOrderScreen(navController: NavController, viewModel: LaundryViewModel) {
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(

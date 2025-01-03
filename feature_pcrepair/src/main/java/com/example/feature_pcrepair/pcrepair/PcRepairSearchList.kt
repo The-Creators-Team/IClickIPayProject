@@ -24,7 +24,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -265,8 +267,17 @@ fun PcTechnicianList(navController: NavController, viewModel: PcRepairViewModel)
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Repair Technicians (${pcTechnicians.size})", style = MaterialTheme.typography.titleMedium)
-        Spacer(modifier = Modifier.height(8.dp))
+        Row {
+            Text(text = "Repair Technicians (${pcTechnicians.size})", style = MaterialTheme.typography.titleMedium)
+            Spacer(modifier = Modifier.weight(1f))
+            IconButton(onClick = { navController.navigate(PcRepairScreens.PcRepairFilterScreen.route)}) {
+                Icon(
+                    imageVector = Icons.Default.FilterList,
+                    contentDescription = "Filter",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        }
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
