@@ -80,19 +80,6 @@ fun HomePageScreen(
         val pagerState = rememberPagerState(initialPage = 0) {
             listOfSubApps.size
         }
-/*        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            contentPadding = PaddingValues(20.dp)
-        ) { page ->
-            CarouselButton(
-                item = listOfSubApps[page].buttonText,
-                onClick = listOfSubApps[page].navFunction,
-                imageId = listOfSubApps[page].imageId
-            )
-        }*/
 
         LazyVerticalGrid(columns = GridCells.Fixed(2)) {
             items(listOfSubApps.size) { item ->
@@ -103,16 +90,6 @@ fun HomePageScreen(
                 )
             }
         }
-
-
-
-
-        Button(
-            //Nav step 4 add nav call to button click also don't forgot to import module in app.gradle file step 5
-            onClick = navigateToHouseCleaning,
-            modifier = Modifier.padding(top = 16.dp)
-        ) {
-            Text(text = "Go to Housecleaning Section")
         }
     }
 }
