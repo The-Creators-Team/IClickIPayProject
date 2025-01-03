@@ -1,4 +1,4 @@
-package com.example.feature_babysitter.babysitter
+package com.example.feature_babysitter.babysitter.navigation
 
 sealed class BabySitterScreen(val route: String) {
     object BabySitterMainScreen : BabySitterScreen("baby_sitter_main_screen")

@@ -1,10 +1,14 @@
 package com.example.feature_mover.presentation.mover
 
 import android.annotation.SuppressLint
-import androidx.compose.runtime.Composable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.common.reuseable.CustomDropdown
 import com.example.feature_mover.R
 import com.example.feature_mover.presentation.mover.routes.MoverScreenRoutes
 import com.example.iclickipay.presentation.reuseable.CustomButton
@@ -25,6 +30,8 @@ import com.example.iclickipay.presentation.reuseable.CustomButton
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MoverScreen(navController: NavController) {
+    var selectedItem by remember { mutableStateOf("Select an item") }
+    var items = listOf("Option 1", "Option 2", "Option 3", "Option 4")
     Scaffold(
         topBar = {
             TopAppBar(
@@ -62,6 +69,8 @@ fun MoverScreen(navController: NavController) {
                         .size(300.dp)
                         .padding(bottom = 16.dp)
                 )
+
+
 
                 Column(
                     modifier = Modifier,

@@ -31,30 +31,12 @@ fun PcRepairProblemScreen(
     var selectedHour by remember { mutableStateOf(14) }
 
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = "Your pc repair") },
-                //modifier = Modifier.height(42.dp),
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.White
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigate(PcRepairScreens.PcRepairHomeScreen.route) }) {
-                        Icon(
-                            imageVector = Icons.Filled.Home,
-                            contentDescription = "Localized description"
-                        )
-                    }
-                }
-            )
-        },
-        containerColor = Color.White
-    ) { paddingValues -> // Use the paddingValues from the Scaffold
+
+
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues) // Apply the Scaffold's padding
                 .padding(horizontal = 16.dp, vertical = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
@@ -92,7 +74,6 @@ fun PcRepairProblemScreen(
             }
         }
     }
-}
 
 
 @Composable

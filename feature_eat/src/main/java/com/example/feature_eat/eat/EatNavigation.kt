@@ -28,5 +28,8 @@ fun EatNavigation(
         composable(route = EatScreens.StoreDetail.route){
             StoreDetail(navController = navController)
         }
+        composable(route = EatScreens.EatOrder.route){
+            EatOrderScreen(navController = navController)
+        }
     }
 }

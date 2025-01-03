@@ -30,7 +30,7 @@ fun LearnIntroScreen(
     ) {
         // Image
         Image(
-            painter = painterResource(R.drawable.ic_gear),
+            painter = painterResource(com.example.common.R.drawable.learn),
             contentDescription = "Home Image",
             modifier = Modifier
                 .fillMaxWidth()

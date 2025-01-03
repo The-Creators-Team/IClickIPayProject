@@ -48,6 +48,13 @@ fun YourArrivalScreen(navController: NavController, moverViewModel: MoverViewMod
 
 
     val focusRequester = remember { FocusRequester() }
+
+    // Trigger re-validation on text change using LaunchedEffect
+    LaunchedEffect(endAddress) {
+        if (endAddress.isNotEmpty() && endAddressErrorMessage.isNotEmpty()) {
+            moverViewModel.clearEndAddressError()
+        }
+    }
     Scaffold(
         topBar = {
             TopAppBar(

@@ -42,6 +42,11 @@ import com.example.feature_handyman.handyman.data.HandyData
 import com.example.feature_handyman.handyman.nami.HandyManNamiScreen
 
 
+
+val handymen = listOf<HandyData>(
+    HandyData("Goku", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
+    HandyData("Gohan", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
+    HandyData("Goten", "Earth", R.drawable.cam_placeholder, 3.0, 500, 15),
 @Composable
 fun HandyManSearchScreen(
     navController: NavController,

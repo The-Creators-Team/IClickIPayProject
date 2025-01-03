@@ -1,4 +1,4 @@
-package com.example.feature_mover.presentation.mover.filter
+package com.example.feature_housecleaning.housecleaning.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,12 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.feature_mover.presentation.mover.viewmodel.MoverViewModel
-
+import com.example.feature_housecleaning.housecleaning.data.HouseCleaningViewModel
+import com.example.feature_housecleaning.housecleaning.navigation.HouseCleaningScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MoverFilter(navController: NavController, viewModel: MoverViewModel) {
+fun FilterScreen(navController: NavController, viewModel: HouseCleaningViewModel)  {
     var selectedOption by remember { mutableStateOf("Recommend") }
     var expanded by remember { mutableStateOf(false) }
     var selectedRating by remember { mutableStateOf(0.0) } // Track selected rating
@@ -91,23 +91,23 @@ fun MoverFilter(navController: NavController, viewModel: MoverViewModel) {
 
         Text(text = "Min: Rating")
 
-//        // Star Rating Selector
-//        StarRatingSelector(
-//            initialRating = selectedRating,
-//            onRatingSelected = { rating ->
-//                selectedRating = rating
-//            }
-//        )
+        // Star Rating Selector
+        StarRatingSelector(
+            initialRating = selectedRating,
+            onRatingSelected = { rating ->
+                selectedRating = rating
+            }
+        )
 
         Button(
             onClick = {
-//                navController.navigate(
-//                    BabySitterScreen.SearchScreen.withArgs(
-//                        selectedOption,
-//                        sliderValue.toString(),
-//                        selectedRating.toString()
-//                    )
-//                )
+                navController.navigate(
+                    HouseCleaningScreen.SearchScreen.withArgs(
+                        selectedOption,
+                        sliderValue.toString(),
+                        selectedRating.toString()
+                    )
+                )
             },
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
@@ -117,44 +117,3 @@ fun MoverFilter(navController: NavController, viewModel: MoverViewModel) {
         }
     }
 }
-
-//@Composable
-//fun StarRatingSelector(
-//    initialRating: Double = 0.0,
-//    onRatingSelected: (Double) -> Unit
-//) {
-//    var selectedRating by remember { mutableStateOf(initialRating) }
-//    val totalStars = 5
-//
-//    Row(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(vertical = 16.dp),
-//        horizontalArrangement = Arrangement.Center
-//    ) {
-//        for (i in 1..totalStars) {
-//            val isHalfFilled = selectedRating >= i - 0.5 && selectedRating < i
-//            val isFullFilled = selectedRating >= i
-//
-//            Icon(
-//                painter = painterResource(
-//                    if (isFullFilled) R.drawable.ic_star_filled
-//                    else if (isHalfFilled) R.drawable.ic_star_half
-//                    else R.drawable.ic_star_outline
-//                ),
-//                contentDescription = "Star $i",
-//                modifier = Modifier
-//                    .size(40.dp)
-//                    .clickable {
-//                        selectedRating = if (selectedRating == i.toDouble()) {
-//                            i - 0.5
-//                        } else {
-//                            i.toDouble()
-//                        }
-//                        onRatingSelected(selectedRating)
-//                    },
-//                tint = Color.Yellow
-//            )
-//        }
-//    }
-//}
