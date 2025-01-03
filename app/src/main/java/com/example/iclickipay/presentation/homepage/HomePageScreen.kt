@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.Button
@@ -78,18 +80,16 @@ fun HomePageScreen(
         val pagerState = rememberPagerState(initialPage = 0) {
             listOfSubApps.size
         }
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            contentPadding = PaddingValues(20.dp)
-        ) { page ->
-            CarouselButton(
-                item = listOfSubApps[page].buttonText,
-                onClick = listOfSubApps[page].navFunction,
-                imageId = listOfSubApps[page].imageId
-            )
+
+        LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+            items(listOfSubApps.size) { item ->
+                CarouselButton(
+                    item = listOfSubApps[item].buttonText,
+                    onClick = listOfSubApps[item].navFunction,
+                    imageId = listOfSubApps[item].imageId
+                )
+            }
+        }
         }
     }
 }

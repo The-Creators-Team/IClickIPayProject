@@ -31,7 +31,7 @@ fun PetIntroScreen(
     ) {
         // Image
         Image(
-            painter = painterResource(R.drawable.ic_gear),
+            painter = painterResource(com.example.common.R.drawable.pet),
             contentDescription = "Home Image",
             modifier = Modifier
                 .fillMaxWidth()
