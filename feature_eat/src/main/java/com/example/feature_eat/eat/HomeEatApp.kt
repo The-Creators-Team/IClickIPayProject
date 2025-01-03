@@ -61,7 +61,6 @@ fun HomeEatApp(navController: NavController) {
             .background(Color.White)
             .verticalScroll(rememberScrollState()),
 
-
         ) {
 
     Column(
@@ -69,7 +68,7 @@ fun HomeEatApp(navController: NavController) {
     ) {
         val imageModifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.40f)
+            .height(360.dp)
         Image(
             contentScale = ContentScale.FillBounds,
             painter = painterResource(R.drawable.rectangle_2),
