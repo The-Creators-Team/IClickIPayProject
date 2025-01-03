@@ -74,7 +74,7 @@ class MainActivity : ComponentActivity() {
 
                         if (showScaffold.value) {
                             CenterAlignedTopAppBar(
-                                title = { Text(appTitle)},
+                                title = { Text(appTitle) },
                                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                                     containerColor = MaterialTheme.colorScheme.primary
                                 ),
@@ -88,7 +88,15 @@ class MainActivity : ComponentActivity() {
                                     }
                                 },
                                 actions = {
-                                    IconButton(onClick = { navController.navigate(HomeScreenRoute) }) {
+                                    IconButton(onClick = {
+                                        navController.navigate(HomeScreenRoute) {
+                                            popUpTo(HomeScreenRoute) {
+                                                inclusive = true
+                                            }
+                                            launchSingleTop = true
+                                        }
+                                    })
+                                    {
                                         Icon(
                                             Icons.Filled.Home, contentDescription = "Go to Home",
                                             tint = Color.White
@@ -127,27 +135,51 @@ class MainActivity : ComponentActivity() {
                         }
                         composable<HomeScreenRoute> {
                             showScaffold.value = true
-                            appTitle="Home Screen"
+                            appTitle = "Home Screen"
                             HomePageScreen(
                                 user = "Jim",
-                                navigateToBabySitter = { navController.navigate(BabySitterNavigationRoute) },
-                                navigateToHouseCleaning = { navController.navigate(HouseCleaningNavigationRoute) },
+                                navigateToBabySitter = {
+                                    navController.navigate(
+                                        BabySitterNavigationRoute
+                                    )
+                                },
+                                navigateToHouseCleaning = {
+                                    navController.navigate(
+                                        HouseCleaningNavigationRoute
+                                    )
+                                },
 //                          navigateToBank = { navController.navigate(BankNavigationRoute) },
                                 navigateToChat = { navController.navigate(ChatNavigationRoute) },
-                                navigateToDelivery = { navController.navigate(DeliveryNavigationRoute) },
+                                navigateToDelivery = {
+                                    navController.navigate(
+                                        DeliveryNavigationRoute
+                                    )
+                                },
                                 navigateToEat = { navController.navigate(EatNavigationRoute) },
-                                navigateToHandyMan = { navController.navigate(HandymanNavigationRoute) },
+                                navigateToHandyMan = {
+                                    navController.navigate(
+                                        HandymanNavigationRoute
+                                    )
+                                },
                                 navigateToHotel = { navController.navigate(HotelNavigationRoute) },
                                 navigateToLaundry = { navController.navigate(LaundryNavigationRoute) },
                                 navigateToLearn = { navController.navigate(LearnNavigationRoute) },
-                                navigateToMechanic = { navController.navigate(MechanicNavigationRoute) },
+                                navigateToMechanic = {
+                                    navController.navigate(
+                                        MechanicNavigationRoute
+                                    )
+                                },
                                 navigateToMover = { navController.navigate(MoverNavigationRoute) },
-                                navigateToPcRepair = { navController.navigate(PcRepairNavigationRoute) },
+                                navigateToPcRepair = {
+                                    navController.navigate(
+                                        PcRepairNavigationRoute
+                                    )
+                                },
                                 navigateToPet = { navController.navigate(PetNavigationRoute) },
                             )
                         }
                         composable<BabySitterNavigationRoute> {
-                            appTitle="Baby Sitter"
+                            appTitle = "Baby Sitter"
                             BabySitterNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
@@ -159,74 +191,74 @@ class MainActivity : ComponentActivity() {
 //                        )
 //                    }
                         composable<ChatNavigationRoute> {
-                            appTitle="Chat"
+                            appTitle = "Chat"
                             ChatNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<DeliveryNavigationRoute> {
-                            appTitle="Delivery"
+                            appTitle = "Delivery"
                             DeliveryNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<EatNavigationRoute> {
-                            appTitle="Eat"
+                            appTitle = "Eat"
                             EatNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<HandymanNavigationRoute> {
-                            appTitle="Handyman"
+                            appTitle = "Handyman"
                             HandymanNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<HotelNavigationRoute> {
-                            appTitle="Hotel"
+                            appTitle = "Hotel"
                             HotelNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<HouseCleaningNavigationRoute> {
-                            appTitle="House Cleaning"
+                            appTitle = "House Cleaning"
                             HouseCleaningNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<PetNavigationRoute> {
-                            appTitle="Pet"
+                            appTitle = "Pet"
                             PetNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<LearnNavigationRoute> {
-                            appTitle="Learn"
+                            appTitle = "Learn"
                             LearnNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<LaundryNavigationRoute> {
-                            appTitle="Laundry"
+                            appTitle = "Laundry"
                             LaundryNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<MechanicNavigationRoute> {
-                            appTitle="Mechanic"
+                            appTitle = "Mechanic"
                             MechanicsNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
                         composable<MoverNavigationRoute> {
-                            appTitle="Mover"
+                            appTitle = "Mover"
                             MoverNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
                         }
 
                         composable<PcRepairNavigationRoute> {
-                            appTitle="PC Repair"
+                            appTitle = "PC Repair"
                             PcRepairNavigation(
                                 onNavigateBack = { navController.navigate(HomeScreenRoute) }
                             )
@@ -238,7 +270,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 
 //think of these as ROUTES:
