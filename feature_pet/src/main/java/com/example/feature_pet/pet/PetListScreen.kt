@@ -14,34 +14,22 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.feature_pet.R
 import com.example.feature_pet.pet.model.Dog
-import com.example.feature_pet.pet.model.DogSex
-import com.example.feature_pet.pet.model.DogSize
 import com.example.feature_pet.viewmodel.DogViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,31 +44,12 @@ fun PetListScreen(
     //observing the dog list viewmodel with a local variable
     val dogs = dogViewModel.dogList
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Pet List") },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary
-                ),
-                navigationIcon = {
-                    IconButton(onClick = { navigateBack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back button",
-                            tint = Color.White
-                        )
-                    }
-                }
-            )
-        }
-    ) { paddingValues ->
+
         Column {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(paddingValues)
-                    //.padding(8.dp)
+                    .padding(8.dp)
                     .clickable {
                         navigateToNewPet()
                     },
@@ -119,7 +88,7 @@ fun PetListScreen(
 
         }
     }
-}
+
 
 @Composable
 fun DogCard(

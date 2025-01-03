@@ -53,16 +53,7 @@ fun PcRepairHomeScreen(
                 //modifier = Modifier.height(42.dp),
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color.White
-                ),
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                            contentDescription = "Localized description",
-
-                        )
-                    }
-                }
+                )
             )
         }
         ,

@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.examole.feature_mechanic.presentation.routes.MechanicsScreenRoutes
 import com.examole.feature_mechanic.presentation.viewmodel.MechanicsViewModel
+import com.example.common.reuseable.CustomDropdown
 import com.example.feature_mechanic.R
 import com.example.iclickipay.presentation.reuseable.CustomButton
 
@@ -100,48 +101,14 @@ fun YourMechanicFormScreen(navController: NavController, moverViewModel: Mechani
                 var expandedVechiles by remember { mutableStateOf(false) }
                 val vechilesList = listOf("1", "2", "3", "4", "5") // Example rooms list
 
-                ExposedDropdownMenuBox(
-                    expanded = expandedVechiles,
-                    onExpandedChange = { expandedVechiles = !expandedVechiles }
-                ) {
-                    OutlinedTextField(
-                        value = startRooms,
-                        onValueChange = { moverViewModel.updateStartRooms(it) },
-                        label = { Text("Type") },
-                        readOnly = true,
-                        isError = !isStartRoomsValid,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .menuAnchor()
-                            .padding(vertical = 8.dp)
-                            .clickable { expandedVechiles = true },
-                        trailingIcon = {
-                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedVechiles)
-                        }
-                    )
-                    ExposedDropdownMenu(
-                        expanded = expandedVechiles,
-                        onDismissRequest = { expandedVechiles = false }
-                    ) {
-                        vechilesList.forEach { vechile ->
-                            DropdownMenuItem(
-                                text = { Text(vechile) },
-                                onClick = {
-                                    moverViewModel.updateStartRooms(vechile)
-                                    expandedVechiles = false
-                                }
-                            )
-                        }
-                    }
-                }
-                if (!isStartRoomsValid) {
-                    Text(
-                        text = startRoomsErrorMessage,
-                        color = Color.Red,
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(start = 16.dp)
-                    )
-                }
+                CustomDropdown(
+                    label = "Type",
+                    selectedValue = startRooms,
+                    onValueChange = { moverViewModel.updateStartRooms(it) },
+                    options = listOf("1", "2", "3", "4", "5"),
+                    isError = !isStartRoomsValid,
+                    errorMessage = startRoomsErrorMessage
+                )
 
                 // Model Dropdown
                 var expandedModels by remember { mutableStateOf(false) }

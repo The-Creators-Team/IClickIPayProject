@@ -58,7 +58,6 @@ fun HotelSingle(navController: NavController) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = Color.Red,
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -110,7 +109,8 @@ fun HotelSingle(navController: NavController) {
 
         Image(
             painter = painterResource(R.drawable.ressort_hotel),
-            contentDescription = "Hotel Image"
+            contentDescription = "Hotel Image",
+            modifier = Modifier.padding(top = 50.dp)
         )
         Row{
             Icon(
@@ -127,7 +127,7 @@ fun HotelSingle(navController: NavController) {
             style = MaterialTheme.typography.headlineMedium.copy(color = Color.Gray)
         )
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Transport")
+        Text(text = "Transport", modifier = Modifier.padding(top = 50.dp))
         Row{
             Icon(
                 imageVector = Icons.Outlined.FlightTakeoff,
@@ -186,7 +186,7 @@ fun HotelSingle(navController: NavController) {
             )
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Text(text = "Equipments")
+        Text(text = "Equipments",modifier = Modifier.padding(top = 50.dp))
 
         val equipmentItems = listOf(
             Pair("Wifi", Icons.Filled.Wifi),
