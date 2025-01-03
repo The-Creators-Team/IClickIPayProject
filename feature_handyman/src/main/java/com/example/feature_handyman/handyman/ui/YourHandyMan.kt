@@ -29,6 +29,7 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,10 +42,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.feature_handyman.handyman.nami.HandyManNamiScreen
+import com.example.feature_handyman.handyman.viewmodel.HandymanViewModel
+import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @Composable
-fun YourHandyMan(navController: NavController) {
+fun YourHandyMan(
+    navController: NavController,
+    viewModel: HandymanViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+) {
     val context = LocalContext.current
+
+    // From View model
+
+    val selectedNeed = viewModel.selectedNeed.collectAsState()
+    val selectedProblem = viewModel.selectedProblem.collectAsState()
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -63,17 +74,19 @@ fun YourHandyMan(navController: NavController) {
             )
         },
         bottomBar = {
-            Button(
-                onClick = {
-                    Toast.makeText(context, "Button Clicked!", Toast.LENGTH_LONG).show()
-                    navController.navigate(HandyManNamiScreen.HandyManMap.route)
-                          },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-            ) {
-                Text(text = "Apply")
-            }
+            CustomButton("Apply", onClick = {
+                if (selectedNeed.value.isNotBlank() && selectedProblem.value.isNotBlank()) {
+                    // Navigate to the next screen and pass the data
+                    Toast.makeText(
+                        context,
+                        "Need: ${selectedNeed.value}, Problem: ${selectedProblem.value}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    navController.navigate(HandyManNamiScreen.HandyManSearch.route)
+                } else {
+                    Toast.makeText(context, "Please select both options", Toast.LENGTH_LONG).show()
+                }
+            })
         },
         content = { padding ->
             Column(
@@ -86,72 +99,24 @@ fun YourHandyMan(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally // Aligns content horizontally
             ) {
                 // Exposed Dropdown Menu
-                var expandedNeed by remember { mutableStateOf(false) }
-                var selectedNeedOption by remember { mutableStateOf("Sort by") }
-                var expandedProblem by remember { mutableStateOf(false) }
-                var selectedProblemOption by remember { mutableStateOf("Problem") }
-                val options = listOf("Price", "Popularity", "Rating")
 
 
-                ExposedDropdownMenuBox(
-                    expanded = expandedNeed,
-                    onExpandedChange = { expandedNeed = !expandedNeed }
-                ) {
-                    OutlinedTextField(
-                        value = selectedNeedOption,
-                        onValueChange = { },
-                        modifier = Modifier
-                            .menuAnchor()
-                            .fillMaxWidth(),
-                        readOnly = true,
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedNeed) },
-                        label = { Text(text = "Need") }
-                    )
-                    DropdownMenu(
-                        expanded = expandedNeed,
-                        onDismissRequest = { expandedNeed = false }
-                    ) {
-                        options.forEach { option ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedNeedOption = option
-                                    expandedNeed = false
-                                },
-                                text = { Text(option) }
-                            )
-                        }
-                    }
-                }
+                // Dropdown for Need
+                DropdownSection(
+                    title = "Need",
+                    options = listOf("Price", "Popularity", "Rating"),
+                    selectedOption = selectedNeed.value,
+                    onOptionSelected = { viewModel.updateSelectedNeed(it) }
+                )
 
-                ExposedDropdownMenuBox(
-                    expanded = expandedProblem,
-                    onExpandedChange = { expandedProblem = !expandedProblem }
-                ) {
-                    OutlinedTextField(
-                        value = selectedProblemOption,
-                        onValueChange = { },
-                        modifier = Modifier
-                            .menuAnchor()
-                            .fillMaxWidth(),
-                        readOnly = true,
-                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandedProblem) },
-                        label = { Text(text = "Problem") }
-                    )
-                    DropdownMenu(
-                        expanded = expandedProblem,
-                        onDismissRequest = { expandedProblem = false }
-                    ) {
-                        options.forEach { option ->
-                            DropdownMenuItem(
-                                onClick = {
-                                    selectedProblemOption = option
-                                    expandedProblem = false
-                                },
-                                text = { Text(option) }
-                            )
-                        }
-                    }
-                }
+
+                // Dropdown for Problem
+                DropdownSection(
+                    title = "Problem",
+                    options = listOf("Electricity", "Plumbing", "Carpentry"),
+                    selectedOption = selectedProblem.value,
+                    onOptionSelected = { viewModel.updateSelectedProblem(it) }
+                )
 
                 // Price/kg Slider
                 DividerSection(label = "Availability")
@@ -196,6 +161,46 @@ fun MySlider(title: String) {
             modifier = Modifier.fillMaxWidth()
         )
         Text(text = "Value: ${sliderValue.toInt()}")
+    }
+}
+
+@Composable
+fun DropdownSection(
+    title: String,
+    options: List<String>,
+    selectedOption: String,
+    onOptionSelected: (String) -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    ExposedDropdownMenuBox(
+        expanded = expanded,
+        onExpandedChange = { expanded = !expanded }
+    ) {
+        OutlinedTextField(
+            value = selectedOption.ifBlank { title },
+            onValueChange = { },
+            modifier = Modifier
+                .menuAnchor()
+                .fillMaxWidth(),
+            readOnly = true,
+            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+            label = { Text(text = title) }
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            options.forEach { option ->
+                DropdownMenuItem(
+                    onClick = {
+                        onOptionSelected(option)
+                        expanded = false
+                    },
+                    text = { Text(option) }
+                )
+            }
+        }
     }
 }
 

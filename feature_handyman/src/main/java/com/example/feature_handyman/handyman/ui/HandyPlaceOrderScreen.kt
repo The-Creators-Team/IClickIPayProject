@@ -41,9 +41,8 @@ import com.example.feature_handyman.R
 import com.example.iclickipay.presentation.reuseable.CustomButton
 
 @Composable
-fun HandyPlaceOrderScreen(navController: NavController) {
+fun HandyPlaceOrderScreen(navController: NavController, selectedDate: String) {
     val context = LocalContext.current
-
 
     Column(
         modifier = Modifier
@@ -121,8 +120,9 @@ fun HandyPlaceOrderScreen(navController: NavController) {
                     color = Color.White.copy(alpha = 0.8f),
                     style = MaterialTheme.typography.bodyMedium
                 )
+                // Display the selected date
                 Text(
-                    text = "20 March, Thu - 10h",
+                    text = selectedDate,
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -232,7 +232,7 @@ fun HandyPlaceOrderScreen(navController: NavController) {
 
             // Place Order Button
             CustomButton("Place Order", onClick = {
-                Toast.makeText( context,"OrderPlaced", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Order Placed", Toast.LENGTH_SHORT).show()
             })
         }
     }
@@ -243,6 +243,7 @@ fun HandyPlaceOrderScreen(navController: NavController) {
 fun HandyPlaceOrderScreenPreview() {
     val navController = rememberNavController()
     HandyPlaceOrderScreen(
-        navController
+        navController,
+        selectedDate = "20 March, Thu - 10h" // Example date
     )
 }

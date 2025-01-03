@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.feature_handyman.handyman.HandyData
+import com.example.feature_handyman.handyman.data.HandyData
 
 
 @Composable
@@ -34,71 +36,57 @@ fun HandyManCard(
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
+            .height(180.dp)
+            .width(115.dp)
             .padding(8.dp)
             .clickable { onClick() }
     ) {
-        Column {
-            // Babysitter Image
-            Box(
-                modifier = Modifier
-                    .height(110.dp),
-            ){
-                Image(
-                    painter = painterResource(id = handyData.imageResId),
-                    contentDescription = "Babysitter Image",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxWidth(),
-                    contentScale = ContentScale.Crop
-                )
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Name and Location
-            Text(
-                text = handyData.name,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
-            Text(
-                text = handyData.location,
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-            )
-
-            // Rating, Distance, and Cost Per Hour
-            Row(
+        Column(
+            modifier = Modifier
+            .fillMaxHeight()
+            .padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Handyman Image
+            Image(
+                painter = painterResource(id = handyData.imageResId),
+                contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                    .fillMaxHeight(0.4f), // Adjust the height proportionally
+                contentScale = ContentScale.Crop // Change to ContentScale.Fit if you want to maintain aspect ratio
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Handyman Details
+            Text(text = handyData.name, modifier = Modifier.padding(horizontal = 8.dp))
+            Text(text = handyData.location, modifier = Modifier.padding(horizontal = 8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 // Rating
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = "Rating",
-                        tint = Color.Yellow
-                    )
+                    Icon(Icons.Filled.Star, contentDescription = null, tint = Color.Yellow)
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(text = "${handyData.rating}")
                 }
 
                 // Distance
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        imageVector = Icons.Default.LocationOn,
-                        contentDescription = "Distance",
-                        tint = Color.Gray
-                    )
+                    Icon(Icons.Filled.LocationOn, contentDescription = null, tint = Color.Gray)
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(text = "${handyData.distance} m")
                 }
-                // Cost Per Hour
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "$${handyData.costPerHour}/hr")
-                }
             }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Cost
+            Text(text = "Cost: $${handyData.price}/hr")
         }
     }
 }

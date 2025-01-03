@@ -52,6 +52,7 @@ import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavController
 import com.example.feature_handyman.handyman.nami.HandyManNamiScreen
+import com.example.feature_handyman.handyman.viewmodel.DateViewModel
 import com.example.iclickipay.presentation.reuseable.CustomButton
 import java.time.LocalDate
 import java.time.YearMonth
@@ -63,27 +64,12 @@ import java.util.Locale
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HandyManDate(navController: NavController) {
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+fun HandyManDate(navController: NavController, dateViewModel: DateViewModel) {
+    var selectedDate = dateViewModel.selectedDate
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
+
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-            title = { },
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                containerColor = Color.White.copy(alpha = 0.1f)
-            ),
-            actions = {
-                IconButton(
-                    modifier = Modifier.padding(top = 24.dp),
-                    onClick = {navController.navigate(HandyManNamiScreen.HandyManFilters.route)}) {
-                    Icon(
-                        imageVector = Icons.Filled.Menu,
-                        contentDescription = "Menu"
-                    )
-                }
-            }
-        )
         },
         content = {
             Column(
@@ -91,69 +77,6 @@ fun HandyManDate(navController: NavController) {
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                // Top Bar
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = { /* Handle back navigation */ }) {
-                        Icon(Icons.Default.ArrowBack, "Back")
-                    }
-                    Text(
-                        text = "Choose date",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    // Empty box for alignment
-                    Box(modifier = Modifier.width(48.dp))
-                }
-
-                // Selected Date Display
-                Text(
-                    text = selectedDate.format(DateTimeFormatter.ofPattern("dd MMMM, EEE")),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 24.dp),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium
-                )
-
-                // Month Navigation
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(onClick = {
-                        currentMonth = currentMonth.minusMonths(1)
-                    }) {
-                        Icon(Icons.Default.KeyboardArrowLeft, "Previous month")
-                    }
-                    Text(
-                        text = currentMonth.format(DateTimeFormatter.ofPattern("MMMM")),
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                    IconButton(onClick = {
-                        currentMonth = currentMonth.plusMonths(1)
-                    }) {
-                        Icon(Icons.Default.KeyboardArrowRight, "Next month")
-                    }
-                }
-
-                // Week Days Header
-                Row(modifier = Modifier.fillMaxWidth()) {
-                    val weekDays = listOf("S", "M", "T", "W", "T", "F", "S")
-                    weekDays.forEach { day ->
-                        Text(
-                            text = day,
-                            modifier = Modifier.weight(1f),
-                            textAlign = TextAlign.Center,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                color = Color.Gray
-                            )
-                        )
-                    }
-                }
 
                 // Calendar Grid
                 val firstDayOfMonth = currentMonth.atDay(1)
@@ -186,7 +109,10 @@ fun HandyManDate(navController: NavController) {
                                             .background(
                                                 if (isSelected) Color(0xFF10C971) else Color.Transparent
                                             )
-                                            .clickable { selectedDate = date },
+                                            .clickable {
+                                                selectedDate = date
+                                                dateViewModel.setSelectedDate(date) // Save the selected date
+                                            },
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
@@ -208,20 +134,20 @@ fun HandyManDate(navController: NavController) {
 
                 CustomButton(
                     text = "Next",
-                    onClick = {navController.navigate(HandyManNamiScreen.HandyPlaceOrderScreen.route) })
-
-
+                    onClick = {
+                        // Pass selectedDate as part of the route
+                        navController.navigate(HandyManNamiScreen.HandyPlaceOrderScreen.createRoute(selectedDate.toString()))
+                    }
+                )
             }
-
         }
     )
-
-
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun HandyManDatePreview(){
-    HandyManDate(navController = NavController(LocalContext.current))
+    HandyManDate(navController = NavController(LocalContext.current), DateViewModel())
+
 }

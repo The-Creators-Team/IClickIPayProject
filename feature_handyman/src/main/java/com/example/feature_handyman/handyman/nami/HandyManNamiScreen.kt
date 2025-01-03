@@ -7,6 +7,12 @@ sealed class HandyManNamiScreen(val route: String) {
     object HandyManFilters : HandyManNamiScreen("handy_man_filter")
     object HandyManSearch : HandyManNamiScreen("handy_man_search")
     object HandyManMap : HandyManNamiScreen("handy_man_map")
-    object HandyPlaceOrderScreen: HandyManNamiScreen("handy_place_order_screen")
     object HandyManDate: HandyManNamiScreen("handy_man_date")
+    object HandyPlaceOrderScreen {
+        const val route = "handyman/placeorder/{selectedDate}"
+
+        fun createRoute(selectedDate: String): String {
+            return "handyman/placeorder/$selectedDate"
+        }
+    }
 }
