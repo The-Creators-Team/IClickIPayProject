@@ -78,12 +78,12 @@ fun MoverCard(movers: Mover, navController: NavController) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(imageVector = Icons.Default.LocationOn, contentDescription = "Distance", tint = Color.Gray)
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "${movers.id} m")
+                    Text(text = "$500 m")
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = "$${movers.id}/hr")
+                    Text(text = "$${movers.price.toInt()}/hr")
                 }
             }
         }

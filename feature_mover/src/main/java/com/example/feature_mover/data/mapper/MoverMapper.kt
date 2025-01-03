@@ -7,13 +7,15 @@ fun MoverDTO.toDomain() = Mover(
     id = id,
     name = name,
     rating = rating,
-    location = location
+    location = location,
+    price = price
 )
 
 fun Mover.toDTO() = MoverDTO(
     id = id,
     name = name,
     rating = rating,
-    location = location
+    location = location,
+    price=price
 )
 

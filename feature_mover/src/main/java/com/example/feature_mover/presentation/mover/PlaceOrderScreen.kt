@@ -1,6 +1,8 @@
 package com.example.feature_mover.presentation.mover
 
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,15 +18,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.feature_mover.R
+import com.example.feature_mover.presentation.mover.routes.MoverScreenRoutes
 import com.example.feature_mover.presentation.mover.viewmodel.MoverViewModel
 import com.example.feature_mover.ui_styles.theme.btnClr
 import com.example.iclickipay.presentation.reuseable.CustomButton
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewModel) {
+    val startAddress by moverViewModel.startAddress.collectAsState()
+
+    val date by moverViewModel.selectedDate.collectAsState()
 
 
     Column(
@@ -104,7 +114,11 @@ fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewMode
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
-                    text = "20 March, Thu - 10h",
+                    text = "${date.format(DateTimeFormatter.ofPattern("dd MMMM,EEE"))} - ${
+                        moverViewModel.estimatedTime(
+                            "time"
+                        )
+                    }",
                     color = Color.White,
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -121,7 +135,7 @@ fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewMode
                         modifier = Modifier.size(20.dp)
                     )
                     Text(
-                        text = "28 Broad Street\nJohannesburg",
+                        text = startAddress,
                         color = Color.White,
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(start = 4.dp)
@@ -153,7 +167,7 @@ fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewMode
                     )
                 }
                 Text(
-                    text = "$ 15",
+                    text = "$ 15/hr",
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -172,7 +186,7 @@ fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewMode
             ) {
                 Text("Subtotal")
                 Text(
-                    text = "$ 15.00",
+                    text = "$ ${moverViewModel.estimatedTime("cost")}",
                 )
             }
 
@@ -205,7 +219,7 @@ fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewMode
                     color = Color.Gray
                 )
                 Text(
-                    text = "$ 15.00",
+                    text = "$ ${moverViewModel.estimatedTime("cost")}",
                     style = MaterialTheme.typography.titleLarge,
                 )
             }
@@ -213,17 +227,24 @@ fun PlaceOrderScreen(navController: NavController, moverViewModel: MoverViewMode
             Spacer(modifier = Modifier.weight(1f))
 
             // Place Order Button
-            CustomButton("Place Order", onClick = {})
+            CustomButton(
+                "Place Order",
+                onClick = {
+                    moverViewModel.addOrderToJson(context = navController.context);
+                    navController.navigate(MoverScreenRoutes.MoverInitialScreen.route)
+
+                })
         }
     }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun OrderScreenPreview() {
-//    val navController = rememberNavController()
-//    PlaceOrderScreen(
-//        navController,
-//        moverViewModel:MoverViewModel()
-//    )
-//}
+@RequiresApi(Build.VERSION_CODES.O)
+@Preview(showBackground = true)
+@Composable
+fun OrderScreenPreview() {
+    val navController = rememberNavController()
+    PlaceOrderScreen(
+        navController,
+        moverViewModel = MoverViewModel()
+    )
+}

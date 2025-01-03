@@ -1,0 +1,23 @@
+{
+  "order": {
+    "mover": {
+      "name": "Box Entreprise",
+      "quote": 15,
+      "removeOption": true
+    },
+    "date": "20 March, Thu - 10h",
+    "location": {
+      "address": "28 Broad Street",
+      "city": "Johannesburg"
+    },
+    "pricing": {
+      "subtotal": 15.00,
+      "deliveryFees": 0.00,
+      "totalAmount": 15.00
+    },
+    "actions": {
+      "cancelOption": true,
+      "placeOrderOption": true
+    }
+  }
+}
