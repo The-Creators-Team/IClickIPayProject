@@ -47,22 +47,6 @@ fun OrderDetailsPage(
 ) {
     val context = LocalContext.current
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(text = "Filters") },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = Color.White
-                ),
-                navigationIcon = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            imageVector = Icons.Filled.Home,
-                            contentDescription = "Home"
-                        )
-                    }
-                }
-            )
-        },
         bottomBar = {
             Button(
                 onClick = {

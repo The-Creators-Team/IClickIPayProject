@@ -63,18 +63,6 @@ fun HandyPlaceOrderScreen(navController: NavController) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { /* Handle back navigation */ }) {
-                    Icon(
-                        Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
-                Text(
-                    text = "Order",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color.White
-                )
                 TextButton(onClick = { /* Handle cancel */ }) {
                     Text(
                         text = "Cancel",
