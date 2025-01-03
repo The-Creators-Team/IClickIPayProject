@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -20,8 +21,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
@@ -38,14 +41,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.feature_eat.eat.EatOrderScreen
 import com.example.feature_eat.eat.EatScreens
 import kotlin.math.absoluteValue
 
@@ -53,6 +54,15 @@ import kotlin.math.absoluteValue
 @ExperimentalFoundationApi
 @Composable
 fun HomeEatApp(navController: NavController) {
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White)
+            .verticalScroll(rememberScrollState()),
+
+
+        ) {
 
     Column(
         modifier = Modifier
@@ -68,8 +78,7 @@ fun HomeEatApp(navController: NavController) {
         )
     }
 
-    Column(
-    ) {
+    Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -184,7 +193,7 @@ fun HomeEatApp(navController: NavController) {
             modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp),
+                .padding(start = 16.dp, end = 30.dp),
             horizontalArrangement = Arrangement.SpaceBetween
 
         ) {
@@ -213,9 +222,10 @@ fun HomeEatApp(navController: NavController) {
             )
         }
 
-
         ListFoodItemsColum(navController)
     }
+    }
+
 }
 
 @Composable
@@ -288,8 +298,9 @@ fun FoodItemsRow() {
 fun ListFoodItemsColum(navController: NavController) {
     LazyColumn(
         modifier = Modifier
-            .fillMaxWidth() // Ensure the LazyRow takes full width
-            .padding(8.dp) // Add padding around the LazyRow
+            .height(400.dp)
+            .fillMaxWidth()
+            .padding(8.dp)// Add padding around the LazyRow
     ) {
         item {
             RestourantItem(navController)
