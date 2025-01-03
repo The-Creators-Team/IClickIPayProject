@@ -67,7 +67,6 @@ fun HotelSearchScreen(navController: NavController) {
                 FavAndOrdersRow()
                 HotelList(navController = navController)
             }
-            FloatHomeIcon(navController = navController)
         }
     }
 }

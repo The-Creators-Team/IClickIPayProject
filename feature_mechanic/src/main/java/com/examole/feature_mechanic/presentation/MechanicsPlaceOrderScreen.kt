@@ -45,24 +45,11 @@ fun MechanicsPlaceOrderScreen(navController: NavController, moverViewModel: Mech
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { /* Handle back navigation */ }) {
-                    Icon(
-                        Icons.Default.ArrowBack,
-                        contentDescription = "Back",
-                        tint = Color.White
-                    )
-                }
                 Text(
                     text = "Order",
                     style = MaterialTheme.typography.titleLarge,
                     color = Color.White
                 )
-                TextButton(onClick = { /* Handle cancel */ }) {
-                    Text(
-                        text = "Cancel",
-                        color = Color.White
-                    )
-                }
             }
 
             // Mover Info
@@ -82,7 +69,7 @@ fun MechanicsPlaceOrderScreen(navController: NavController, moverViewModel: Mech
                     modifier = Modifier.padding(start = 12.dp)
                 ) {
                     Text(
-                        text = "Mover",
+                        text = "Mechanic",
                         color = Color.White.copy(alpha = 0.8f),
                         style = MaterialTheme.typography.bodyMedium
                     )
